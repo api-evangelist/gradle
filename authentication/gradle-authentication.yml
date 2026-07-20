@@ -1,0 +1,18 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gradle-develocity-openapi.yaml
+summary:
+  types:
+  - http
+schemes:
+- name: DevelocityAccessKeyOrToken
+  type: http
+  scheme: bearer
+  bearerFormat: Bearer <<Develocity Access Key or Token>>
+  description: "All requests require a Develocity access key or token as a bearer token. \n\
+    Given an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required\
+    \ header is `Authorization: Bearer [example key]`.\n\
+    \nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control)\
+    \ for guidance on how to provision access keys or token"
+  sources:
+  - openapi/gradle-develocity-openapi.yaml
