@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: Develocity Auth API
+  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
+
+    '
+  version: 2026.2.0
+  license:
+    name: Develocity License
+    url: https://gradle.com/help/legal-gradle-software-license-agreement
+  termsOfService: https://gradle.com/help/legal-terms-of-use
+  contact:
+    name: Gradle
+    url: https://gradle.com
+  x-logo:
+    url: https://assets.gradle.com/logo/develocity-logo.svg
+    altText: Develocity
+servers:
+- url: https://develocity.example.com
+  description: Your Develocity instance.
+security:
+- DevelocityAccessKeyOrToken: []
+tags:
+- name: Auth
+  description: "Endpoints related to Develocity authentication and authorization. \nThe permissions required for these endpoints vary.\nConsult the endpoint descriptions.\n"
+paths:
+  /api/auth/revoke-signing-keys:
+    post:
+      operationId: RevokeSigningKeys
+      summary: Revoke auth token signing keys
+      description: Revokes the existing auth token signing keys, and creates a new one. Requires the `Configure operational settings` permission. All existing access tokens will become invalid. Develocity may take a few minutes to revoke all existing access tokens.
+      tags:
+      - Auth
+      responses:
+        '200':
+          description: The existing signing keys have been revoked, all access tokens will become invalid shortly
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+  /api/auth/token:
+    post:
+      operationId: CreateAccessToken
+      summary: Create a new access token
+      description: Create a new short-lived access token, optionally limited to the provided permissions and projects. Users do not need any specific Develocity permission to do this, but must be authenticated. If an access key is used to authenticate this request, the created token will be limited to the user's permissions and projects. If an access token is used to authenticate this request, the created token will be limited to the authenticating token's permissions and projects and not live longer than the authenticating token's remaining lifetime. Query parameters can be used to further restrict the permissions of the access token. A 401 response will be sent if the request is not authenticated. A 403 response will be sent if one of the projects or permissions present in the query parameters is not assigned to this user. A 403 will also be sent if an access token is used to authenticate the request and the requested expiration date is after the authenticating access token's expiration.
+      tags:
+      - Auth
+      parameters:
+      - in: query
+        name: projectIds
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ProjectId'
+        example:
+        - project-a,project-b
+        - project-c
+        explode: true
+        required: false
+        description: Limit the created token to one or more projects. Values should be project ids. Comma seperated values and repeated parameters are supported.
+      - in: query
+        name: permissions
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Permission'
+        example:
+        - publishScan,readCache
+        - writeCache
+        explode: true
+        required: false
+        description: Limit the created token to one or more permissions. Values should be permission [config values](https://gradle.com/help/helm-admin-permissions). Comma seperated values and repeated parameters are supported.
+      - in: query
+        name: expiresInHours
+        schema:
+          type: number
+          format: float
+          minimum: 0
+          exclusiveMinimum: true
+          maximum: 24
+          default: 2
+        example: 0.5
+        required: false
+        description: The lifetime of the created token, in hours.
+      responses:
+        '200':
+          description: An access token
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: eyJraWQiOiJ0ZXN0LWtleSIsImFsZyI6IlJTMjU2IiwidHlwIjoiSldUIn0.eyJpc19hbm9ueW1vdXMiOmZhbHNlLCJwZXJtaXNzaW9ucyI6WyJSRUFEX1ZFUlNJT04iLCJFWFBPUlRfREFUQSIsIkFDQ0VTU19EQVRBX1dJVEhPVVRfQVNTT0NJQVRFRF9QUk9KRUNUIl0sInByb2plY3RzIjp7ImEiOjEsImIiOjJ9LCJ1c2VyX2lkIjoic29tZS1pZCIsInVzZXJuYW1lIjoidGVzdCIsImZpcnN0X25hbWUiOiJhIiwibGFzdF9uYW1lIjoidXNlciIsImVtYWlsIjoiYkBncmFkbGUuY29tIiwic3ViIjoidGVzdCIsImV4cCI6NzIwMCwibmJmIjowLCJpYXQiOjAsImF1ZCI6ImV4YW1wbGUuZ3JhZGxlLmNvbSIsImlzcyI6ImV4YW1wbGUuZ3JhZGxlLmNvbSIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.H1_NEG1xuleP-WIAY_uvSmdd2o7i_-Ko3qhlo04zvCgrElJe7_F5jNuqsyDfnb5hvKlOe5UKG_7QPTgY9-3pFQ
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/AccessTokenForbidden'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  examples:
+    ForbiddenUserExample:
+      value:
+        type: urn:gradle:enterprise:forbidden
+        title: Insufficient permissions
+        detail: User must have the Administer Projects permission to access this endpoint.
+        status: 403
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
+    UnauthenticatedExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:client-error
+        title: Something was wrong with the request
+        status: 401
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+  responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    UnauthenticatedError:
+      description: Something was wrong with the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/UnauthenticatedExample'
+    AccessTokenForbidden:
+      description: The current user or authenticating access token does not have sufficient access or lifetime to create the requested access token.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            MissingPermissionResponse:
+              value:
+                type: urn:gradle:enterprise:api:problems:forbidden
+                title: Missing requested permission.
+                detail: The permissions [administerGe] were requested for the access token, but were not granted to this user.
+                status: 403
+            MissingProjectResponse:
+              value:
+                type: urn:gradle:enterprise:api:problems:forbidden
+                title: Missing requested projects.
+                detail: The projects [project-a, project-b] were requested for the access token, but were not assigned to this user.
+                status: 403
+            InsufficientLifetimeResponse:
+              value:
+                type: urn:gradle:enterprise:api:problems:forbidden
+                title: Requested expiration exceeds current.
+                detail: The access token used to authenticate this request expires at 2024-02-14T01:44:51.225701Z, which is sooner than the requested expiration time of PT12H from now.
+                status: 403
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    ForbiddenError:
+      description: The authenticated user has insufficient permissions.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            ForbiddenUserResponse:
+              $ref: '#/components/examples/ForbiddenUserExample'
+  schemas:
+    Permission:
+      type: string
+      description: A permission [config value](https://gradle.com/help/helm-admin-permissions).
+      minLength: 1
+      maxLength: 256
+      pattern: ^\S+$
+    ProjectId:
+      type: string
+      description: The unique identifier for the project. Must not contain whitespace.
+      minLength: 1
+      maxLength: 256
+      pattern: ^\S+$
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type: string
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+          nullable: true
+  securitySchemes:
+    DevelocityAccessKeyOrToken:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <<Develocity Access Key or Token>>
+      description: "All requests require a Develocity access key or token as a bearer token. \nGiven an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required header is `Authorization: Bearer l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`.\n\nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control) for guidance on how to provision access keys or tokens and check user permissions.\n"

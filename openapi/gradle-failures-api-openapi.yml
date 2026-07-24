@@ -1,0 +1,559 @@
+openapi: 3.0.3
+info:
+  title: Develocity Auth Failures API
+  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
+
+    '
+  version: 2026.2.0
+  license:
+    name: Develocity License
+    url: https://gradle.com/help/legal-gradle-software-license-agreement
+  termsOfService: https://gradle.com/help/legal-terms-of-use
+  contact:
+    name: Gradle
+    url: https://gradle.com
+  x-logo:
+    url: https://assets.gradle.com/logo/develocity-logo.svg
+    altText: Develocity
+servers:
+- url: https://develocity.example.com
+  description: Your Develocity instance.
+security:
+- DevelocityAccessKeyOrToken: []
+tags:
+- name: Failures
+  x-displayName: 'Failures (Beta)
+
+    '
+  description: "Endpoints related to retrieving details about failures of builds from the Develocity instance. \nTo access these endpoints the user requires the `Access build data via the API` permission.\n\n**<mark>Beta:</mark> _The Failures API is unstable and is likely to change in future._**\n"
+paths:
+  /api/failures/builds/{id}:
+    parameters:
+    - in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: The Build Scan ID.
+    - in: query
+      name: BuildFailuresQuery
+      explode: true
+      description: The query parameters used to retrieve the failures of a build.
+      schema:
+        $ref: '#/components/schemas/BuildFailuresQuery'
+    get:
+      operationId: GetBuildFailures
+      summary: Get the failures of a build.
+      description: '**<mark>Beta:</mark>** Returns the failures of a build, organized by build tool (Gradle, Maven, npm).
+
+        The response structure includes nested objects for each build tool containing their respective failures.
+
+        '
+      tags:
+      - Failures
+      responses:
+        '200':
+          description: The failures of a build.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildFailures'
+              example:
+                buildToolType: gradle
+                gradle:
+                  buildFailures:
+                  - header: Task :codeNarcMain failed
+                    message: 'A failure occurred while executing org.gradle.api.plugins.quality.internal.CodeNarcAction
+
+                      > CodeNarc rule violations were found. See the report at: file:///Users/user/project/build/reports/codenarc/main.html
+
+                      '
+                    taskPath: :codeNarcMain
+                    location: Build file 'build.gradle' line 3
+                    stacktrace: "        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:130)\nCaused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionException: A failure occurred while executing org.gradle.api.plugins.quality.internal.CodeNarcAction\n        at org.gradle.workers.internal.DefaultWorkerExecutor$WorkItemExecution.waitForCompletion(DefaultWorkerExecutor.java:287)\n"
+                  testFailures:
+                  - id:
+                      workUnitName: :test
+                      suiteName: example.ExampleTest
+                      testName: failingTest
+                    message: 'org.junit.ComparisonFailure: expected:<[1]> but was:<[2]>
+
+                      '
+                    stacktrace: "        at example.ExampleTest.failingTest(ExampleTest.java:10)\nCaused by: org.junit.ComparisonFailure: expected:<[1]> but was:<[2]>\n        at org.junit.ComparisonFailure.create(ComparisonFailure.java:41)\n"
+                maven: null
+                npm: null
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+        '503':
+          $ref: '#/components/responses/NotReadyError'
+  /api/failures/groups:
+    description: 'The failure groups for the given query
+
+      '
+    get:
+      operationId: GetFailureGroups
+      summary: Get a list of failure groups.
+      description: '**<mark>Beta:</mark>** Returns the list of failure groups.
+
+        '
+      tags:
+      - Failures
+      parameters:
+      - in: query
+        name: query
+        explode: true
+        required: true
+        description: The query parameters used to retrieve the list of failure groups.
+        schema:
+          $ref: '#/components/schemas/FailureGroupsQuery'
+      responses:
+        '200':
+          description: A list of failure groups.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureGroupsResponse'
+              example:
+                content:
+                - type: build
+                  failureCount: 10
+                  firstOccurrence: '2025-01-15T10:00:00Z'
+                  lastOccurrence: '2025-06-10T15:30:00Z'
+                  exampleFailure:
+                    message: 'A failure occurred while executing org.gradle.api.plugins.quality.internal.CodeNarcAction
+
+                      > CodeNarc rule violations were found. See the report at: file:///Users/user/project/build/reports/codenarc/main.html
+
+                      '
+                    relevantLog: 'Violation: Rule=VariableName P=2 Line=304 Msg=[Variable named isAtLeastGradle9_2 in class com.gradle.scan.server.test.vmcv.scan.tests.suitedetailsview.IntermediaryNodeFailureCrossVersionTest$IntermediaryNodeFailureCrossVersionTest_JUnit4 does not match the pattern [a-z][a-zA-Z0-9]*] Src=[def isAtLeastGradle9_2 = gradleVersion.isAtLeast(GradleVersions.V9_2_0)]
+
+                      '
+                  buildIds:
+                  - bsfohatb6uw2u
+                  - begl4bohhoy2i
+                  - beo6lnhluzkbbg
+                - type: test
+                  failureCount: 25
+                  firstOccurrence: '2025-05-15T10:00:00Z'
+                  lastOccurrence: '2025-07-11T15:30:00Z'
+                  exampleFailure:
+                    message: 'org.junit.ComparisonFailure: expected:<[1]> but was:<[2]>
+
+                      '
+                  buildIds:
+                  - tsfohatb6uw2u
+                  - teg4bohhoy2i
+                  - teo6lnhluzkbbg
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    NotReadyError:
+      description: The server is not ready to handle the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            IngestionNotCompletedResponse:
+              $ref: '#/components/examples/IngestionNotCompletedApiProblemExample'
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
+  schemas:
+    MavenFailures:
+      type: object
+      description: The build and test failures of a Maven build. `null` if the build is not a Maven build.
+      nullable: true
+      properties:
+        buildFailures:
+          description: A list of build failures.
+          items:
+            $ref: '#/components/schemas/MavenBuildFailure'
+          type: array
+        testFailures:
+          description: A list of test failures. `null` if tests are not captured.
+          items:
+            $ref: '#/components/schemas/TestFailure'
+          type: array
+          nullable: true
+    BuildFailuresQuery:
+      allOf:
+      - $ref: '#/components/schemas/BuildModelQuery'
+      - type: object
+        properties:
+          maxFailures:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 100
+            description: The maximum number of failures to return for each failure list independently. This limit applies separately to the buildFailures and testFailures lists.
+    TestId:
+      type: object
+      description: Information required to uniquely identify a test.
+      required:
+      - workUnitName
+      - suiteName
+      properties:
+        workUnitName:
+          type: string
+          description: Work unit name that executed the test.
+        suiteName:
+          type: string
+          description: Suite name of the test, in most cases the class name.
+        testName:
+          type: string
+          description: Name of the test. `null` when the test is a suite.
+          nullable: true
+    NpmFailures:
+      type: object
+      description: The build and test failures of an npm build. `null` if the build is not an npm build.
+      nullable: true
+      properties:
+        buildFailures:
+          description: A list of build failures.
+          items:
+            $ref: '#/components/schemas/NpmBuildFailure'
+          type: array
+        testFailures:
+          description: A list of test failures. `null` if tests are not captured.
+          items:
+            $ref: '#/components/schemas/TestFailure'
+          type: array
+          nullable: true
+    TestFailure:
+      type: object
+      required:
+      - id
+      - message
+      properties:
+        id:
+          $ref: '#/components/schemas/TestId'
+        message:
+          type: string
+          description: Failure message.
+        stacktrace:
+          type: string
+          description: The failure stacktrace. `null` if there is no stacktrace available.
+          nullable: true
+    GradleBuildFailure:
+      type: object
+      required:
+      - header
+      - message
+      properties:
+        header:
+          type: string
+          description: Failure header.
+        message:
+          type: string
+          description: Failure message.
+        relevantLog:
+          type: string
+          description: Relevant console log. `null` if no relevant console log has been found.
+          nullable: true
+        location:
+          type: string
+          description: Failure location, which can be a build script or source file. `null` when the failure is not location aware.
+          nullable: true
+        taskPath:
+          type: string
+          description: The task path associated with this failure. `null` if no task is associated with the failure.
+          nullable: true
+        stacktrace:
+          type: string
+          description: The stacktrace of this failure. `null` if there is no stacktrace available.
+          nullable: true
+    MavenBuildFailure:
+      type: object
+      required:
+      - header
+      - message
+      properties:
+        header:
+          type: string
+          description: Failure header.
+        message:
+          type: string
+          description: Failure message.
+        relevantLog:
+          type: string
+          description: Relevant console log. `null` if no relevant console log has been found.
+          nullable: true
+        goalExecutionId:
+          type: string
+          description: The goal execution id associated with this failure. `null` if no goal execution is associated with the failure.
+          nullable: true
+        stacktrace:
+          type: string
+          description: The stacktrace of this failure. `null` if there is no stacktrace available.
+          nullable: true
+    FailureGroup:
+      type: object
+      description: 'A failure group.
+
+        '
+      required:
+      - type
+      - failureCount
+      - firstOccurrence
+      - lastOccurrence
+      - exampleFailure
+      - buildIds
+      properties:
+        type:
+          $ref: '#/components/schemas/FailureType'
+        failureCount:
+          type: integer
+          format: int64
+          description: The number of failures in this group.
+        firstOccurrence:
+          type: string
+          format: date-time
+          description: 'The timestamp of the first occurrence of this failure group.
+
+            This is the timestamp of the earliest failure that belongs to this group and therefore may be outside the time range of the query.
+
+            '
+        lastOccurrence:
+          type: string
+          format: date-time
+          description: 'The timestamp of the last occurrence of this failure group.
+
+            This is the timestamp of the latest failure that belongs to this group and therefore may be outside the time range of the query.
+
+            '
+        exampleFailure:
+          $ref: '#/components/schemas/Failure'
+        buildIds:
+          type: array
+          description: Build Scan IDs for builds that contain failures that belong to this failure group.
+          items:
+            type: string
+    BuildFailures:
+      type: object
+      description: 'The unified failures response for a build, containing build tool-specific failure information.
+
+        Each build tool (gradle, maven, npm) has its own nested object with failures if applicable for that build.
+
+        '
+      required:
+      - buildToolType
+      properties:
+        buildToolType:
+          type: string
+          description: The build tool type of the build.
+        gradle:
+          $ref: '#/components/schemas/GradleFailures'
+        maven:
+          $ref: '#/components/schemas/MavenFailures'
+        npm:
+          $ref: '#/components/schemas/NpmFailures'
+    Failure:
+      type: object
+      description: 'An individual failure instance.
+
+        '
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: The failure message.
+        relevantLog:
+          type: string
+          description: Relevant console log. `null` if no relevant console log has been found.
+          nullable: true
+    FailureGroupsQuery:
+      type: object
+      required:
+      - query
+      properties:
+        failureTypes:
+          type: array
+          description: Allows restricting the search to failure types. By default all failure types are considered.
+          default:
+          - build
+          - test
+          items:
+            $ref: '#/components/schemas/FailureType'
+        query:
+          type: string
+          description: 'A query for filtering the builds considered for failure groups, written in the Develocity advanced search query language.
+
+            The query must contain a restriction on `buildStartTime` to ensure the search is bounded in time.
+
+            See: https://gradle.com/help/advanced-search
+
+            '
+        maxFailureGroups:
+          description: The maximum number of failure groups to return.
+          type: integer
+          format: int32
+          default: 100
+          minimum: 1
+          maximum: 1000
+        maxBuildIdsPerGroup:
+          description: The maximum number of buildIds to return in a given FailureGroup.
+          type: integer
+          format: int32
+          default: 20
+          minimum: 1
+          maximum: 1000
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type: string
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+          nullable: true
+    FailureGroupsResponse:
+      type: object
+      description: A list of failure groups.
+      required:
+      - content
+      properties:
+        content:
+          type: array
+          description: A list of failure groups.
+          items:
+            $ref: '#/components/schemas/FailureGroup'
+    GradleFailures:
+      type: object
+      description: The build and test failures of a Gradle build. `null` if the build is not a Gradle build.
+      nullable: true
+      properties:
+        buildFailures:
+          description: A list of build failures.
+          items:
+            $ref: '#/components/schemas/GradleBuildFailure'
+          type: array
+        testFailures:
+          description: A list of test failures. `null` if tests are not captured.
+          items:
+            $ref: '#/components/schemas/TestFailure'
+          type: array
+          nullable: true
+    AvailabilityWaitTimeoutSecs:
+      type: integer
+      minimum: 0
+      description: The time in seconds the server should wait for ingestion before returning a wait timeout response.
+    BuildModelQuery:
+      type: object
+      properties:
+        availabilityWaitTimeoutSecs:
+          $ref: '#/components/schemas/AvailabilityWaitTimeoutSecs'
+    FailureType:
+      type: string
+      enum:
+      - build
+      - test
+    NpmBuildFailure:
+      type: object
+      required:
+      - header
+      - message
+      properties:
+        header:
+          type: string
+          description: Failure header.
+        message:
+          type: string
+          description: Failure message.
+        relevantLog:
+          type: string
+          description: Relevant console log. `null` if no relevant console log has been found.
+          nullable: true
+        processName:
+          type: string
+          description: The full process name (executable name and parameters) for which this failure was detected.
+          nullable: false
+        stacktrace:
+          type: string
+          description: The stacktrace of this failure. `null` if there is no stacktrace available.
+          nullable: true
+  examples:
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
+    IngestionNotCompletedApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:build-processing-incomplete
+        title: Build processing is incomplete.
+        detail: 'The data of build 9r4d13f0r3v3r is not yet available for viewing. Please try again later.
+
+          '
+        status: 503
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+  securitySchemes:
+    DevelocityAccessKeyOrToken:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <<Develocity Access Key or Token>>
+      description: "All requests require a Develocity access key or token as a bearer token. \nGiven an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required header is `Authorization: Bearer l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`.\n\nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control) for guidance on how to provision access keys or tokens and check user permissions.\n"

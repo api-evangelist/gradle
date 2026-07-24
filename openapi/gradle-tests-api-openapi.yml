@@ -1,0 +1,834 @@
+openapi: 3.0.3
+info:
+  title: Develocity Auth Tests API
+  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
+
+    '
+  version: 2026.2.0
+  license:
+    name: Develocity License
+    url: https://gradle.com/help/legal-gradle-software-license-agreement
+  termsOfService: https://gradle.com/help/legal-terms-of-use
+  contact:
+    name: Gradle
+    url: https://gradle.com
+  x-logo:
+    url: https://assets.gradle.com/logo/develocity-logo.svg
+    altText: Develocity
+servers:
+- url: https://develocity.example.com
+  description: Your Develocity instance.
+security:
+- DevelocityAccessKeyOrToken: []
+tags:
+- name: Tests
+  description: "Endpoints related to retrieving details of tests of the Develocity instance. \nTo access these endpoints the user requires the `Access build data via the API` permission.\nThe Develocity installation also needs to have the Test Failure Analytics feature enabled.\n"
+paths:
+  /api/tests/build/{id}:
+    description: 'The tests build endpoint is used to retrieve the test execution information for a specific build.
+
+      '
+    get:
+      operationId: GetBuildTests
+      summary: Get tests executed in the given build.
+      description: Retrieves summary of executed tests and containers, as well as the detailed information about each test execution in each invoked test work unit.
+      tags:
+      - Tests
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The Build Scan ID.
+      - in: query
+        name: query
+        explode: true
+        required: true
+        description: The query parameters used to retrieve test execution data for a build.
+        schema:
+          $ref: '#/components/schemas/BuildTestsQuery'
+      responses:
+        '200':
+          description: Test executions in the given build.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildTestsResponse'
+              example:
+                summary:
+                  duration:
+                    total: 150
+                    serial: 150
+                  testCasesOutcomeDistribution:
+                    total: 3
+                    failed: 1
+                    passed: 1
+                    flaky: 1
+                    skipped: 0
+                    notSelected: 0
+                  testContainersOutcomeDistribution:
+                    total: 2
+                    failed: 0
+                    passed: 2
+                    flaky: 0
+                    skipped: 0
+                    notSelected: 0
+                workUnits:
+                - name: :test
+                  duration:
+                    total: 150
+                    own: 50
+                    serial: 150
+                  outcome: failed
+                  tests:
+                  - name: JUnit Jupiter
+                    duration:
+                      total: 100
+                      own: 50
+                      serial: 100
+                    outcome:
+                      overall: failed
+                      own: passed
+                      children: failed
+                    executions:
+                    - duration:
+                        total: 60
+                        own: 20
+                        serial: 60
+                      outcome:
+                        overall: failed
+                        own: passed
+                        children: failed
+                    - duration:
+                        total: 40
+                        own: 10
+                        serial: 40
+                      outcome:
+                        overall: failed
+                        own: passed
+                        children: failed
+                    children:
+                    - name: org.example.TestContainer
+                      duration:
+                        total: 70
+                        own: 0
+                        serial: 70
+                      outcome:
+                        overall: failed
+                        own: passed
+                        children: failed
+                      executions:
+                      - duration:
+                          total: 40
+                          own: 0
+                          serial: 40
+                        outcome:
+                          overall: failed
+                          own: passed
+                          children: failed
+                      - duration:
+                          total: 30
+                          own: 0
+                          serial: 30
+                        outcome:
+                          overall: failed
+                          own: passed
+                          children: failed
+                      children:
+                      - name: successfulTest
+                        duration:
+                          total: 10
+                        outcome:
+                          overall: passed
+                        executions:
+                        - duration:
+                            total: 10
+                          outcome:
+                            overall: passed
+                        children: []
+                      - name: failingTest
+                        duration:
+                          total: 20
+                        outcome:
+                          overall: failed
+                        executions:
+                        - duration:
+                            total: 10
+                          outcome:
+                            overall: failed
+                        - duration:
+                            total: 10
+                          outcome:
+                            overall: failed
+                        children: []
+                      - name: flakyTest
+                        duration:
+                          total: 40
+                        outcome:
+                          overall: flaky
+                        executions:
+                        - duration:
+                            total: 20
+                          outcome:
+                            overall: failed
+                        - duration:
+                            total: 20
+                          outcome:
+                            overall: passed
+                        children: []
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+  /api/tests/cases:
+    description: "The test cases endpoint is used to retrieve the list of test cases that have at least one instance of the given test outcomes in the given timeframe. \nIt returns information about the test cases inside the given container.\n"
+    get:
+      operationId: GetTestCases
+      summary: Get a list of test cases.
+      description: Retrieves the list of test cases of a single container.
+      tags:
+      - Tests
+      parameters:
+      - in: query
+        name: query
+        explode: true
+        required: true
+        description: The query parameters used to retrieve the list of test cases.
+        schema:
+          $ref: '#/components/schemas/TestCasesQuery'
+      responses:
+        '200':
+          description: A list of test cases.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestsResponse'
+              example:
+                content:
+                - name: testCase1
+                  workUnits:
+                  - gradle:
+                      projectName: acme
+                      taskPath: :test
+                  outcomeDistribution:
+                    passed: 1
+                    failed: 2
+                    skipped: 3
+                    flaky: 4
+                    notSelected: 5
+                    total: 15
+                  buildScanIdsByOutcome:
+                    passed:
+                    - ssfohatb6uw2u
+                    failed:
+                    - qegl4bohhoy2i
+                    - eo6lnhluzkbbg
+                    skipped:
+                    - 6jsgeu7deyisu
+                    - nyg4nlhts6ez2
+                    - 5qpe6oluq6nkm
+                    flaky:
+                    - milutmob6ayt6
+                    - es5izuj3d3euw
+                    - q7hrgly7txcoa
+                    - lo7xqd74pkepk
+                    notSelected:
+                    - q3cz4ajrspqe4
+                    - kpmkaegons4ls
+                    - t53u7u63j35uq
+                    - wifudssaudxyo
+                    - k6cgdkvi574u4
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+  /api/tests/containers:
+    description: 'The tests endpoint is used to retrieve the list of tests that have at least one instance of the given test outcomes in the given timeframe.
+
+      It works on test containers, such as test classes, and not individual tests cases.
+
+      '
+    get:
+      operationId: GetTestContainers
+      summary: Get a list of test containers.
+      description: Returns the list of test containers.
+      tags:
+      - Tests
+      parameters:
+      - in: query
+        name: query
+        explode: true
+        required: true
+        description: The query parameters used to retrieve the list of test containers.
+        schema:
+          $ref: '#/components/schemas/TestContainersQuery'
+      responses:
+        '200':
+          description: A list of test containers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestsResponse'
+              example:
+                content:
+                - name: com.example.Test
+                  workUnits:
+                  - gradle:
+                      projectName: acme
+                      taskPath: :test
+                  outcomeDistribution:
+                    passed: 1
+                    failed: 2
+                    skipped: 3
+                    flaky: 4
+                    notSelected: 5
+                    total: 15
+                  buildScanIdsByOutcome:
+                    passed:
+                    - ssfohatb6uw2u
+                    failed:
+                    - qegl4bohhoy2i
+                    - eo6lnhluzkbbg
+                    skipped:
+                    - 6jsgeu7deyisu
+                    - nyg4nlhts6ez2
+                    - 5qpe6oluq6nkm
+                    flaky:
+                    - milutmob6ayt6
+                    - es5izuj3d3euw
+                    - q7hrgly7txcoa
+                    - lo7xqd74pkepk
+                    notSelected:
+                    - q3cz4ajrspqe4
+                    - kpmkaegons4ls
+                    - t53u7u63j35uq
+                    - wifudssaudxyo
+                    - k6cgdkvi574u4
+                - name: com.example.MavenTest
+                  workUnits:
+                  - maven:
+                      groupId: com.example
+                      artifactId: maven-test
+                      goalName: surefire:test
+                      executionId: default-execution
+                  outcomeDistribution:
+                    passed: 0
+                    failed: 0
+                    skipped: 0
+                    flaky: 1
+                    notSelected: 0
+                    total: 1
+                  buildScanIdsByOutcome:
+                    passed: []
+                    failed: []
+                    skipped: []
+                    flaky:
+                    - rvta3gxepioxu
+                    notSelected: []
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
+  schemas:
+    TestWorkUnitOutcome:
+      type: string
+      enum:
+      - passed
+      - failed
+      - skipped
+      - flaky
+      - timedOut
+    NpmWorkUnit:
+      type: object
+      description: An npm work unit.
+      required:
+      - projectName
+      - testRunner
+      properties:
+        projectName:
+          type: string
+          description: The name of the npm project.
+        testRunner:
+          type: string
+          description: The name of the test runner.
+    MavenWorkUnit:
+      type: object
+      description: A Maven work unit.
+      required:
+      - groupId
+      - artifactId
+      - goalName
+      - executionId
+      properties:
+        groupId:
+          type: string
+          description: The Maven groupId.
+        artifactId:
+          type: string
+          description: The Maven artifactId.
+        goalName:
+          type: string
+          description: The Maven goal name.
+        executionId:
+          type: string
+          description: The execution id of the goal.
+    SbtWorkUnit:
+      type: object
+      description: An sbt work unit.
+      required:
+      - taskName
+      properties:
+        scope:
+          type: object
+          description: The sbt scope.
+          properties:
+            project:
+              type: string
+              description: The name of the sbt scope project.
+            configuration:
+              type: string
+              description: The name of the sbt scope configuration.
+            task:
+              type: string
+              description: The name of the sbt scope task.
+        taskName:
+          type: string
+          description: The name of the sbt task.
+    BuildTestsQuery:
+      x-all-of-name: BuildTestsQuery
+      type: object
+      properties:
+        workUnit:
+          type: string
+          description: 'The name of the test work unit to return test results for. If not specified, all work units are included.
+
+            May contain wildcards: an asterisk character ("*") matches an arbitrary number of characters.
+
+            '
+        testName:
+          type: string
+          description: "The name of the test case or container to return test results for. If not specified, all tests and containers are included. \nMay contain wildcards: an asterisk character (\"*\") matches an arbitrary number of characters.\nThe first matching test and all of its children are returned regardless of whether their names match the query or not.\n"
+        testOutcomes:
+          type: array
+          description: "Allows restricting the search to tests that had the given outcome. If not specified or empty, all tests and containers are included.\nIf the field contains multiple outcome values, then tests and containers having any of the provided outcomes are returned.\nFor test cases, the overall outcome is inspected. For test containers, their own outcome is inspected.\nThe filter is applied to the leaves of the test hierarchy first. The deepest test or container with matching outcomes is returned \ntogether with all of its parents, regardless of whether their outcomes match the query or not.\n"
+          items:
+            $ref: '#/components/schemas/TestOutcome'
+    TestOutcomeDistribution:
+      type: object
+      description: A distribution of outcomes.
+      required:
+      - passed
+      - failed
+      - skipped
+      - flaky
+      - notSelected
+      - total
+      properties:
+        passed:
+          type: integer
+          description: The number of 'Passed' outcomes.
+        failed:
+          type: integer
+          description: The number of 'Failed' outcomes.
+        skipped:
+          type: integer
+          description: The number of 'Skipped' outcomes.
+        flaky:
+          type: integer
+          description: The number of 'Flaky' outcomes.
+        notSelected:
+          type: integer
+          description: The number of 'Not Selected' outcomes.
+        total:
+          type: integer
+          description: The total number of outcomes.
+    BazelWorkUnit:
+      type: object
+      description: A Bazel work unit.
+      required:
+      - packageName
+      - targetName
+      properties:
+        packageName:
+          type: string
+          description: The name of the Bazel package.
+        targetName:
+          type: string
+          description: The name of the Bazel target.
+    BuildTestOrContainerOutcome:
+      type: object
+      required:
+      - overall
+      properties:
+        overall:
+          $ref: '#/components/schemas/TestOutcome'
+        own:
+          $ref: '#/components/schemas/TestOutcome'
+        children:
+          $ref: '#/components/schemas/TestOutcome'
+    GradleWorkUnit:
+      type: object
+      description: A Gradle work unit.
+      required:
+      - projectName
+      - taskPath
+      properties:
+        projectName:
+          type: string
+          description: The name of the Gradle project.
+        taskPath:
+          type: string
+          description: The path of the Gradle task.
+    TestOrContainer:
+      type: object
+      description: A test or test container.
+      required:
+      - name
+      - outcomeDistribution
+      properties:
+        name:
+          type: string
+          description: The name of the test or test container.
+        workUnits:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/TestWorkUnit'
+        outcomeDistribution:
+          $ref: '#/components/schemas/TestOutcomeDistribution'
+        buildScanIdsByOutcome:
+          $ref: '#/components/schemas/BuildScanIdsByOutcome'
+    TestOutcome:
+      type: string
+      enum:
+      - passed
+      - failed
+      - skipped
+      - flaky
+      - notSelected
+    TestCasesQuery:
+      x-all-of-name: TestCasesQuery
+      type: object
+      required:
+      - container
+      - testOutcomes
+      - query
+      properties:
+        container:
+          type: string
+          description: Must be the fully qualified name of the test container to query. May not contain any wildcards.
+        testOutcomes:
+          type: array
+          description: Allows restricting the search to tests that had at least one instance of the given outcome.
+          items:
+            $ref: '#/components/schemas/TestOutcome'
+          minItems: 1
+        limit:
+          description: The maximum number of test outcomes to query.
+          type: integer
+          format: int32
+          default: 100
+          minimum: 1
+          maximum: 1000
+        query:
+          type: string
+          description: 'A query for filtering tests, written in the Develocity advanced search query language
+
+            See: https://gradle.com/help/advanced-search
+
+            '
+        include:
+          type: array
+          description: Controls which optional fields are included in the response.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/TestIncludeFields'
+    BuildTestOrContainer:
+      type: object
+      required:
+      - name
+      - duration
+      - outcome
+      - executions
+      - children
+      properties:
+        name:
+          type: string
+          description: The name of the test or test container.
+        duration:
+          $ref: '#/components/schemas/BuildTestOrContainerDuration'
+        outcome:
+          $ref: '#/components/schemas/BuildTestOrContainerOutcome'
+        executions:
+          type: array
+          description: A summary of individual test executions. A test can run multiple times in a build if test retries are configured.
+          items:
+            $ref: '#/components/schemas/BuildTestOrContainerExecution'
+        children:
+          type: array
+          description: A list of child test containers or test cases that were executed in this test container.
+          items:
+            $ref: '#/components/schemas/BuildTestOrContainer'
+    BuildTestOrContainerDuration:
+      type: object
+      description: Various types of test durations captured for a given test.
+      properties:
+        total:
+          type: integer
+          format: int64
+          description: 'The elapsed wall-clock time in milliseconds when the test or container is running.
+
+            May be absent if the duration of the current test container or case is unknown. For example, the duration of forked suites is not captured in sbt.
+
+            '
+        own:
+          type: integer
+          format: int64
+          description: "The time in milliseconds spent in the setup or cleanup of test containers. \nAbsent for test cases.\n"
+        serial:
+          type: integer
+          format: int64
+          description: "The sum of the time spent in milliseconds if tests and containers were running sequentially. \nAbsent for test cases.\n"
+    BuildTestsSummary:
+      type: object
+      description: A summary of test execution data for a build.
+      required:
+      - duration
+      - testCasesOutcomeDistribution
+      - testContainersOutcomeDistribution
+      properties:
+        duration:
+          type: object
+          required:
+          - total
+          properties:
+            total:
+              type: integer
+              format: int64
+              description: The sum of the elapsed wall-clock time in milliseconds of work units with tests.
+            serial:
+              type: integer
+              format: int64
+              description: "The sum of the time in milliseconds spent if tests and containers were running sequentially. \nMay be absent if the duration of test containers of cases is unknown (for example, the duration of forked suites is not captured in sbt).\n"
+        testCasesOutcomeDistribution:
+          $ref: '#/components/schemas/TestOutcomeDistribution'
+        testContainersOutcomeDistribution:
+          $ref: '#/components/schemas/TestOutcomeDistribution'
+    BuildTestWorkUnit:
+      type: object
+      description: A work unit that ran tests in a build.
+      required:
+      - name
+      - duration
+      - outcome
+      - tests
+      properties:
+        name:
+          type: string
+          description: The name of the work unit.
+        duration:
+          $ref: '#/components/schemas/BuildTestOrContainerDuration'
+        outcome:
+          $ref: '#/components/schemas/TestWorkUnitOutcome'
+        tests:
+          type: array
+          description: A list of test containers or test cases that were executed in this work unit.
+          items:
+            $ref: '#/components/schemas/BuildTestOrContainer'
+    BuildScanIdsByOutcome:
+      type: object
+      description: Build Scan IDs for builds that contain tests with outcomes.
+      required:
+      - passed
+      - failed
+      - skipped
+      - flaky
+      - notSelected
+      properties:
+        passed:
+          type: array
+          description: The BuildIds of 'Passed' outcomes.
+          items:
+            type: string
+        failed:
+          type: array
+          description: The Build Scan IDs of 'Failed' outcomes.
+          items:
+            type: string
+        skipped:
+          type: array
+          description: The BuildIds of 'Skipped' outcomes.
+          items:
+            type: string
+        flaky:
+          type: array
+          description: The BuildIds of 'Flaky' outcomes.
+          items:
+            type: string
+        notSelected:
+          type: array
+          description: The BuildIds of 'Not Selected' outcomes.
+          items:
+            type: string
+    TestWorkUnit:
+      type: object
+      description: 'Contains a work unit.
+
+
+        Only one of the properties is set, representing the build tool used for the build.
+
+        '
+      minProperties: 1
+      maxProperties: 1
+      properties:
+        bazel:
+          $ref: '#/components/schemas/BazelWorkUnit'
+        gradle:
+          $ref: '#/components/schemas/GradleWorkUnit'
+        maven:
+          $ref: '#/components/schemas/MavenWorkUnit'
+        npm:
+          $ref: '#/components/schemas/NpmWorkUnit'
+        sbt:
+          $ref: '#/components/schemas/SbtWorkUnit'
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type: string
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+          nullable: true
+    BuildTestsResponse:
+      type: object
+      description: Test execution data for a build.
+      required:
+      - summary
+      - workUnits
+      properties:
+        summary:
+          $ref: '#/components/schemas/BuildTestsSummary'
+        workUnits:
+          type: array
+          description: A list of test work units that were executed in the build.
+          items:
+            $ref: '#/components/schemas/BuildTestWorkUnit'
+    BuildTestOrContainerExecution:
+      type: object
+      required:
+      - duration
+      - outcome
+      properties:
+        duration:
+          $ref: '#/components/schemas/BuildTestOrContainerDuration'
+        outcome:
+          $ref: '#/components/schemas/BuildTestOrContainerOutcome'
+    TestsResponse:
+      type: object
+      description: A list of test containers or test cases.
+      required:
+      - content
+      properties:
+        content:
+          type: array
+          description: A list of test containers.
+          items:
+            $ref: '#/components/schemas/TestOrContainer'
+    TestContainersQuery:
+      type: object
+      required:
+      - testOutcomes
+      - query
+      properties:
+        container:
+          type: string
+          description: Allows restricting the search to parts of the test container hierarchy. You can use wildcards to match a specific subpackage.
+          default: '*'
+        testOutcomes:
+          type: array
+          description: Allows restricting the search to tests that had at least one instance of the given outcome.
+          items:
+            $ref: '#/components/schemas/TestOutcome'
+          minItems: 1
+        query:
+          type: string
+          description: 'A query for filtering tests, written in the Develocity advanced search query language
+
+            See: https://gradle.com/help/advanced-search
+
+            '
+        include:
+          type: array
+          description: Controls which optional fields are included in the response.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/TestIncludeFields'
+    TestIncludeFields:
+      type: string
+      enum:
+      - buildScanIds
+      - workUnits
+      x-enum-varnames:
+      - BUILD_SCAN_IDS
+      - WORK_UNITS
+  examples:
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
+  securitySchemes:
+    DevelocityAccessKeyOrToken:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <<Develocity Access Key or Token>>
+      description: "All requests require a Develocity access key or token as a bearer token. \nGiven an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required header is `Authorization: Bearer l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`.\n\nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control) for guidance on how to provision access keys or tokens and check user permissions.\n"

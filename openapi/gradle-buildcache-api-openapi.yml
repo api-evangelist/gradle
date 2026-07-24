@@ -1,0 +1,283 @@
+openapi: 3.0.3
+info:
+  title: Develocity Auth BuildCache API
+  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
+
+    '
+  version: 2026.2.0
+  license:
+    name: Develocity License
+    url: https://gradle.com/help/legal-gradle-software-license-agreement
+  termsOfService: https://gradle.com/help/legal-terms-of-use
+  contact:
+    name: Gradle
+    url: https://gradle.com
+  x-logo:
+    url: https://assets.gradle.com/logo/develocity-logo.svg
+    altText: Develocity
+servers:
+- url: https://develocity.example.com
+  description: Your Develocity instance.
+security:
+- DevelocityAccessKeyOrToken: []
+tags:
+- name: BuildCache
+  x-displayName: Build Cache
+  description: 'Endpoints related to configuring the Build Cache nodes of the Develocity instance.
+
+    To access these endpoints the user requires the `Configure Build Caching` permission.
+
+    '
+paths:
+  /api/build-cache/nodes/{name}:
+    parameters:
+    - in: path
+      name: name
+      schema:
+        type: string
+      required: true
+      description: The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name.
+    get:
+      operationId: GetBuildCacheNode
+      summary: View the configuration of a Build Cache Node.
+      description: View the enablement status and replication configuration of a Build Cache Node.
+      tags:
+      - BuildCache
+      responses:
+        '200':
+          description: The configuration of a Build Cache Node.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeConfiguration'
+              example:
+                enabled: false
+                replication:
+                  source: parent-node-1
+                  preemptive: true
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+    put:
+      operationId: CreateOrUpdateBuildCacheNode
+      summary: Create or update a Build Cache Node.
+      description: 'Create a new Build Cache Node in Develocity or update the configuration of an existing one.
+
+        The Built-in Build Cache Node cannot be named as the target of this operation.
+
+        '
+      tags:
+      - BuildCache
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NodeConfiguration'
+            example:
+              enabled: false
+              replication:
+                source: parent-node-1
+                preemptive: true
+      responses:
+        '200':
+          description: The name referenced an existing Build Cache Node and that Build Cache Node’s configuration was updated successfully.
+        '201':
+          description: A new Build Cache Node was created with the configuration specified in the request.
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+  /api/build-cache/nodes/{name}/purge:
+    parameters:
+    - in: path
+      name: name
+      schema:
+        type: string
+      required: true
+      description: The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name.
+    post:
+      operationId: InitiatePurgeOfBuildCacheNode
+      summary: Deletes all entries from a Build Cache Node.
+      description: 'Triggers the deletion of all entries stored at the named Build Cache Node.
+
+        '
+      tags:
+      - BuildCache
+      responses:
+        '202':
+          description: Purging the Build Cache Node was successfully initiated.
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+        '503':
+          $ref: '#/components/responses/NodeNotSignedInError'
+  /api/build-cache/nodes/{name}/secret:
+    parameters:
+    - in: path
+      name: name
+      schema:
+        type: string
+      required: true
+      description: The name of the Build Cache Node.
+    post:
+      operationId: RegenerateSecretOfBuildCacheNode
+      summary: Regenerate the secret of a Build Cache Node.
+      description: 'Regenerates the secret associated with the named Build Cache Node. The old secret expires immediately, causing the Build Cache Node to
+
+        disconnect from Develocity. The Built-in Build Cache Node cannot be named as the target of this operation.
+
+        '
+      tags:
+      - BuildCache
+      responses:
+        '200':
+          description: The name referenced an existing Build Cache Node and that Build Cache Node's secret was regenerated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeySecretPair'
+              example:
+                key: cvzxztkqkqxzc3vcruabpcr264
+                secret: e5ag76yp6abcc5jbxusboca313
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  schemas:
+    ReplicationConfiguration:
+      description: Cached data replication configuration description. May be `null` if replication is not configured.
+      type: object
+      nullable: true
+      required:
+      - source
+      - preemptive
+      properties:
+        source:
+          type: string
+          description: The name of the Build Cache Node which is the source of data.
+        preemptive:
+          type: boolean
+          description: Indicates if preemptive replication is enabled from the source.
+    NodeConfiguration:
+      description: A Build Cache Node configuration description.
+      type: object
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if the Build Cache Node is enabled.
+        replication:
+          $ref: '#/components/schemas/ReplicationConfiguration'
+    KeySecretPair:
+      description: A Build Cache Node key and secret pair.
+      type: object
+      required:
+      - key
+      - secret
+      properties:
+        key:
+          type: string
+          description: A unique identifier for the Build Cache Node in Develocity.
+        secret:
+          type: string
+          description: The secret associated with the Build Cache Node.
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type: string
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+          nullable: true
+  responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    NodeNotSignedInError:
+      description: The node was not signed in with Develocity.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NodeNotSignedInResponse:
+              $ref: '#/components/examples/NodeNotSignedInProblemExample'
+  examples:
+    NodeNotSignedInProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:node-not-signed-in
+        title: Node with name not-signed-in-node1 must be signed-in before this operation can be performed.
+        status: 503
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+  securitySchemes:
+    DevelocityAccessKeyOrToken:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <<Develocity Access Key or Token>>
+      description: "All requests require a Develocity access key or token as a bearer token. \nGiven an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required header is `Authorization: Bearer l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`.\n\nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control) for guidance on how to provision access keys or tokens and check user permissions.\n"

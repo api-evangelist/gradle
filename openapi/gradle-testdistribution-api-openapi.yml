@@ -1,0 +1,750 @@
+openapi: 3.0.3
+info:
+  title: Develocity Auth TestDistribution API
+  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
+
+    '
+  version: 2026.2.0
+  license:
+    name: Develocity License
+    url: https://gradle.com/help/legal-gradle-software-license-agreement
+  termsOfService: https://gradle.com/help/legal-terms-of-use
+  contact:
+    name: Gradle
+    url: https://gradle.com
+  x-logo:
+    url: https://assets.gradle.com/logo/develocity-logo.svg
+    altText: Develocity
+servers:
+- url: https://develocity.example.com
+  description: Your Develocity instance.
+security:
+- DevelocityAccessKeyOrToken: []
+tags:
+- name: TestDistribution
+  x-displayName: Test Distribution
+  description: 'Endpoints related to the management of Test Distribution resources.
+
+    To access these endpoints the user requires the `Admin` permission.
+
+    '
+paths:
+  /api/test-distribution/agent-pools:
+    get:
+      operationId: ListTestDistributionAgentPools
+      summary: Lists Agent Pools.
+      description: Returns a list of all Agent Pools.
+      tags:
+      - TestDistribution
+      responses:
+        '200':
+          description: The response contains a listing of all Agent Pools.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolPage'
+              example:
+                content:
+                - id: m4yfaq4a
+                  name: abc-agents-pool
+                  minimumSize: 10
+                  maximumSize: 20
+                  capabilities:
+                  - os=linux
+                  - jdk=11
+                  - team-abc
+                  orderIndex: 1
+                  restrictAccessToProjectGroups: false
+                  projectGroupIds: []
+                - id: dwc4whvi
+                  name: def-agents-pool
+                  minimumSize: 0
+                  maximumSize: 10
+                  capabilities:
+                  - os=windows
+                  - jdk=11
+                  orderIndex: 2
+                  restrictAccessToProjectGroups: true
+                  projectGroupIds:
+                  - project-group-a
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+    post:
+      operationId: CreateTestDistributionAgentPool
+      summary: Create an Agent Pool.
+      description: 'Create a new Agent Pool in Develocity.
+
+        The orderIndex element is optional and can be used to specify the priority order in which the Agent Pool is considered.
+
+        When not specified, the Agent Pool will be added last.
+
+        When specified, the Agent Pool will be added at the specified index and all other Agent Pools will be moved down.
+
+        If the specified index is out of bounds, the Agent Pool will be added last with the orderIndex adjusted accordingly.
+
+        '
+      tags:
+      - TestDistribution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestDistributionAgentPoolConfiguration'
+            example:
+              name: abc-agents-pool
+              minimumSize: 10
+              maximumSize: 20
+              capabilities:
+              - os=linux
+              - jdk=11
+              - team-abc
+              orderIndex: 1
+              restrictAccessToProjectGroups: false
+              projectGroupIds: []
+      responses:
+        '200':
+          description: A new Agent Pool was created with the configuration specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolConfigurationWithId'
+              example:
+                id: m4yfaq4a
+                name: abc-agents-pool
+                minimumSize: 10
+                maximumSize: 20
+                capabilities:
+                - os=linux
+                - jdk=11
+                - team-abc
+                orderIndex: 1
+                restrictAccessToProjectGroups: false
+                projectGroupIds: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+  /api/test-distribution/agent-pools/{poolId}:
+    parameters:
+    - in: path
+      name: poolId
+      example: m4yfaq4a
+      schema:
+        $ref: '#/components/schemas/TestDistributionAgentPoolId'
+      required: true
+      description: The ID of the pool to view.
+    get:
+      operationId: GetTestDistributionAgentPool
+      summary: View the properties of an Agent Pool
+      description: View the identifier, capabilities and size of an Agent Pool.
+      tags:
+      - TestDistribution
+      responses:
+        '200':
+          description: The poolId referenced an existing Agent Pool whose configuration is described in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolConfigurationWithId'
+              example:
+                id: m4yfaq4a
+                name: abc-agents-pool
+                minimumSize: 10
+                maximumSize: 20
+                capabilities:
+                - os=linux
+                - jdk=11
+                - team-abc
+                orderIndex: 1
+                restrictAccessToProjectGroups: false
+                projectGroupIds: []
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+    put:
+      operationId: CreateOrUpdateTestDistributionAgentPool
+      summary: Create or update an Agent Pool.
+      description: 'Create a new Agent Pool in Develocity or update the configuration of an existing one.
+
+        The orderIndex element is optional and can be used to specify the priority order in which the Agent Pool is considered.
+
+        When not specified, the Agent Pool will be either added last on creation, or will not change position on update.
+
+        When specified, the Agent Pool will be added at/moved to the specified index and all other Agent Pools will be moved down.
+
+        If the specified index is out of bounds, the Agent Pool will be added last with the orderIndex adjusted accordingly.
+
+        '
+      tags:
+      - TestDistribution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestDistributionAgentPoolConfiguration'
+            example:
+              name: abc-agents-pool
+              minimumSize: 10
+              maximumSize: 20
+              capabilities:
+              - os=linux
+              - jdk=11
+              - team-abc
+              orderIndex: 1
+              restrictAccessToProjectGroups: false
+              projectGroupIds: []
+      responses:
+        '200':
+          description: The Agent Pool was created or its configuration was updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolConfigurationWithId'
+              example:
+                id: m4yfaq4a
+                name: abc-agents-pool
+                minimumSize: 10
+                maximumSize: 20
+                capabilities:
+                - os=linux
+                - jdk=11
+                - team-abc
+                orderIndex: 1
+                restrictAccessToProjectGroups: false
+                projectGroupIds: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+    delete:
+      operationId: DeleteTestDistributionAgentPool
+      summary: Delete an Agent Pool.
+      description: Delete an existing Agent Pool.
+      tags:
+      - TestDistribution
+      responses:
+        '200':
+          description: The poolId referenced an existing Agent Pool and it was deleted.
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+  /api/test-distribution/agent-pools/{poolId}/registration-keys:
+    parameters:
+    - in: path
+      name: poolId
+      example: m4yfaq4a
+      schema:
+        $ref: '#/components/schemas/TestDistributionAgentPoolId'
+      required: true
+      description: The ID of the pool to view.
+    get:
+      operationId: ListTestDistributionAgentPoolRegistrationKeys
+      summary: Lists Test Distribution pool-specific agent registration keys.
+      description: Returns a list of all Test Distribution pool-specific agent registration key prefixes.
+      tags:
+      - TestDistribution
+      responses:
+        '200':
+          description: The response contains a listing of the requested type of (active or revoked) Test Distribution pool-specific agent registration key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKeyPrefixPage'
+              example:
+                content:
+                - keyPrefix: am3mbm5kamztbmrmygym5kamct
+                  createdAt: '2021-01-01T12:59:59Z'
+                  lastUsedAt: '2021-05-03T10:11:02Z'
+                  lastUsedBy: agent1.localhost
+                - keyPrefix: yw3zbwjtnwthbxp3ym6ybxlnew
+                  createdAt: '2021-04-20T13:21:43Z'
+                  revokedAt: '2022-10-12T11:22:33Z'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+    post:
+      operationId: GenerateTestDistributionAgentPoolRegistrationKey
+      summary: Generate a new Test Distribution pool-specific agent registration key.
+      description: Generate a new Test Distribution pool-specific agent registration key to connect agents and query the agent pool API.
+      tags:
+      - TestDistribution
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKeyDescription'
+            example:
+              description: Created by user-x for testing
+      responses:
+        '200':
+          description: A new registration key was successfully generated and contained in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKey'
+              example:
+                key: 46rhyue2hltfwcx36qw7gad74lar4f2clb6a4qo5a433zzx7aqwq
+                description: Created by user-x for testing
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+  /api/test-distribution/agent-pools/{poolId}/registration-keys/{keyPrefix}:
+    parameters:
+    - in: path
+      name: poolId
+      example: m4yfaq4a
+      schema:
+        $ref: '#/components/schemas/TestDistributionAgentPoolId'
+      required: true
+      description: The ID of the pool to view.
+    - in: path
+      name: keyPrefix
+      example: riux3fkajs6ivtajxbrunelywk
+      schema:
+        type: string
+        minLength: 26
+        maxLength: 26
+        pattern: ^[a-z2-7]{26}$
+      required: true
+      description: The prefix of the Test Distribution pool-specific agent registration key.
+    get:
+      operationId: GetTestDistributionAgentPoolRegistrationKey
+      summary: Get a Test Distribution pool-specific agent registration keyPrefix information.
+      description: Returns information about a Test Distribution pool-specific agent registration keyPrefix.
+      tags:
+      - TestDistribution
+      responses:
+        '200':
+          description: The response contains information about the requested Test Distribution pool-specific agent registration keyPrefix.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKeyPrefix'
+              example:
+                keyPrefix: am3mbm5kamztbmrmygym5kamct
+                description: Created by user-x for testing
+                createdAt: '2021-01-01T12:59:59Z'
+                lastUsedAt: '2021-05-03T10:11:02Z'
+                lastUsedBy: agent1.localhost
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+    put:
+      operationId: InsertTestDistributionAgentPoolRegistrationKey
+      summary: Insert a specific Test Distribution pool-specific agent registration key.
+      description: 'Inserts a specific Test Distribution pool-specific agent registration key to connect agents and query the agent pool API.
+
+        If a key with the same prefix but different key already exists (regardless of which pool it belongs to), it will return 400.
+
+        '
+      tags:
+      - TestDistribution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKey'
+            example:
+              key: 46rhyue2hltfwcx36qw7gad74lar4f2clb6a4qo5a433zzx7aqwq
+              description: Created by user-x for testing
+      responses:
+        '200':
+          description: The registration key was successfully inserted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKeyPrefix'
+              example:
+                keyPrefix: am3mbm5kamztbmrmygym5kamct
+                description: Created by user-x for testing
+                createdAt: '2021-01-01T12:59:59Z'
+                lastUsedAt: '2021-05-03T10:11:02Z'
+                lastUsedBy: agent1.localhost
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+    delete:
+      operationId: RevokeTestDistributionAgentPoolRegistrationKey
+      summary: Revoke a Test Distribution pool-specific agent registration key.
+      description: 'Revoke the Test Distribution pool-specific agent registration key for the given prefix which uniquely identifies a Test Distribution pool-specific agent registration key.
+
+        A revoked key can no longer be used to connect agents, but it will still be queryable and returned in the list.
+
+        '
+      tags:
+      - TestDistribution
+      responses:
+        '200':
+          description: The registration key was revoked successfully.
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+  /api/test-distribution/agent-pools/{poolId}/status:
+    parameters:
+    - in: path
+      name: poolId
+      example: m4yfaq4a
+      schema:
+        $ref: '#/components/schemas/TestDistributionAgentPoolId'
+      required: true
+      description: The ID of the pool to view.
+    get:
+      operationId: GetTestDistributionAgentPoolStatus
+      summary: View the status of an Agent Pool
+      description: 'View the status of an Agent Pool, such as its current size.
+
+        To access this endpoint the user requires the `Test Distribution` permission.
+
+        '
+      tags:
+      - TestDistribution
+      responses:
+        '200':
+          description: The poolId referenced an existing Agent Pool whose status is described in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestDistributionAgentPoolStatus'
+              example:
+                id: m4yfaq4a
+                name: abc-agents-pool
+                minimumSize: 10
+                maximumSize: 20
+                connectedAgents: 15
+                idleAgents: 5
+                desiredAgents: 10
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/UnauthorizedOrNotFoundError'
+components:
+  examples:
+    ForbiddenUserExample:
+      value:
+        type: urn:gradle:enterprise:forbidden
+        title: Insufficient permissions
+        detail: User must have the Administer Projects permission to access this endpoint.
+        status: 403
+    CapabilityValidationProblemExample:
+      value:
+        type: urn:gradle:enterprise:validation
+        title: Invalid request parameters
+        detail: One or more capabilities have an invalid format.
+        status: 400
+  schemas:
+    TestDistributionAgentPoolId:
+      description: The unique identifier of the agent pool.
+      type: string
+      minLength: 8
+      maxLength: 8
+      pattern: ^[a-z2-7]{8}$
+    TestDistributionAgentPoolStatus:
+      description: The status of an agent pool.
+      type: object
+      required:
+      - id
+      - name
+      - minimumSize
+      - maximumSize
+      - connectedAgents
+      - idleAgents
+      - desiredAgents
+      properties:
+        id:
+          $ref: '#/components/schemas/TestDistributionAgentPoolId'
+        name:
+          type: string
+          description: The alias or display name of the agent pool.
+          minLength: 1
+        minimumSize:
+          type: integer
+          format: int32
+        maximumSize:
+          type: integer
+          format: int32
+        connectedAgents:
+          type: integer
+          format: int32
+        idleAgents:
+          type: integer
+          format: int32
+        desiredAgents:
+          type: integer
+          format: int32
+    TestDistributionAgentPoolConfigurationWithId:
+      description: An agent pool configuration.
+      type: object
+      required:
+      - id
+      - name
+      - minimumSize
+      - maximumSize
+      - capabilities
+      - orderIndex
+      properties:
+        id:
+          $ref: '#/components/schemas/TestDistributionAgentPoolId'
+        name:
+          type: string
+          description: The alias or display name of the agent pool.
+          minLength: 1
+          example: functional-test-agents
+        minimumSize:
+          type: integer
+          format: int32
+          minimum: 0
+        maximumSize:
+          type: integer
+          format: int32
+          minimum: 0
+        orderIndex:
+          description: The order in which the agent pool is considered for allocation. Lower values are considered first.
+          type: integer
+          format: int32
+          minimum: 0
+        capabilities:
+          type: array
+          items:
+            type: string
+            pattern: ^([-\w.]+)(?:=([-\w.]+))?$
+          example:
+          - jdk=17
+          - os=linux
+          - functional-test
+        restrictAccessToProjectGroups:
+          type: boolean
+          description: 'Controls whether this pool can be used by everyone, or only the assigned project groups.
+
+            A `true` value implies that `projectGroupIds` is present and has at least one entry.
+
+            Conversely, a `false` value implies that `projectGroupIds` is empty.
+
+            '
+          default: false
+        projectGroupIds:
+          type: array
+          description: 'Controls which project groups can use this pool.
+
+            If it is empty, then `restrictAccessToProjectGroups` must be `false`.
+
+            Conversely, if it has values then `restrictAccessToProjectGroups` must be `true`.
+
+            '
+          items:
+            type: string
+            pattern: ^[^\\s]{1,215}$
+            example: project-group-a
+    TestDistributionAgentPoolRegistrationKey:
+      description: A Test Distribution pool-specific agent registration key.
+      type: object
+      required:
+      - key
+      properties:
+        key:
+          type: string
+          minLength: 52
+          maxLength: 52
+          pattern: ^[a-z2-7]{52}$
+          description: The agent API key.
+        description:
+          type: string
+          maxLength: 100
+          description: Description of the registration key to help identify it later.
+          example: Used by xyz
+    TestDistributionAgentPoolRegistrationKeyPrefix:
+      description: A Test Distribution pool-specific agent registration key prefix.
+      type: object
+      required:
+      - keyPrefix
+      - createdAt
+      properties:
+        keyPrefix:
+          type: string
+          minLength: 26
+          maxLength: 26
+          pattern: ^[a-z2-7]{26}$
+          description: The registration key prefix.
+        description:
+          type: string
+          maxLength: 100
+          description: Description of the registration key to help identify it later.
+          example: Used by xyz
+        createdAt:
+          type: string
+          format: date-time
+          description: When the key was created
+        lastUsedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the key was last used
+        lastUsedBy:
+          type: string
+          nullable: true
+          description: Who used the key last
+        revokedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the key was revoked, a non-null value implies that the key is revoked and can no longer be used to authenticate.
+    TestDistributionAgentPoolConfiguration:
+      description: An agent pool configuration.
+      type: object
+      required:
+      - name
+      - minimumSize
+      - maximumSize
+      - capabilities
+      properties:
+        name:
+          type: string
+          description: The alias or display name of the agent pool.
+          minLength: 1
+          example: functional-test-agents
+        minimumSize:
+          type: integer
+          format: int32
+          minimum: 0
+        maximumSize:
+          type: integer
+          format: int32
+          minimum: 0
+        orderIndex:
+          description: The order in which the agent pool is considered for allocation. Lower values are considered first.
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 0
+        capabilities:
+          type: array
+          items:
+            type: string
+            pattern: ^([-\w.]+)(?:=([-\w.]+))?$
+          example:
+          - jdk=17
+          - os=linux
+          - functional-test
+        restrictAccessToProjectGroups:
+          type: boolean
+          description: 'Controls whether this pool can be used by everyone, or only the assigned project groups.
+
+            A `true` value implies that `projectGroupIds` is present and has at least one entry.
+
+            Conversely, a `false` value implies that `projectGroupIds` is empty.
+
+            '
+          default: false
+        projectGroupIds:
+          type: array
+          description: 'Controls which project groups can use this pool.
+
+            If it is empty, then `restrictAccessToProjectGroups` must be `false`.
+
+            Conversely, if it has values then `restrictAccessToProjectGroups` must be `true`.
+
+            '
+          items:
+            type: string
+            pattern: ^[^\\s]{1,215}$
+            example: project-group-a
+    TestDistributionAgentPoolRegistrationKeyPrefixPage:
+      description: A list of Test Distribution pool-specific agent registration key prefixes.
+      type: object
+      required:
+      - content
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKeyPrefix'
+    TestDistributionAgentPoolPage:
+      description: A list of agent pools.
+      type: object
+      required:
+      - content
+      properties:
+        content:
+          type: array
+          description: A list of agent pool IDs.
+          items:
+            $ref: '#/components/schemas/TestDistributionAgentPoolConfigurationWithId'
+    TestDistributionAgentPoolRegistrationKeyDescription:
+      description: Optional description of a Test Distribution pool-specific agent registration key.
+      type: object
+      properties:
+        description:
+          type: string
+          maxLength: 100
+          description: Description of the registration key to help identify it later.
+          example: Used by xyz
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type: string
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+          nullable: true
+  responses:
+    UnauthorizedOrNotFoundError:
+      description: No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.
+    BadRequest:
+      description: The request body is malformed or contains invalid values for at least one of the properties.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            CapabilityValidationProblemResponse:
+              $ref: '#/components/examples/CapabilityValidationProblemExample'
+    ForbiddenError:
+      description: The authenticated user has insufficient permissions.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            ForbiddenUserResponse:
+              $ref: '#/components/examples/ForbiddenUserExample'
+  securitySchemes:
+    DevelocityAccessKeyOrToken:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <<Develocity Access Key or Token>>
+      description: "All requests require a Develocity access key or token as a bearer token. \nGiven an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required header is `Authorization: Bearer l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`.\n\nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control) for guidance on how to provision access keys or tokens and check user permissions.\n"

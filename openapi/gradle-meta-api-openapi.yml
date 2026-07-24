@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Develocity Auth Meta API
+  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
+
+    '
+  version: 2026.2.0
+  license:
+    name: Develocity License
+    url: https://gradle.com/help/legal-gradle-software-license-agreement
+  termsOfService: https://gradle.com/help/legal-terms-of-use
+  contact:
+    name: Gradle
+    url: https://gradle.com
+  x-logo:
+    url: https://assets.gradle.com/logo/develocity-logo.svg
+    altText: Develocity
+servers:
+- url: https://develocity.example.com
+  description: Your Develocity instance.
+security:
+- DevelocityAccessKeyOrToken: []
+tags:
+- name: Meta
+  x-displayName: Meta
+  description: 'Endpoints related to the Develocity installation and its state.
+
+    '
+paths:
+  /api/version:
+    get:
+      operationId: GetVersion
+      summary: Provides the version of Develocity.
+      description: This endpoint can be accessed by any authenticated user.
+      tags:
+      - Meta
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulVersionResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    SuccessfulVersionResponse:
+      description: Successful version response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DevelocityVersion'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+  schemas:
+    GradleEnterpriseVersion:
+      title: GradleEnterpriseVersion
+      type: object
+      description: '**This object is deprecated, use `DevelocityVersion` instead.**
+
+        '
+      deprecated: true
+      required:
+      - string
+      - year
+      - release
+      - patch
+      properties:
+        string:
+          type: string
+          description: The complete version string of format `YEAR.RELEASE.PATCH`, where the patch component is omitted when `0` (e.g. `2022.3`, `2022.3.1`).
+        year:
+          type: integer
+          description: The gregorian calendar year of the release.
+        release:
+          type: integer
+          description: The sequence number of the release for that year, starting with 1.
+          minimum: 1
+        patch:
+          type: integer
+          description: The patch level of the release, starting with 0.
+          minimum: 0
+      example:
+        '2022.3':
+          value:
+            string: '2022.3'
+            year: 2022
+            release: 3
+            patch: 0
+        2022.3.1:
+          value:
+            string: 2022.3.1
+            year: 2022
+            release: 3
+            patch: 1
+    DevelocityVersion:
+      title: DevelocityVersion
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GradleEnterpriseVersion'
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type: string
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+          nullable: true
+  examples:
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+  securitySchemes:
+    DevelocityAccessKeyOrToken:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <<Develocity Access Key or Token>>
+      description: "All requests require a Develocity access key or token as a bearer token. \nGiven an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required header is `Authorization: Bearer l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`.\n\nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control) for guidance on how to provision access keys or tokens and check user permissions.\n"
