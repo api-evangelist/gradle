@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Develocity API
+  version: 1.0.0
+extends: openapi/gradle-develocity-openapi.yaml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: gradle
+      x-apievangelist-product: Develocity
+      x-apievangelist-deployment: self-hosted
+      x-apievangelist-error-format: rfc7807
+      x-apievangelist-status-page: https://status.gradle.com/
+      x-apievangelist-security-txt: https://gradle.org/.well-known/security.txt
+  - target: $.info
+    update:
+      x-apievangelist-categories:
+        - Developer Tools
+        - Build Analytics
+        - Developer Productivity Engineering
+  - target: $.components.securitySchemes.DevelocityAccessKeyOrToken
+    update:
+      x-apievangelist-auth-docs: https://docs.develocity.ai/2026.2/reference/api-manual/

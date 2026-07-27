@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.develocity.ai/develocityctl/1.23/
+clis:
+  - name: develocityctl
+    version: '1.23'
+    description: Command-line tool for administering standalone and Kubernetes-hosted Develocity installations.
+    docs: https://docs.develocity.ai/develocityctl/1.23/
+    install_docs: https://docs.develocity.ai/develocityctl/1.23/install/
+    command_groups:
+      - name: database
+        description: Backup creation, restoration, and maintenance.
+      - name: config
+        description: Generate and validate Develocity configuration files.
+      - name: build-scan
+        description: Query, export, and delete Build Scans.
+      - name: license
+        description: Inspect license file details and convert formats.
+      - name: support
+        description: Create support bundles for technical assistance.
+      - name: system
+        description: System restart and settings management.
+    supported_versions: 2024.3 - 2026.2.1
+  - name: develocity-artifact-cache
+    version: '1.4'
+    description: Artifact Cache CLI to cache external dependencies and tools to reduce network downloads.
+    docs: https://docs.develocity.ai/artifact-cache/1.4/

@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.develocity.ai/2026.2/miscellaneous/
+versioning:
+  scheme: calver-per-release
+  current: '2026.2'
+  docs: https://docs.develocity.ai/2026.2/miscellaneous/
+  notes: >-
+    Develocity and its API version on a CalVer release cadence (e.g. 2026.1, 2026.2).
+    The OpenAPI specification is published per release.
+deprecation:
+  policy_url: https://docs.develocity.ai/2026.2/miscellaneous/
+  notes: >-
+    Compatibility tables and a support lifecycle are published under the Version and
+    Release Reference. The GradleEnterprise tag on legacy endpoints marks the prior
+    product name being phased toward Develocity.
+support_lifecycle: https://docs.develocity.ai/2026.2/miscellaneous/
+release_notes: https://docs.develocity.ai/2026.2/miscellaneous/
+security_advisories: https://security.gradle.com/
+sla:
+  notes: Self-hosted product; availability is a function of the customer's own deployment.
+status_page: https://status.gradle.com/
+deprecated_operations: []

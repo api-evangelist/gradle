@@ -1,22 +1,310 @@
 aid: gradle
 name: Gradle
-description: Gradle is a company surfaced as a portfolio company of dcvc and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Gradle Inc. (Gradle Technologies) is the company behind the open-source Gradle
+  Build Tool, downloaded more than 25 million times a month across the Java, JVM,
+  Android, Kotlin, C/C++, and native ecosystems, and Develocity (formerly Gradle
+  Enterprise), its commercial Developer Productivity Engineering platform. Develocity
+  adds Build Scan, Build Cache, Predictive Test Selection, and Test Distribution to
+  accelerate and stabilize builds and tests. The Develocity API is a JSON REST API,
+  described with OpenAPI, that provides programmatic access to build data, failures,
+  tests, projects, project groups, Build Cache node configuration, Test Distribution
+  agent pools, and short-lived access tokens on a self-hosted Develocity instance.
+  Founded in 2009 and headquartered in San Francisco with offices in Berlin and
+  Melbourne, Gradle raised a $27M Series C led by Triangle Peak Partners.
 url: https://raw.githubusercontent.com/api-evangelist/gradle/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - dcvc
-x-tier: stub
-x-tier-reason: portfolio-lead
+- triangle-peak-partners
+- true-ventures
+- bain-capital-ventures
+x-tier: enriched
+x-tier-reason: real-api-surface
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
+image: https://assets.gradle.com/logo/develocity-logo.svg
 tags:
 - Company
-apis: []
+- Developer Tools
+- Build Automation
+- Developer Productivity
+- CI/CD
+- Build Analytics
+- Testing
+- DevOps
+- Java
+- Build Cache
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: gradle:gradle-auth-api
+  name: Gradle Auth API
+  description: "Endpoints related to Develocity authentication and authorization. \nThe permissions required\
+    \ for these endpoints vary.\nConsult the endpoint descriptions."
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-auth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-buildcache-api
+  name: Gradle BuildCache API
+  description: >-
+    Endpoints related to configuring the Build Cache nodes of the Develocity instance.
+
+    To access these endpoints the user requires the `Configure Build Caching` permission.
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - BuildCache
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-buildcache-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-builds-api
+  name: Gradle Builds API
+  description: "Endpoints related to retrieving details of a build from the Develocity instance. \nTo\
+    \ access these endpoints the user requires the `Access build data via the API` permission."
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Builds
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-builds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-comparison-api
+  name: Gradle Comparison API
+  description: >-
+    Endpoints for comparing two builds to identify differences in work unit inputs, dependencies, and
+    other dimensions.
+
+    To access these endpoints the user requires the `Access build data via the API` permission.
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Comparison
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-comparison-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-develocity-api
+  name: Gradle Develocity API
+  description: All endpoints of the Develocity API.
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Develocity
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-develocity-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-failures-api
+  name: Gradle Failures API
+  description: "Endpoints related to retrieving details about failures of builds from the Develocity instance.\
+    \ \nTo access these endpoints the user requires the `Access build data via the API` permission.\n\n\
+    **<mark>Beta:</mark> _The Failures API is unstable and is likely to change in future._**"
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Failures
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-failures-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-gradleenterprise-api
+  name: Gradle GradleEnterprise API
+  description: >-
+    **This tag is deprecated, use `Develocity` instead**.
+
+    All endpoints of the Develocity API.
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - GradleEnterprise
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-gradleenterprise-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-meta-api
+  name: Gradle Meta API
+  description: Endpoints related to the Develocity installation and its state.
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Meta
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-meta-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-projects-api
+  name: Gradle Projects API
+  description: >-
+    Endpoints related to the management of project-level access control in Develocity.
+
+    To access these endpoints the user requires the `Administer Projects` permission.
+
+
+    **<mark>Beta:</mark> _The Projects API is unstable and is likely to change in future._**
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-testdistribution-api
+  name: Gradle TestDistribution API
+  description: >-
+    Endpoints related to the management of Test Distribution resources.
+
+    To access these endpoints the user requires the `Admin` permission.
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - TestDistribution
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-testdistribution-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- aid: gradle:gradle-tests-api
+  name: Gradle Tests API
+  description: "Endpoints related to retrieving details of tests of the Develocity instance. \nTo access\
+    \ these endpoints the user requires the `Access build data via the API` permission.\nThe Develocity\
+    \ installation also needs to have the Test Failure Analytics feature enabled."
+  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
+  baseURL: https://develocity.example.com/api
+  tags:
+  - Tests
+  properties:
+  - type: OpenAPI
+    url: openapi/gradle-tests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.develocity.ai/2026.2/reference/api-manual/
+  - type: APIReference
+    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+common:
+- type: DeveloperPortal
+  url: https://docs.develocity.ai/
+- type: Documentation
+  url: https://docs.develocity.ai/
+- type: APIReference
+  url: https://docs.develocity.ai/2026.2/reference/develocity-api/
+- type: GettingStarted
+  url: https://docs.develocity.ai/2026.2/quickstart/
+- type: Blog
+  url: https://gradle.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/gradle
+- type: Support
+  url: https://community.gradle.org/
+- type: SignUp
+  url: https://scans.gradle.com/
+- type: TermsOfService
+  url: https://gradle.com/help/legal-terms-of-use
+- type: PrivacyPolicy
+  url: https://gradle.com/legal/privacy/
+- type: OpenAPI
+  url: openapi/gradle-develocity-openapi.yaml
+- type: LLMsTxt
+  url: llms/gradle-llms.txt
+- type: Packages
+  url: packages/gradle-packages.yml
+- type: SDKs
+  url: packages/gradle-packages.yml
+- type: MCPServer
+  url: mcp/gradle-mcp.yml
+- type: WellKnown
+  url: well-known/gradle-well-known.yml
+- type: SecurityTxt
+  url: well-known/gradle-security.txt
+- type: Authentication
+  url: authentication/gradle-authentication.yml
+- type: Conventions
+  url: conventions/gradle-conventions.yml
+- type: ErrorCatalog
+  url: errors/gradle-problem-types.yml
+- type: Conformance
+  url: conformance/gradle-conformance.yml
+- type: Compliance
+  url: security/gradle-trust-center.yml
+- type: DataModel
+  url: data-model/gradle-data-model.yml
+- type: Overlay
+  url: overlays/gradle-develocity-overlay.yaml
+- type: Lifecycle
+  url: lifecycle/gradle-lifecycle.yml
+- type: StatusPage
+  url: https://status.gradle.com/
+- type: Deprecation
+  url: https://docs.develocity.ai/2026.2/miscellaneous/
+- type: ChangeLog
+  url: changelog/gradle-changelog.yml
+- type: CLI
+  url: cli/gradle-cli.yml
+- type: DomainSecurity
+  url: security/gradle-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/gradle-vulnerability-disclosure.yml
+- type: Security
+  url: https://github.com/gradle/.github/blob/master/SECURITY.md
+- type: TrustCenter
+  url: security/gradle-trust-center.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

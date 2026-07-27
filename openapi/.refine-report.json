@@ -1,0 +1,34 @@
+{
+  "provider": "gradle",
+  "sources": [
+    "gradle-auth-api-openapi.yml",
+    "gradle-buildcache-api-openapi.yml",
+    "gradle-builds-api-openapi.yml",
+    "gradle-comparison-api-openapi.yml",
+    "gradle-develocity-api-openapi.yml",
+    "gradle-failures-api-openapi.yml",
+    "gradle-gradleenterprise-api-openapi.yml",
+    "gradle-meta-api-openapi.yml",
+    "gradle-projects-api-openapi.yml",
+    "gradle-testdistribution-api-openapi.yml",
+    "gradle-tests-api-openapi.yml"
+  ],
+  "outputs": [
+    "gradle-auth-api-openapi.yml",
+    "gradle-buildcache-api-openapi.yml",
+    "gradle-builds-api-openapi.yml",
+    "gradle-comparison-api-openapi.yml",
+    "gradle-develocity-api-openapi.yml",
+    "gradle-failures-api-openapi.yml",
+    "gradle-gradleenterprise-api-openapi.yml",
+    "gradle-meta-api-openapi.yml",
+    "gradle-projects-api-openapi.yml",
+    "gradle-testdistribution-api-openapi.yml",
+    "gradle-tests-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

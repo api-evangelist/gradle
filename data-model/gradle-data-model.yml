@@ -1,0 +1,67 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gradle-develocity-openapi.yaml
+description: >-
+  Entity-relationship graph derived from the Develocity API OpenAPI schemas and path
+  structure. The Build is the central entity; per-build tool-specific model documents
+  (Gradle/Maven/npm/Python/sbt/Bazel attributes, dependencies, performance) hang off it.
+entities:
+  - name: Build
+    id_field: id
+    description: A single build captured by Develocity, keyed by Build Scan id, with build-tool-specific model documents.
+    source_operations: [GetBuilds, GetBuild]
+  - name: BuildModel
+    description: Tool-specific sub-resources of a build (gradle-attributes, maven-dependencies, npm-network-activity, python-attributes, sbt-attributes, test-performance, build-cache-performance, etc.).
+    source_operations: [GetGradleAttributes, GetMavenAttributes, GetNpmAttributes, GetPythonAttributes, GetSbtAttributes]
+  - name: Failure
+    description: Build failure records and grouped failure classifications.
+    source_operations: [GetBuildFailures, GetFailureGroups]
+  - name: TestCase
+    description: Test outcomes queried across builds (cases and containers).
+    source_operations: [GetBuildTests, GetTestCases, GetTestContainers]
+  - name: Project
+    id_field: id
+    source_operations: [ListProjects, GetProject, CreateOrUpdateProject]
+  - name: ProjectGroup
+    id_field: id
+    description: A named grouping of projects, optionally bound to an identity-provider attribute value.
+    source_operations: [ListProjectGroups, GetProjectGroup, CreateOrUpdateProjectGroup, DeleteProjectGroup]
+  - name: BuildCacheNode
+    id_field: name
+    source_operations: [GetBuildCacheNode, CreateOrUpdateBuildCacheNode, InitiatePurgeOfBuildCacheNode, RegenerateSecretOfBuildCacheNode]
+  - name: TestDistributionAgentPool
+    id_field: poolId
+    source_operations: [ListTestDistributionAgentPools, GetTestDistributionAgentPool, CreateTestDistributionAgentPool, CreateOrUpdateTestDistributionAgentPool, DeleteTestDistributionAgentPool]
+  - name: RegistrationKey
+    id_field: keyPrefix
+    description: Agent-pool registration keys used by Test Distribution agents to join a pool.
+    source_operations: [ListTestDistributionAgentPoolRegistrationKeys, GenerateTestDistributionAgentPoolRegistrationKey, GetTestDistributionAgentPoolRegistrationKey]
+  - name: AccessToken
+    description: Short-lived bearer token, optionally scoped to permissions and projects.
+    source_operations: [CreateAccessToken, RevokeSigningKeys]
+relationships:
+  - from: Build
+    to: BuildModel
+    type: has_many
+    via: id
+    note: build-tool-specific model documents are sub-paths of /api/builds/{id}
+  - from: Build
+    to: Failure
+    type: has_many
+    via: id
+  - from: Build
+    to: TestCase
+    type: has_many
+    via: id
+  - from: ProjectGroup
+    to: Project
+    type: has_many
+    via: projects
+  - from: TestDistributionAgentPool
+    to: RegistrationKey
+    type: has_many
+    via: poolId
+  - from: Failure
+    to: FailureGroup
+    type: belongs_to
+    via: type

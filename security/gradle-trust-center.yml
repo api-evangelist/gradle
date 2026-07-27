@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+url: https://trust.gradle.com/
+description: >-
+  Gradle maintains a Trust Portal and a published security posture for Develocity. The
+  trust portal (trust.gradle.com) is bot-gated (HTTP 403 to automated probes) but is
+  publicly documented; SOC 2 reports are available through it under NDA.
+certifications:
+  - SOC 2 Type 1
+  - SOC 2 Type 2
+compliance:
+  - GDPR
+  - CCPA
+security_practices:
+  - Continuous vulnerability scanning
+  - Dependency analysis
+  - Artifact integrity checks
+  - Regular third-party penetration testing
+evidence:
+  - source: https://gradle.com/develocity/solutions/security/
+    kind: security-overview
+  - source: https://gradle.com/data-protection
+    kind: data-protection (GDPR/CCPA, DPA, transparency report)
+  - source: https://security.gradle.com/
+    kind: security-advisories
+  - source: https://trust.gradle.com/
+    kind: trust-portal
+    status: 403

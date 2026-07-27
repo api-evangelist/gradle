@@ -1,0 +1,37 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of Gradle web hosts
+hosts:
+  - host: https://gradle.org
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: gradle-security.txt
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://gradle.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        note: security.txt canonical lists this host but it currently 404s; gradle.org serves it.
+      - path: /.well-known/openid-configuration
+        status: 404
+  - host: https://develocity.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+  - host: https://docs.develocity.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /llms.txt
+        status: 200
+        file: ../llms/gradle-llms.txt

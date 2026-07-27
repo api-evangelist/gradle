@@ -1,0 +1,63 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gradle-develocity-openapi.yaml
+format: rfc9457
+envelope:
+  media_type: application/problem+json
+  schema: ApiProblem
+  standard: RFC 7807 (Problem JSON), as declared in the OpenAPI ApiProblem schema
+  fields:
+    - name: type
+      required: true
+      description: A URN identifying the type of the problem.
+    - name: title
+      required: true
+      description: The underlying reason for the problem.
+    - name: status
+      required: true
+      description: HTTP status code of the problem response.
+    - name: detail
+      required: false
+      description: A longer, comprehensive description of the problem (may be null).
+docs: https://docs.develocity.ai/2026.2/reference/develocity-api/
+problems:
+  - status: 400
+    response: BadRequestError
+    title: Bad request
+    detail: The request cannot be fulfilled due to a problem.
+  - status: 400
+    response: BadRequest
+    title: Malformed request body
+    detail: The request body is malformed or contains invalid values for at least one of the properties.
+  - status: 401
+    response: UnauthenticatedError
+    title: Unauthenticated
+    detail: Something was wrong with the request; the caller is not authenticated.
+  - status: 403
+    response: ForbiddenError
+    title: Insufficient permissions
+    detail: The authenticated user has insufficient permissions.
+  - status: 403
+    response: AccessTokenForbidden
+    title: Access token forbidden
+    detail: The current user or authenticating access token does not have sufficient access or lifetime for the request.
+  - status: 404
+    response: NotFoundError
+    title: Resource not found
+    detail: The referenced resource either does not exist or the permissions to know about it are missing.
+  - status: 404
+    response: UnauthorizedOrNotFoundError
+    title: Unauthorized or not found
+    detail: No API key was specified, the key has insufficient permissions, or the resource does not exist.
+  - status: 500
+    response: UnexpectedError
+    title: Unexpected server error
+    detail: The server encountered an unexpected error.
+  - status: 503
+    response: NotReadyError
+    title: Server not ready
+    detail: The server is not ready to handle the request.
+  - status: 503
+    response: NodeNotSignedInError
+    title: Node not signed in
+    detail: The Build Cache node was not signed in with Develocity.

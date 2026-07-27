@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: searched
+status: published
+source: https://docs.develocity.ai/mcp-server/
+description: >-
+  Develocity ships official Model Context Protocol servers that give AI agents access
+  to Develocity build data and analytics. Because Develocity is self-hosted, the MCP
+  server is exposed on the customer's own Develocity instance at the /mcp path over the
+  streamable HTTP transport, authenticated with a Develocity access key that has the
+  "Access build data via the API" permission.
+servers:
+  - name: develocity-mcp
+    transport: http
+    url_pattern: https://<your-develocity-host>/mcp
+    auth:
+      type: bearer
+      header: 'Authorization: Bearer <Develocity Access Key>'
+      required_permission: Access build data via the API
+    docs: https://docs.develocity.ai/mcp-server/
+    clients:
+      - Claude Desktop (claude mcp add --transport http)
+      - stdio clients via mcp-proxy (streamablehttp transport)
+      - IntelliJ, VS Code
+  - name: develocity-analytics-mcp
+    transport: http
+    docs: https://docs.gradle.com/develocity/current/integrations/drv-mcp/
+    description: >-
+      Develocity Analytics (DRV) MCP Server — provides AI agents with access to
+      Develocity build analytics for instant analysis and feedback.
+notes: >-
+  Third-party community Gradle MCP servers also exist (e.g. rnett/gradle-mcp) that wrap
+  the Gradle Tooling API; the servers listed here are the official Gradle/Develocity ones.

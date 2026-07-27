@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.develocity.ai/2026.2/operations/upgrade/changes/
+scheme: calver-per-release
+current_version: '2026.2'
+docs: https://docs.develocity.ai/2026.2/operations/upgrade/changes/
+security_advisories: https://security.gradle.com/
+notes: >-
+  Develocity ships on a CalVer release train. Each release publishes changes, a new
+  API specification version, and (where relevant) security advisories. The live docs
+  are the source of truth; the recent window is captured below.
+entries:
+  - version: '2026.2'
+    highlights:
+      - Develocity API specification 2026.2.0 published (OpenAPI 3.0.3).
+      - Ongoing rename from Gradle Enterprise to Develocity; docs relocated to docs.develocity.ai.
+  - version: '2026.1'
+    highlights:
+      - Develocity Analytics MCP Server documented for AI-assisted build analysis.

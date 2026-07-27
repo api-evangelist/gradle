@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gradle-develocity-openapi.yaml
+docs: https://docs.develocity.ai/2026.2/reference/api-manual/
+description: >-
+  Cross-cutting request/response semantics for the Develocity API, derived from the
+  OpenAPI 3.0 specification and the API user manual. Develocity is self-hosted, so the
+  base URL is the customer's own instance host.
+authentication:
+  style: bearer
+  scheme: DevelocityAccessKeyOrToken
+  header: 'Authorization: Bearer <access key or access token>'
+  notes: >-
+    An access key is a long-lived credential; an access token is a short-lived JWT
+    (max 24h) minted via CreateAccessToken and optionally scoped to permissions/projects.
+  ref: authentication/gradle-authentication.yml
+idempotency:
+  supported: false
+  notes: >-
+    No Idempotency-Key header is documented. Configuration resources (project groups,
+    projects, Build Cache nodes, agent pools, registration keys) use idempotent PUT
+    create-or-update semantics, but there is no request-replay idempotency contract.
+pagination:
+  style: cursor
+  notes: >-
+    Collection endpoints (e.g. GetBuilds, GetTestCases) page forward from a build/scan
+    id or timestamp; the API manual documents the advanced build query and pagination
+    controls per endpoint.
+versioning:
+  scheme: calver-per-release
+  current: '2026.2'
+  notes: >-
+    The API version tracks the Develocity product release (e.g. 2026.2.0). The spec is
+    published per release at docs.develocity.ai/downloads/develocity-api-specification/.
+    The API is described as generally backwards compatible within a major line.
+  docs: https://docs.develocity.ai/2026.2/miscellaneous/
+error_envelope:
+  format: rfc7807
+  media_type: application/problem+json
+  schema: ApiProblem
+  ref: errors/gradle-problem-types.yml
+rate_limiting:
+  signaled: unknown
+  notes: No rate-limit headers are declared in the OpenAPI specification.
+request_tracing:
+  notes: No standard request-id response header is declared in the specification.
+cross_links:
+  errors: errors/gradle-problem-types.yml
+  authentication: authentication/gradle-authentication.yml
+  lifecycle: lifecycle/gradle-lifecycle.yml

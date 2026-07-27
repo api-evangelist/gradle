@@ -1,0 +1,17 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/gradle-develocity-openapi.yaml
+api: openapi/gradle-develocity-openapi.yaml
+skills:
+  - file: gradle-inspect-build.md
+    name: Inspect a build and its performance
+    api: openapi/gradle-develocity-openapi.yaml
+    operations: [GetBuilds, GetBuild, GetGradleAttributes, GetGradleBuildCachePerformance]
+  - file: gradle-triage-failures.md
+    name: Triage build failures
+    api: openapi/gradle-develocity-openapi.yaml
+    operations: [GetFailureGroups, GetBuildFailures, GetBuild]
+  - file: gradle-manage-test-distribution.md
+    name: Manage Test Distribution agent pools
+    api: openapi/gradle-develocity-openapi.yaml
+    operations: [ListTestDistributionAgentPools, CreateTestDistributionAgentPool, GenerateTestDistributionAgentPoolRegistrationKey, GetTestDistributionAgentPoolStatus]

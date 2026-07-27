@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: searched
+source: https://repo.maven.apache.org/maven2/com/gradle/
+notes: >-
+  First-party Gradle Inc. libraries and build-tool integrations published to Maven
+  Central (group com.gradle) and the Gradle Plugin Portal. The Develocity REST API has
+  no dedicated published client SDK — Gradle publishes the OpenAPI specification and the
+  develocity-api-samples repository for code generation. The Gradle Tooling API is the
+  first-party programmatic client library for driving Gradle builds.
+packages:
+  - language: java
+    registry: maven-central
+    name: org.gradle:gradle-tooling-api
+    url: https://central.sonatype.com/artifact/org.gradle/gradle-tooling-api
+    install: 'implementation("org.gradle:gradle-tooling-api")'
+    official: true
+    kind: sdk
+    description: The Gradle Tooling API — first-party Java client library to programmatically configure, execute, and query Gradle builds.
+  - language: java
+    registry: gradle-plugin-portal
+    name: com.gradle.develocity
+    url: https://plugins.gradle.org/plugin/com.gradle.develocity
+    install: 'id("com.gradle.develocity")'
+    official: true
+    kind: plugin
+    description: Develocity Gradle plugin — enables Build Scan, Build Cache, and performance reporting for Gradle builds.
+  - language: java
+    registry: maven-central
+    name: com.gradle:develocity-maven-extension
+    url: https://central.sonatype.com/artifact/com.gradle/develocity-maven-extension
+    install: 'com.gradle:develocity-maven-extension'
+    official: true
+    kind: extension
+    description: Develocity Maven extension — Build Scan and build insights for Maven projects.
+  - language: java
+    registry: gradle-plugin-portal
+    name: com.gradle.common-custom-user-data-gradle-plugin
+    url: https://plugins.gradle.org/plugin/com.gradle.common-custom-user-data-gradle-plugin
+    install: 'id("com.gradle.common-custom-user-data-gradle-plugin")'
+    official: true
+    kind: plugin
+    description: Enhances Develocity Build Scans with Git, CI provider, and OS metadata.
+  - language: java
+    registry: maven-central
+    name: com.gradle:common-custom-user-data-maven-extension
+    url: https://central.sonatype.com/artifact/com.gradle/common-custom-user-data-maven-extension
+    install: 'com.gradle:common-custom-user-data-maven-extension'
+    official: true
+    kind: extension
+    description: Maven counterpart that enriches Develocity Build Scans with build metadata.
