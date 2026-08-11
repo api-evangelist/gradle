@@ -256,7 +256,7 @@ common:
 - type: PrivacyPolicy
   url: https://gradle.com/legal/privacy/
 - type: OpenAPI
-  url: openapi/gradle-develocity-openapi.yaml
+  url: openapi/_original/gradle-develocity-openapi.yaml
 - type: LLMsTxt
   url: llms/gradle-llms.txt
 - type: Packages
