@@ -1,0 +1,2659 @@
+{
+  "item": [
+    {
+      "id": "488b8eb4-8066-451b-96db-2d1d1aff8bff",
+      "name": "TestDistribution",
+      "description": {
+        "content": "Endpoints related to the management of Test Distribution resources.\nTo access these endpoints the user requires the `Admin` permission.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "62a10483-ed19-4489-8095-bbcb8aab348b",
+          "name": "Lists Agent Pools.",
+          "request": {
+            "name": "Lists Agent Pools.",
+            "description": {
+              "content": "Returns a list of all Agent Pools.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "695f1208-b7ff-4d49-b653-fbdcfb5a21ca",
+              "name": "The response contains a listing of all Agent Pools.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"m4yfaq4a\",\n      \"name\": \"abc-agents-pool\",\n      \"minimumSize\": 10,\n      \"maximumSize\": 20,\n      \"capabilities\": [\n        \"os=linux\",\n        \"jdk=11\",\n        \"team-abc\"\n      ],\n      \"orderIndex\": 1,\n      \"restrictAccessToProjectGroups\": false,\n      \"projectGroupIds\": []\n    },\n    {\n      \"id\": \"dwc4whvi\",\n      \"name\": \"def-agents-pool\",\n      \"minimumSize\": 0,\n      \"maximumSize\": 10,\n      \"capabilities\": [\n        \"os=windows\",\n        \"jdk=11\"\n      ],\n      \"orderIndex\": 2,\n      \"restrictAccessToProjectGroups\": true,\n      \"projectGroupIds\": [\n        \"project-group-a\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05635264-db46-447b-a90d-bdf769498d66",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d166e1a-06aa-47de-9f33-c714e9a9ee30",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "753aabf4-826c-4d24-aaf2-b6c007de20c3",
+          "name": "Create an Agent Pool.",
+          "request": {
+            "name": "Create an Agent Pool.",
+            "description": {
+              "content": "Create a new Agent Pool in Develocity.\nThe orderIndex element is optional and can be used to specify the priority order in which the Agent Pool is considered.\nWhen not specified, the Agent Pool will be added last.\nWhen specified, the Agent Pool will be added at the specified index and all other Agent Pools will be moved down.\nIf the specified index is out of bounds, the Agent Pool will be added last with the orderIndex adjusted accordingly.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"minimumSize\": \"<integer>\",\n  \"maximumSize\": \"<integer>\",\n  \"capabilities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"orderIndex\": \"<integer>\",\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "23bdf167-38f3-4f99-9cbb-ad4dd34a0e88",
+              "name": "A new Agent Pool was created with the configuration specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"m4yfaq4a\",\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64a63d9a-8ad9-44e0-a74a-6740d024c854",
+              "name": "The request body is malformed or contains invalid values for at least one of the properties.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:validation\",\n  \"title\": \"Invalid request parameters\",\n  \"detail\": \"One or more capabilities have an invalid format.\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b857a280-76cc-47b7-b76b-a62f80f477d3",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf27166d-23f2-4749-8f48-c51e65695ee6",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd298ca3-440a-498f-99c7-40a9c7640c76",
+          "name": "View the properties of an Agent Pool",
+          "request": {
+            "name": "View the properties of an Agent Pool",
+            "description": {
+              "content": "View the identifier, capabilities and size of an Agent Pool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f200d1c-0ba2-44ce-899d-5dd3c264f194",
+              "name": "The poolId referenced an existing Agent Pool whose configuration is described in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"m4yfaq4a\",\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9049d21f-ad4d-4bfd-90ed-ce5a597bc5f2",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5435591-9401-476c-8614-3a556923f44e",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "97467507-2400-4c4d-954b-9efebbdd777f",
+          "name": "Create or update an Agent Pool.",
+          "request": {
+            "name": "Create or update an Agent Pool.",
+            "description": {
+              "content": "Create a new Agent Pool in Develocity or update the configuration of an existing one.\nThe orderIndex element is optional and can be used to specify the priority order in which the Agent Pool is considered.\nWhen not specified, the Agent Pool will be either added last on creation, or will not change position on update.\nWhen specified, the Agent Pool will be added at/moved to the specified index and all other Agent Pools will be moved down.\nIf the specified index is out of bounds, the Agent Pool will be added last with the orderIndex adjusted accordingly.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"minimumSize\": \"<integer>\",\n  \"maximumSize\": \"<integer>\",\n  \"capabilities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"orderIndex\": \"<integer>\",\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1dc29743-0e84-4c03-a837-c4ce4fd14d91",
+              "name": "The Agent Pool was created or its configuration was updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"m4yfaq4a\",\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9038398e-009f-4775-8d73-0b1380d08c3b",
+              "name": "The request body is malformed or contains invalid values for at least one of the properties.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:validation\",\n  \"title\": \"Invalid request parameters\",\n  \"detail\": \"One or more capabilities have an invalid format.\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "083bc9a6-0e85-4693-89fa-d173eb26491a",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef363db3-4ab2-4259-a88d-010981b47d31",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"capabilities\": [\n    \"os=linux\",\n    \"jdk=11\",\n    \"team-abc\"\n  ],\n  \"orderIndex\": 1,\n  \"restrictAccessToProjectGroups\": false,\n  \"projectGroupIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d81468f-a163-44e2-ae97-bf067f1c38de",
+          "name": "Delete an Agent Pool.",
+          "request": {
+            "name": "Delete an Agent Pool.",
+            "description": {
+              "content": "Delete an existing Agent Pool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0b60fa6-68f0-4b9e-afe2-4a7b0140fc83",
+              "name": "The poolId referenced an existing Agent Pool and it was deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d91c9df-f617-4ebc-84ed-1142112cd658",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00468a89-47df-4780-a955-4cc44c752d50",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a994c96-ce85-42e8-8d57-397acb252315",
+          "name": "Lists Test Distribution pool-specific agent registration keys.",
+          "request": {
+            "name": "Lists Test Distribution pool-specific agent registration keys.",
+            "description": {
+              "content": "Returns a list of all Test Distribution pool-specific agent registration key prefixes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId",
+                "registration-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f19dd03-96c9-4219-8a77-6dfa0ef0e3e6",
+              "name": "The response contains a listing of the requested type of (active or revoked) Test Distribution pool-specific agent registration key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"keyPrefix\": \"am3mbm5kamztbmrmygym5kamct\",\n      \"createdAt\": \"2021-01-01T12:59:59Z\",\n      \"lastUsedAt\": \"2021-05-03T10:11:02Z\",\n      \"lastUsedBy\": \"agent1.localhost\"\n    },\n    {\n      \"keyPrefix\": \"yw3zbwjtnwthbxp3ym6ybxlnew\",\n      \"createdAt\": \"2021-04-20T13:21:43Z\",\n      \"revokedAt\": \"2022-10-12T11:22:33Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65f42888-2316-4537-9ce8-8c631c39df51",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44605cc2-c61e-4d6b-8af8-538c802df9d6",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9c53a45-ca0b-45a6-9065-8caa507b9d91",
+          "name": "Generate a new Test Distribution pool-specific agent registration key.",
+          "request": {
+            "name": "Generate a new Test Distribution pool-specific agent registration key.",
+            "description": {
+              "content": "Generate a new Test Distribution pool-specific agent registration key to connect agents and query the agent pool API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId",
+                "registration-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f84ba0a7-eee9-4790-987f-6a3599aa826e",
+              "name": "A new registration key was successfully generated and contained in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Created by user-x for testing\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"46rhyue2hltfwcx36qw7gad74lar4f2clb6a4qo5a433zzx7aqwq\",\n  \"description\": \"Created by user-x for testing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c41a1fda-84a2-4373-8941-e4d7aa2332b6",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Created by user-x for testing\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "994f13d2-b492-4f24-8bae-3767d0c7fd7f",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Created by user-x for testing\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2d64d06-aa18-403b-9bed-797aa50a68ec",
+          "name": "Get a Test Distribution pool-specific agent registration keyPrefix information.",
+          "request": {
+            "name": "Get a Test Distribution pool-specific agent registration keyPrefix information.",
+            "description": {
+              "content": "Returns information about a Test Distribution pool-specific agent registration keyPrefix.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId",
+                "registration-keys",
+                ":keyPrefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keyPrefix",
+                  "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21780153-8b26-4fec-9466-8f979c46c003",
+              "name": "The response contains information about the requested Test Distribution pool-specific agent registration keyPrefix.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keyPrefix\": \"am3mbm5kamztbmrmygym5kamct\",\n  \"description\": \"Created by user-x for testing\",\n  \"createdAt\": \"2021-01-01T12:59:59Z\",\n  \"lastUsedAt\": \"2021-05-03T10:11:02Z\",\n  \"lastUsedBy\": \"agent1.localhost\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a23803bf-bfee-4fa5-92f4-9236ada8c03f",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74fcdfed-9559-4c63-9fa1-b962c6aafadb",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f633c4e-a259-4f9d-9db0-d5841f7abab8",
+          "name": "Insert a specific Test Distribution pool-specific agent registration key.",
+          "request": {
+            "name": "Insert a specific Test Distribution pool-specific agent registration key.",
+            "description": {
+              "content": "Inserts a specific Test Distribution pool-specific agent registration key to connect agents and query the agent pool API.\nIf a key with the same prefix but different key already exists (regardless of which pool it belongs to), it will return 400.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId",
+                "registration-keys",
+                ":keyPrefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keyPrefix",
+                  "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa8600b0-0fb0-4b34-9c09-08deb8f07d0f",
+              "name": "The registration key was successfully inserted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"46rhyue2hltfwcx36qw7gad74lar4f2clb6a4qo5a433zzx7aqwq\",\n  \"description\": \"Created by user-x for testing\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keyPrefix\": \"am3mbm5kamztbmrmygym5kamct\",\n  \"description\": \"Created by user-x for testing\",\n  \"createdAt\": \"2021-01-01T12:59:59Z\",\n  \"lastUsedAt\": \"2021-05-03T10:11:02Z\",\n  \"lastUsedBy\": \"agent1.localhost\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d17e87da-2069-469a-849f-e2c7884b4974",
+              "name": "The request body is malformed or contains invalid values for at least one of the properties.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"46rhyue2hltfwcx36qw7gad74lar4f2clb6a4qo5a433zzx7aqwq\",\n  \"description\": \"Created by user-x for testing\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:validation\",\n  \"title\": \"Invalid request parameters\",\n  \"detail\": \"One or more capabilities have an invalid format.\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b86cb82-9859-471e-9f3a-4c7c1910d444",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"46rhyue2hltfwcx36qw7gad74lar4f2clb6a4qo5a433zzx7aqwq\",\n  \"description\": \"Created by user-x for testing\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e014efb-9beb-4364-87cc-ed773b4a95ca",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"46rhyue2hltfwcx36qw7gad74lar4f2clb6a4qo5a433zzx7aqwq\",\n  \"description\": \"Created by user-x for testing\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77fbbab1-6926-4437-9d85-281ebe556f3f",
+          "name": "Revoke a Test Distribution pool-specific agent registration key.",
+          "request": {
+            "name": "Revoke a Test Distribution pool-specific agent registration key.",
+            "description": {
+              "content": "Revoke the Test Distribution pool-specific agent registration key for the given prefix which uniquely identifies a Test Distribution pool-specific agent registration key.\nA revoked key can no longer be used to connect agents, but it will still be queryable and returned in the list.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId",
+                "registration-keys",
+                ":keyPrefix"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keyPrefix",
+                  "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e53926e-1fac-438c-b004-5702458ca68f",
+              "name": "The registration key was revoked successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5ac8adfb-7020-41fe-aca2-7b658dbc9c27",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58a783fe-31b9-4169-bdab-45119dfbbe48",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "registration-keys",
+                    ":keyPrefix"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyPrefix",
+                      "description": "(Required) The prefix of the Test Distribution pool-specific agent registration key."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ffba59e-a094-40e1-976e-89c2129baf41",
+          "name": "View the status of an Agent Pool",
+          "request": {
+            "name": "View the status of an Agent Pool",
+            "description": {
+              "content": "View the status of an Agent Pool, such as its current size.\nTo access this endpoint the user requires the `Test Distribution` permission.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "test-distribution",
+                "agent-pools",
+                ":poolId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "poolId",
+                  "description": "(Required) The ID of the pool to view."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d75308c-1edc-40b3-a87f-094f7ff75db8",
+              "name": "The poolId referenced an existing Agent Pool whose status is described in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"m4yfaq4a\",\n  \"name\": \"abc-agents-pool\",\n  \"minimumSize\": 10,\n  \"maximumSize\": 20,\n  \"connectedAgents\": 15,\n  \"idleAgents\": 5,\n  \"desiredAgents\": 10\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc1de650-a424-4261-b55b-4caf345b178a",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e91f932-89eb-4535-90ca-dc0ff3865022",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "test-distribution",
+                    "agent-pools",
+                    ":poolId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "poolId",
+                      "description": "(Required) The ID of the pool to view."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://develocity.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "94143286-c2ac-4125-a687-994fbcef7d51",
+    "name": "Develocity Auth TestDistribution API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
+      "type": "text/plain"
+    }
+  }
+}

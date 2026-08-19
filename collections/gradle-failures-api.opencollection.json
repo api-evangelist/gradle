@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth Failures API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Failures",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the failures of a build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/failures/builds/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildFailuresQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the failures of a build."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Returns the failures of a build, organized by build tool (Gradle, Maven, npm).\nThe response structure includes nested objects for each build tool containing their respective failures.\n"
+        },
+        {
+          "info": {
+            "name": "Get a list of failure groups.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/failures/groups",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the list of failure groups."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Returns the list of failure groups.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

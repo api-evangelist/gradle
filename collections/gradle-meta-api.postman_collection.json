@@ -1,0 +1,209 @@
+{
+  "item": [
+    {
+      "id": "fd696825-c8b6-4881-984a-8e6a9723673e",
+      "name": "Meta",
+      "description": {
+        "content": "Endpoints related to the Develocity installation and its state.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1cbc4d87-a10d-4de9-85b9-269143f94df4",
+          "name": "Provides the version of Develocity.",
+          "request": {
+            "name": "Provides the version of Develocity.",
+            "description": {
+              "content": "This endpoint can be accessed by any authenticated user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b38be40b-c4d8-494e-a7c7-6099179d05ff",
+              "name": "Successful version response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"string\": \"string\",\n  \"year\": 8253,\n  \"release\": 1088,\n  \"patch\": 4754\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "418ef137-652e-4290-948c-e19bfceac69d",
+              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b2f6346-ded0-4281-bbdd-f46e27e0a795",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://develocity.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2a072ccc-f841-44a4-b6fd-3473998f234d",
+    "name": "Develocity Auth Meta API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
+      "type": "text/plain"
+    }
+  }
+}

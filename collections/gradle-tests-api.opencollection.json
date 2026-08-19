@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth Tests API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tests executed in the given build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/tests/build/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve test execution data for a build."
+              }
+            ]
+          },
+          "docs": "Retrieves summary of executed tests and containers, as well as the detailed information about each test execution in each invoked test work unit."
+        },
+        {
+          "info": {
+            "name": "Get a list of test cases.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/tests/cases",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the list of test cases."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of test cases of a single container."
+        },
+        {
+          "info": {
+            "name": "Get a list of test containers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/tests/containers",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the list of test containers."
+              }
+            ]
+          },
+          "docs": "Returns the list of test containers."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

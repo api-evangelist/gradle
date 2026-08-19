@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth Comparison API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Comparison",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get work unit input differences between two builds.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/comparison/inputs",
+            "params": [
+              {
+                "name": "ComparisonInputsQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters for the comparison inputs."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Returns work unit input comparison data with full detail for each work unit.\n\nEach work unit includes identity, difference types, build metadata, and all change details\n(value input changes, file input changes with recursive file tree, output changes, and action changes).\n\nOptional filters narrow which work units are returned:\n- `workUnitPath`: filter by specific work unit path(s). For Gradle, this is the task path (e.g. `:app:compileJava`). For Maven, this is the full goa"
+        },
+        {
+          "info": {
+            "name": "Get a summary of differences between two builds.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/comparison/summary",
+            "params": [
+              {
+                "name": "ComparisonSummaryQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters for the comparison summary."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Returns a summary of which comparison dimensions have differences between two builds.\nBoth builds must use the same build tool (both Gradle or both Maven).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

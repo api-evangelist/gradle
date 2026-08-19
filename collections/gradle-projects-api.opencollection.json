@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth Projects API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists access control project groups.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/project-groups",
+            "params": [
+              {
+                "name": "PageQuery",
+                "value": "",
+                "type": "query",
+                "description": "The page to fetch."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Returns a list of all project groups configured for project-level access control.\nIf there are a lot of project groups, then all pages will need to be retrieved in order to retrieve the full list of project groups.\nThe default number of project groups per page is 100.\n"
+        },
+        {
+          "info": {
+            "name": "Get an access control project group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/project-groups/:projectGroupId",
+            "params": [
+              {
+                "name": "projectGroupId",
+                "value": "a-project-group",
+                "type": "path",
+                "description": "The ID of the project group configured for project-level access control."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Gets a specific project group configured for project-level access control.\n"
+        },
+        {
+          "info": {
+            "name": "Create or update an access control project group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://develocity.example.com/api/project-groups/:projectGroupId",
+            "params": [
+              {
+                "name": "projectGroupId",
+                "value": "a-project-group",
+                "type": "path",
+                "description": "The ID of the project group configured for project-level access control."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**<mark>Beta:</mark>** Create or update a project group configured for project-level access control in Develocity.\nWhen updating, any optional fields that are omitted from the request, but were previously set on the project group, will be unset/removed.\nAn existing project group's identifier cannot be updated.\nIf the update contains a id that does not match the current id, then the operation will fail with a Bad Request response.\n"
+        },
+        {
+          "info": {
+            "name": "Delete an access control project group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://develocity.example.com/api/project-groups/:projectGroupId",
+            "params": [
+              {
+                "name": "projectGroupId",
+                "value": "a-project-group",
+                "type": "path",
+                "description": "The ID of the project group configured for project-level access control."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Delete a project group configured for project-level access control in Develocity.\n"
+        },
+        {
+          "info": {
+            "name": "Lists access control projects.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/projects",
+            "params": [
+              {
+                "name": "PageQuery",
+                "value": "",
+                "type": "query",
+                "description": "The page to fetch."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Returns a paged list of projects configured for project-level access control.\nIf there are a lot of projects, then all pages will need to be retrieved in order to retrieve the full list of projects.\nThe default number of projects per page is 1,000.\n"
+        },
+        {
+          "info": {
+            "name": "Get an access control project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "a-project",
+                "type": "path",
+                "description": "The ID of the access control project."
+              }
+            ]
+          },
+          "docs": "**<mark>Beta:</mark>** Gets a specific project configured for project-level access control.\n"
+        },
+        {
+          "info": {
+            "name": "Create or update an access control project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://develocity.example.com/api/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "a-project",
+                "type": "path",
+                "description": "The ID of the access control project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**<mark>Beta:</mark>** Create or update a project configured for project-level access control in Develocity.\nWhen updating, any optional fields that are omitted from the request, but were previously set on the project, will be unset/removed.\nAn existing project's identifier cannot be updated.\nIf the update contains a id that does not match the current id, then the operation will fail with a Bad Request response.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

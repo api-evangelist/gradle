@@ -1,0 +1,251 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth TestDistribution API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TestDistribution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists Agent Pools.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools"
+          },
+          "docs": "Returns a list of all Agent Pools."
+        },
+        {
+          "info": {
+            "name": "Create an Agent Pool.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Agent Pool in Develocity.\nThe orderIndex element is optional and can be used to specify the priority order in which the Agent Pool is considered.\nWhen not specified, the Agent Pool will be added last.\nWhen specified, the Agent Pool will be added at the specified index and all other Agent Pools will be moved down.\nIf the specified index is out of bounds, the Agent Pool will be added last with the orderIndex adjusted accordingly.\n"
+        },
+        {
+          "info": {
+            "name": "View the properties of an Agent Pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              }
+            ]
+          },
+          "docs": "View the identifier, capabilities and size of an Agent Pool."
+        },
+        {
+          "info": {
+            "name": "Create or update an Agent Pool.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Agent Pool in Develocity or update the configuration of an existing one.\nThe orderIndex element is optional and can be used to specify the priority order in which the Agent Pool is considered.\nWhen not specified, the Agent Pool will be either added last on creation, or will not change position on update.\nWhen specified, the Agent Pool will be added at/moved to the specified index and all other Agent Pools will be moved down.\nIf the specified index is out of bounds, the Agent Pool wi"
+        },
+        {
+          "info": {
+            "name": "Delete an Agent Pool.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              }
+            ]
+          },
+          "docs": "Delete an existing Agent Pool."
+        },
+        {
+          "info": {
+            "name": "Lists Test Distribution pool-specific agent registration keys.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId/registration-keys",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Test Distribution pool-specific agent registration key prefixes."
+        },
+        {
+          "info": {
+            "name": "Generate a new Test Distribution pool-specific agent registration key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId/registration-keys",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a new Test Distribution pool-specific agent registration key to connect agents and query the agent pool API."
+        },
+        {
+          "info": {
+            "name": "Get a Test Distribution pool-specific agent registration keyPrefix information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId/registration-keys/:keyPrefix",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              },
+              {
+                "name": "keyPrefix",
+                "value": "riux3fkajs6ivtajxbrunelywk",
+                "type": "path",
+                "description": "The prefix of the Test Distribution pool-specific agent registration key."
+              }
+            ]
+          },
+          "docs": "Returns information about a Test Distribution pool-specific agent registration keyPrefix."
+        },
+        {
+          "info": {
+            "name": "Insert a specific Test Distribution pool-specific agent registration key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId/registration-keys/:keyPrefix",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              },
+              {
+                "name": "keyPrefix",
+                "value": "riux3fkajs6ivtajxbrunelywk",
+                "type": "path",
+                "description": "The prefix of the Test Distribution pool-specific agent registration key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Inserts a specific Test Distribution pool-specific agent registration key to connect agents and query the agent pool API.\nIf a key with the same prefix but different key already exists (regardless of which pool it belongs to), it will return 400.\n"
+        },
+        {
+          "info": {
+            "name": "Revoke a Test Distribution pool-specific agent registration key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId/registration-keys/:keyPrefix",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              },
+              {
+                "name": "keyPrefix",
+                "value": "riux3fkajs6ivtajxbrunelywk",
+                "type": "path",
+                "description": "The prefix of the Test Distribution pool-specific agent registration key."
+              }
+            ]
+          },
+          "docs": "Revoke the Test Distribution pool-specific agent registration key for the given prefix which uniquely identifies a Test Distribution pool-specific agent registration key.\nA revoked key can no longer be used to connect agents, but it will still be queryable and returned in the list.\n"
+        },
+        {
+          "info": {
+            "name": "View the status of an Agent Pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/test-distribution/agent-pools/:poolId/status",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "m4yfaq4a",
+                "type": "path",
+                "description": "The ID of the pool to view."
+              }
+            ]
+          },
+          "docs": "View the status of an Agent Pool, such as its current size.\nTo access this endpoint the user requires the `Test Distribution` permission.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

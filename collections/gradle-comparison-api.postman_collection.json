@@ -1,0 +1,811 @@
+{
+  "item": [
+    {
+      "id": "01b103d4-9e8c-4df7-8c1b-c387fd1969ee",
+      "name": "Comparison",
+      "description": {
+        "content": "Endpoints for comparing two builds to identify differences in work unit inputs, dependencies, and other dimensions.\nTo access these endpoints the user requires the `Access build data via the API` permission.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5feedc83-a584-48ab-9e34-6abb1229dfad",
+          "name": "Get work unit input differences between two builds.",
+          "request": {
+            "name": "Get work unit input differences between two builds.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Returns work unit input comparison data with full detail for each work unit.\n\nEach work unit includes identity, difference types, build metadata, and all change details\n(value input changes, file input changes with recursive file tree, output changes, and action changes).\n\nOptional filters narrow which work units are returned:\n- `workUnitPath`: filter by specific work unit path(s). For Gradle, this is the task path (e.g. `:app:compileJava`). For Maven, this is the full goal execution coordinates (e.g. `groupId:artifactId:goalName:executionId`).\n- `cacheability`: filter by cacheability status (e.g. `CACHEABLE`).\n- `className`: filter by work unit implementation class name (e.g. `org.gradle.api.tasks.compile.JavaCompile`).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "comparison",
+                "inputs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "buildIdA",
+                  "value": "<string>",
+                  "description": "The query parameters for the comparison inputs."
+                },
+                {
+                  "disabled": false,
+                  "key": "buildIdB",
+                  "value": "<string>",
+                  "description": "The query parameters for the comparison inputs."
+                },
+                {
+                  "disabled": false,
+                  "key": "workUnitPath",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "description": "The query parameters for the comparison inputs."
+                },
+                {
+                  "disabled": false,
+                  "key": "cacheability",
+                  "value": "<string>",
+                  "description": "The query parameters for the comparison inputs."
+                },
+                {
+                  "disabled": false,
+                  "key": "className",
+                  "value": "<string>",
+                  "description": "The query parameters for the comparison inputs."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The query parameters for the comparison inputs."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The query parameters for the comparison inputs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7816669-e45f-451d-a76b-ca474bc62cc2",
+              "name": "Work unit input comparison data with full detail for each work unit.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "inputs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workUnitPath",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cacheability",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "className",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalCount\": 6707,\n  \"offset\": 1433,\n  \"limit\": 5010,\n  \"omissionReason\": \"string\",\n  \"gradle\": [\n    {\n      \"taskPath\": \"string\",\n      \"differenceTypes\": [\n        \"IMPLEMENTATION_CLASS\",\n        \"INPUTS\"\n      ],\n      \"buildA\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"buildB\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"hasImplementationChanged\": true,\n      \"valueInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\"\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_B\"\n        }\n      ],\n      \"fileInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"COMPILE_CLASSPATH\",\n            \"directorySensitivity\": \"IGNORE\",\n            \"lineEndingSensitivity\": \"NORMALIZE\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"NAME_ONLY\",\n            \"directorySensitivity\": \"IGNORE\",\n            \"lineEndingSensitivity\": \"UNKNOWN\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_B\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"COMPILE_CLASSPATH\",\n            \"directorySensitivity\": \"DEFAULT\",\n            \"lineEndingSensitivity\": \"UNKNOWN\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"IGNORED_PATH\",\n            \"directorySensitivity\": \"IGNORE\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"outputChanges\": [\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        },\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        }\n      ],\n      \"actions\": {\n        \"doFirstActions\": [\n          {\n            \"hasNameChanged\": true,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ],\n        \"doLastActions\": [\n          {\n            \"hasNameChanged\": true,\n            \"hasImplementationChanged\": true,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": true,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ]\n      }\n    },\n    {\n      \"taskPath\": \"string\",\n      \"differenceTypes\": [\n        \"IMPLEMENTATION_CLASS\",\n        \"OUTPUTS\"\n      ],\n      \"buildA\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"buildB\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"hasImplementationChanged\": true,\n      \"valueInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\"\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\"\n        }\n      ],\n      \"fileInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"IGNORED_PATH\",\n            \"directorySensitivity\": \"UNKNOWN\",\n            \"lineEndingSensitivity\": \"UNKNOWN\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"IGNORED_PATH\",\n            \"directorySensitivity\": \"IGNORE\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"ABSOLUTE_PATH\",\n            \"directorySensitivity\": \"IGNORE\",\n            \"lineEndingSensitivity\": \"NORMALIZE\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"RELATIVE_PATH\",\n            \"directorySensitivity\": \"DEFAULT\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"outputChanges\": [\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        },\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        }\n      ],\n      \"actions\": {\n        \"doFirstActions\": [\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": true,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ],\n        \"doLastActions\": [\n          {\n            \"hasNameChanged\": true,\n            \"hasImplementationChanged\": true,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": true,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ]\n      }\n    }\n  ],\n  \"maven\": [\n    {\n      \"groupId\": \"string\",\n      \"artifactId\": \"string\",\n      \"goalName\": \"string\",\n      \"executionId\": \"string\",\n      \"projectName\": \"string\",\n      \"differenceTypes\": [\n        \"IMPLEMENTATION_CLASS\",\n        \"IMPLEMENTATION_CLASS\"\n      ],\n      \"buildA\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"buildB\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"hasImplementationChanged\": true,\n      \"valueInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"IN_BOTH\"\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\"\n        }\n      ],\n      \"fileInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"NAME_ONLY\",\n            \"directorySensitivity\": \"DEFAULT\",\n            \"lineEndingSensitivity\": \"UNKNOWN\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"NAME_ONLY\",\n            \"directorySensitivity\": \"IGNORE\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"ABSOLUTE_PATH\",\n            \"directorySensitivity\": \"DEFAULT\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"RELATIVE_PATH\",\n            \"directorySensitivity\": \"IGNORE\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"outputChanges\": [\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        },\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        }\n      ],\n      \"actions\": {\n        \"doFirstActions\": [\n          {\n            \"hasNameChanged\": true,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ],\n        \"doLastActions\": [\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ]\n      }\n    },\n    {\n      \"groupId\": \"string\",\n      \"artifactId\": \"string\",\n      \"goalName\": \"string\",\n      \"executionId\": \"string\",\n      \"projectName\": \"string\",\n      \"differenceTypes\": [\n        \"IMPLEMENTATION_CLASS\",\n        \"OUTPUTS\"\n      ],\n      \"buildA\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"buildB\": {\n        \"className\": \"string\",\n        \"outcome\": \"string\",\n        \"cacheability\": \"string\",\n        \"cacheKey\": \"string\"\n      },\n      \"hasImplementationChanged\": false,\n      \"valueInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_B\"\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_B\"\n        }\n      ],\n      \"fileInputChanges\": [\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"IGNORED_PATH\",\n            \"directorySensitivity\": \"DEFAULT\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"COMPILE_CLASSPATH\",\n            \"directorySensitivity\": \"DEFAULT\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"presence\": \"ONLY_IN_A\",\n          \"status\": \"string\",\n          \"normalizationA\": {\n            \"strategy\": \"CLASSPATH\",\n            \"directorySensitivity\": \"UNKNOWN\",\n            \"lineEndingSensitivity\": \"DEFAULT\"\n          },\n          \"normalizationB\": {\n            \"strategy\": \"RELATIVE_PATH\",\n            \"directorySensitivity\": \"UNKNOWN\",\n            \"lineEndingSensitivity\": \"UNKNOWN\"\n          },\n          \"differenceExplainer\": \"string\",\n          \"roots\": [\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"root\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"presence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"children\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"outputChanges\": [\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        },\n        {\n          \"nameA\": \"string\",\n          \"nameB\": \"string\"\n        }\n      ],\n      \"actions\": {\n        \"doFirstActions\": [\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": true,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ],\n        \"doLastActions\": [\n          {\n            \"hasNameChanged\": true,\n            \"hasImplementationChanged\": true,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          },\n          {\n            \"hasNameChanged\": false,\n            \"hasImplementationChanged\": false,\n            \"displayNameA\": \"string\",\n            \"displayNameB\": \"string\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b867d68a-8a7f-4e79-bbc7-fe3307b3def4",
+              "name": "The request cannot be fulfilled due to a problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "inputs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workUnitPath",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cacheability",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "className",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5967f45d-0a2a-433a-9740-1cb360a0fd17",
+              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "inputs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workUnitPath",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cacheability",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "className",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55495f1e-113d-4612-be4b-9068e47157bc",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "inputs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workUnitPath",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cacheability",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "className",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e783111-423d-43c3-8735-4397cc7fbb2e",
+              "name": "The server is not ready to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "inputs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workUnitPath",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cacheability",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "className",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:build-processing-incomplete\",\n  \"title\": \"Build processing is incomplete.\",\n  \"detail\": \"The data of build 9r4d13f0r3v3r is not yet available for viewing. Please try again later.\\n\",\n  \"status\": 503\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ea9c148-b927-4da8-9f12-8da5ec8cf438",
+          "name": "Get a summary of differences between two builds.",
+          "request": {
+            "name": "Get a summary of differences between two builds.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Returns a summary of which comparison dimensions have differences between two builds.\nBoth builds must use the same build tool (both Gradle or both Maven).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "comparison",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "buildIdA",
+                  "value": "<string>",
+                  "description": "The query parameters for the comparison summary."
+                },
+                {
+                  "disabled": false,
+                  "key": "buildIdB",
+                  "value": "<string>",
+                  "description": "The query parameters for the comparison summary."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4494aab3-121d-4726-a075-34b897e96c1a",
+              "name": "The comparison summary.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"buildToolType\": \"maven\",\n  \"differences\": {\n    \"workUnitInputs\": false,\n    \"dependencies\": false,\n    \"buildDependencies\": true,\n    \"customValues\": true,\n    \"switches\": false,\n    \"infrastructure\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e16548b7-13b7-4dab-ba77-80451596c084",
+              "name": "The request cannot be fulfilled due to a problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17504477-1ed1-41e2-adde-642108d675ce",
+              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c9bd205-8f7a-434f-bf10-a4c8363a19e4",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f20c7a5-2a26-4ca9-a4f7-1506045c2a5b",
+              "name": "The server is not ready to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "comparison",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "buildIdA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "buildIdB",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:build-processing-incomplete\",\n  \"title\": \"Build processing is incomplete.\",\n  \"detail\": \"The data of build 9r4d13f0r3v3r is not yet available for viewing. Please try again later.\\n\",\n  \"status\": 503\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://develocity.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9fc8fecd-39ac-499a-bfe3-ca5bb37370a8",
+    "name": "Develocity Auth Comparison API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
+      "type": "text/plain"
+    }
+  }
+}

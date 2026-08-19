@@ -1,0 +1,821 @@
+{
+  "item": [
+    {
+      "id": "e0417eed-d27c-4267-b024-dd98c6d066dd",
+      "name": "Tests",
+      "description": {
+        "content": "Endpoints related to retrieving details of tests of the Develocity instance. \nTo access these endpoints the user requires the `Access build data via the API` permission.\nThe Develocity installation also needs to have the Test Failure Analytics feature enabled.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6fd96faa-62e1-46ec-9db4-17e8dd469715",
+          "name": "Get tests executed in the given build.",
+          "request": {
+            "name": "Get tests executed in the given build.",
+            "description": {
+              "content": "Retrieves summary of executed tests and containers, as well as the detailed information about each test execution in each invoked test work unit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "tests",
+                "build",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workUnit",
+                  "value": "<string>",
+                  "description": "(Required) The query parameters used to retrieve test execution data for a build."
+                },
+                {
+                  "disabled": false,
+                  "key": "testName",
+                  "value": "<string>",
+                  "description": "(Required) The query parameters used to retrieve test execution data for a build."
+                },
+                {
+                  "disabled": false,
+                  "key": "testOutcomes",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "description": "(Required) The query parameters used to retrieve test execution data for a build."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Build Scan ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "119f6d7d-e9ab-458c-8385-6ab6feacef01",
+              "name": "Test executions in the given build.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "build",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workUnit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Build Scan ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": {\n    \"duration\": {\n      \"total\": 150,\n      \"serial\": 150\n    },\n    \"testCasesOutcomeDistribution\": {\n      \"total\": 3,\n      \"failed\": 1,\n      \"passed\": 1,\n      \"flaky\": 1,\n      \"skipped\": 0,\n      \"notSelected\": 0\n    },\n    \"testContainersOutcomeDistribution\": {\n      \"total\": 2,\n      \"failed\": 0,\n      \"passed\": 2,\n      \"flaky\": 0,\n      \"skipped\": 0,\n      \"notSelected\": 0\n    }\n  },\n  \"workUnits\": [\n    {\n      \"name\": \":test\",\n      \"duration\": {\n        \"total\": 150,\n        \"own\": 50,\n        \"serial\": 150\n      },\n      \"outcome\": \"failed\",\n      \"tests\": [\n        {\n          \"name\": \"JUnit Jupiter\",\n          \"duration\": {\n            \"total\": 100,\n            \"own\": 50,\n            \"serial\": 100\n          },\n          \"outcome\": {\n            \"overall\": \"failed\",\n            \"own\": \"passed\",\n            \"children\": \"failed\"\n          },\n          \"executions\": [\n            {\n              \"duration\": {\n                \"total\": 60,\n                \"own\": 20,\n                \"serial\": 60\n              },\n              \"outcome\": {\n                \"overall\": \"failed\",\n                \"own\": \"passed\",\n                \"children\": \"failed\"\n              }\n            },\n            {\n              \"duration\": {\n                \"total\": 40,\n                \"own\": 10,\n                \"serial\": 40\n              },\n              \"outcome\": {\n                \"overall\": \"failed\",\n                \"own\": \"passed\",\n                \"children\": \"failed\"\n              }\n            }\n          ],\n          \"children\": [\n            {\n              \"name\": \"org.example.TestContainer\",\n              \"duration\": {\n                \"total\": 70,\n                \"own\": 0,\n                \"serial\": 70\n              },\n              \"outcome\": {\n                \"overall\": \"failed\",\n                \"own\": \"passed\",\n                \"children\": \"failed\"\n              },\n              \"executions\": [\n                {\n                  \"duration\": {\n                    \"total\": 40,\n                    \"own\": 0,\n                    \"serial\": 40\n                  },\n                  \"outcome\": {\n                    \"overall\": \"failed\",\n                    \"own\": \"passed\",\n                    \"children\": \"failed\"\n                  }\n                },\n                {\n                  \"duration\": {\n                    \"total\": 30,\n                    \"own\": 0,\n                    \"serial\": 30\n                  },\n                  \"outcome\": {\n                    \"overall\": \"failed\",\n                    \"own\": \"passed\",\n                    \"children\": \"failed\"\n                  }\n                }\n              ],\n              \"children\": [\n                {\n                  \"name\": \"successfulTest\",\n                  \"duration\": {\n                    \"total\": 10\n                  },\n                  \"outcome\": {\n                    \"overall\": \"passed\"\n                  },\n                  \"executions\": [\n                    {\n                      \"duration\": {\n                        \"total\": 10\n                      },\n                      \"outcome\": {\n                        \"overall\": \"passed\"\n                      }\n                    }\n                  ],\n                  \"children\": []\n                },\n                {\n                  \"name\": \"failingTest\",\n                  \"duration\": {\n                    \"total\": 20\n                  },\n                  \"outcome\": {\n                    \"overall\": \"failed\"\n                  },\n                  \"executions\": [\n                    {\n                      \"duration\": {\n                        \"total\": 10\n                      },\n                      \"outcome\": {\n                        \"overall\": \"failed\"\n                      }\n                    },\n                    {\n                      \"duration\": {\n                        \"total\": 10\n                      },\n                      \"outcome\": {\n                        \"overall\": \"failed\"\n                      }\n                    }\n                  ],\n                  \"children\": []\n                },\n                {\n                  \"name\": \"flakyTest\",\n                  \"duration\": {\n                    \"total\": 40\n                  },\n                  \"outcome\": {\n                    \"overall\": \"flaky\"\n                  },\n                  \"executions\": [\n                    {\n                      \"duration\": {\n                        \"total\": 20\n                      },\n                      \"outcome\": {\n                        \"overall\": \"failed\"\n                      }\n                    },\n                    {\n                      \"duration\": {\n                        \"total\": 20\n                      },\n                      \"outcome\": {\n                        \"overall\": \"passed\"\n                      }\n                    }\n                  ],\n                  \"children\": []\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "006c0bf6-45c7-44a3-ad96-56246c38100e",
+              "name": "The request cannot be fulfilled due to a problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "build",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workUnit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Build Scan ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "671bc7ee-ee42-40d0-bc35-f50ab4db8734",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "build",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workUnit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Build Scan ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "367549ec-da16-4853-8e0b-94a5ba224b51",
+          "name": "Get a list of test cases.",
+          "request": {
+            "name": "Get a list of test cases.",
+            "description": {
+              "content": "Retrieves the list of test cases of a single container.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "tests",
+                "cases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "container",
+                  "value": "<string>",
+                  "description": "(Required) The query parameters used to retrieve the list of test cases."
+                },
+                {
+                  "disabled": false,
+                  "key": "testOutcomes",
+                  "value": "[\"<string>\"]",
+                  "description": "(Required) The query parameters used to retrieve the list of test cases."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) The query parameters used to retrieve the list of test cases."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "(Required) The query parameters used to retrieve the list of test cases."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "description": "(Required) The query parameters used to retrieve the list of test cases."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dfc93ff6-15a8-4988-ab38-69bc56a4c7cd",
+              "name": "A list of test cases.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "container",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"name\": \"testCase1\",\n      \"workUnits\": [\n        {\n          \"gradle\": {\n            \"projectName\": \"acme\",\n            \"taskPath\": \":test\"\n          }\n        }\n      ],\n      \"outcomeDistribution\": {\n        \"passed\": 1,\n        \"failed\": 2,\n        \"skipped\": 3,\n        \"flaky\": 4,\n        \"notSelected\": 5,\n        \"total\": 15\n      },\n      \"buildScanIdsByOutcome\": {\n        \"passed\": [\n          \"ssfohatb6uw2u\"\n        ],\n        \"failed\": [\n          \"qegl4bohhoy2i\",\n          \"eo6lnhluzkbbg\"\n        ],\n        \"skipped\": [\n          \"6jsgeu7deyisu\",\n          \"nyg4nlhts6ez2\",\n          \"5qpe6oluq6nkm\"\n        ],\n        \"flaky\": [\n          \"milutmob6ayt6\",\n          \"es5izuj3d3euw\",\n          \"q7hrgly7txcoa\",\n          \"lo7xqd74pkepk\"\n        ],\n        \"notSelected\": [\n          \"q3cz4ajrspqe4\",\n          \"kpmkaegons4ls\",\n          \"t53u7u63j35uq\",\n          \"wifudssaudxyo\",\n          \"k6cgdkvi574u4\"\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90e67902-a023-432f-9421-62c4c266b5b4",
+              "name": "The request cannot be fulfilled due to a problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "container",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c095325-6caf-4789-9099-b603f17f88ea",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "container",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a325140-cf7a-4aa7-b846-fe06943cd578",
+          "name": "Get a list of test containers.",
+          "request": {
+            "name": "Get a list of test containers.",
+            "description": {
+              "content": "Returns the list of test containers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "tests",
+                "containers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "testOutcomes",
+                  "value": "[\"<string>\"]",
+                  "description": "(Required) The query parameters used to retrieve the list of test containers."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) The query parameters used to retrieve the list of test containers."
+                },
+                {
+                  "disabled": false,
+                  "key": "container",
+                  "value": "*",
+                  "description": "(Required) The query parameters used to retrieve the list of test containers."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "description": "(Required) The query parameters used to retrieve the list of test containers."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc94a8b4-fcab-4d7f-94b6-cdeffd7b12e6",
+              "name": "A list of test containers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "containers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "container",
+                      "value": "*"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"name\": \"com.example.Test\",\n      \"workUnits\": [\n        {\n          \"gradle\": {\n            \"projectName\": \"acme\",\n            \"taskPath\": \":test\"\n          }\n        }\n      ],\n      \"outcomeDistribution\": {\n        \"passed\": 1,\n        \"failed\": 2,\n        \"skipped\": 3,\n        \"flaky\": 4,\n        \"notSelected\": 5,\n        \"total\": 15\n      },\n      \"buildScanIdsByOutcome\": {\n        \"passed\": [\n          \"ssfohatb6uw2u\"\n        ],\n        \"failed\": [\n          \"qegl4bohhoy2i\",\n          \"eo6lnhluzkbbg\"\n        ],\n        \"skipped\": [\n          \"6jsgeu7deyisu\",\n          \"nyg4nlhts6ez2\",\n          \"5qpe6oluq6nkm\"\n        ],\n        \"flaky\": [\n          \"milutmob6ayt6\",\n          \"es5izuj3d3euw\",\n          \"q7hrgly7txcoa\",\n          \"lo7xqd74pkepk\"\n        ],\n        \"notSelected\": [\n          \"q3cz4ajrspqe4\",\n          \"kpmkaegons4ls\",\n          \"t53u7u63j35uq\",\n          \"wifudssaudxyo\",\n          \"k6cgdkvi574u4\"\n        ]\n      }\n    },\n    {\n      \"name\": \"com.example.MavenTest\",\n      \"workUnits\": [\n        {\n          \"maven\": {\n            \"groupId\": \"com.example\",\n            \"artifactId\": \"maven-test\",\n            \"goalName\": \"surefire:test\",\n            \"executionId\": \"default-execution\"\n          }\n        }\n      ],\n      \"outcomeDistribution\": {\n        \"passed\": 0,\n        \"failed\": 0,\n        \"skipped\": 0,\n        \"flaky\": 1,\n        \"notSelected\": 0,\n        \"total\": 1\n      },\n      \"buildScanIdsByOutcome\": {\n        \"passed\": [],\n        \"failed\": [],\n        \"skipped\": [],\n        \"flaky\": [\n          \"rvta3gxepioxu\"\n        ],\n        \"notSelected\": []\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "759acce4-7af9-417f-a7a8-ad670ebf3168",
+              "name": "The request cannot be fulfilled due to a problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "containers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "container",
+                      "value": "*"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bed08b88-ca3b-4bf4-a86f-43266f69725a",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tests",
+                    "containers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testOutcomes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "container",
+                      "value": "*"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://develocity.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9c310764-ab3b-434e-a198-df4965918ebf",
+    "name": "Develocity Auth Tests API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
+      "type": "text/plain"
+    }
+  }
+}

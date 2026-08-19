@@ -1,0 +1,1641 @@
+{
+  "item": [
+    {
+      "id": "efece475-99ad-4f4d-bf24-70610413aed4",
+      "name": "Projects",
+      "description": {
+        "content": "Endpoints related to the management of project-level access control in Develocity.\nTo access these endpoints the user requires the `Administer Projects` permission.\n\n**<mark>Beta:</mark> _The Projects API is unstable and is likely to change in future._**\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3914b543-08c1-4105-a88b-7b35abbe8249",
+          "name": "Lists access control project groups.",
+          "request": {
+            "name": "Lists access control project groups.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Returns a list of all project groups configured for project-level access control.\nIf there are a lot of project groups, then all pages will need to be retrieved in order to retrieve the full list of project groups.\nThe default number of project groups per page is 100.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "project-groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0",
+                  "description": "The page to fetch."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<in32>",
+                  "description": "The page to fetch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "589d830e-4498-4ead-a7c3-03781ae7e812",
+              "name": "A list of project groups configured for project-level access control.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<in32>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"some-project-group\",\n      \"displayName\": \"Some Project Group\",\n      \"description\": \"An example project group\",\n      \"projects\": [\n        {\n          \"id\": \"some-project\"\n        },\n        {\n          \"id\": \"another-project\"\n        }\n      ]\n    },\n    {\n      \"id\": \"another-project-group\",\n      \"displayName\": \"Another Project Group\",\n      \"description\": \"Another example project group\",\n      \"projects\": [\n        {\n          \"id\": \"another-project\"\n        }\n      ]\n    }\n  ],\n  \"page\": {\n    \"number\": 1,\n    \"size\": 50,\n    \"totalPages\": 4,\n    \"totalElements\": 151\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f5b0a1a-8e95-4fb4-9566-3a2cee5a4301",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<in32>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1c0e94d-9715-4fe9-bc7c-871634e24c28",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<in32>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3da8838c-1282-48e7-af47-fe3da9c95017",
+          "name": "Get an access control project group.",
+          "request": {
+            "name": "Get an access control project group.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Gets a specific project group configured for project-level access control.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "project-groups",
+                ":projectGroupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectGroupId",
+                  "description": "(Required) The ID of the project group configured for project-level access control."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "457e63cc-482e-4045-9129-43d2a289a376",
+              "name": "The requested project group configured for project-level access control.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"some-project-group\",\n  \"displayName\": \"Some Project Group\",\n  \"description\": \"An example project group\",\n  \"projects\": [\n    {\n      \"id\": \"some-project\"\n    },\n    {\n      \"id\": \"another-project\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a263889a-bbe3-4243-8e87-c4b42b80fddc",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3de8b3d-2e57-4670-be04-53700044e863",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec755b8a-ce1b-4275-8eca-06fd82289be9",
+          "name": "Create or update an access control project group.",
+          "request": {
+            "name": "Create or update an access control project group.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Create or update a project group configured for project-level access control in Develocity.\nWhen updating, any optional fields that are omitted from the request, but were previously set on the project group, will be unset/removed.\nAn existing project group's identifier cannot be updated.\nIf the update contains a id that does not match the current id, then the operation will fail with a Bad Request response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "project-groups",
+                ":projectGroupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectGroupId",
+                  "description": "(Required) The ID of the project group configured for project-level access control."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"identityProviderAttributeValue\": \"<string>\",\n  \"projects\": [\n    {\n      \"id\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "15dedc67-20e8-4a60-b449-403cd5e2d00a",
+              "name": "The project group was created or updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project-group\",\n  \"displayName\": \"Some Project Group\",\n  \"description\": \"An example project group\",\n  \"projects\": [\n    {\n      \"id\": \"some-project\"\n    },\n    {\n      \"id\": \"another-project\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"some-project-group\",\n  \"displayName\": \"Some Project Group\",\n  \"description\": \"An example project group\",\n  \"projects\": [\n    {\n      \"id\": \"some-project\"\n    },\n    {\n      \"id\": \"another-project\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78ebf2e7-eabe-41bd-ad73-ba589368658d",
+              "name": "The request body is malformed or contains invalid values for at least one of the properties.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project-group\",\n  \"displayName\": \"Some Project Group\",\n  \"description\": \"An example project group\",\n  \"projects\": [\n    {\n      \"id\": \"some-project\"\n    },\n    {\n      \"id\": \"another-project\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:validation\",\n  \"title\": \"Invalid request parameters\",\n  \"detail\": \"One or more capabilities have an invalid format.\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "358a8dac-df16-4d4a-9665-e1b4f13fc3ca",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project-group\",\n  \"displayName\": \"Some Project Group\",\n  \"description\": \"An example project group\",\n  \"projects\": [\n    {\n      \"id\": \"some-project\"\n    },\n    {\n      \"id\": \"another-project\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b57bf138-4cfd-401a-a573-295bdf162d9b",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project-group\",\n  \"displayName\": \"Some Project Group\",\n  \"description\": \"An example project group\",\n  \"projects\": [\n    {\n      \"id\": \"some-project\"\n    },\n    {\n      \"id\": \"another-project\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc58ca98-2a64-4f67-b8d8-0cb8f6647450",
+          "name": "Delete an access control project group.",
+          "request": {
+            "name": "Delete an access control project group.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Delete a project group configured for project-level access control in Develocity.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "project-groups",
+                ":projectGroupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectGroupId",
+                  "description": "(Required) The ID of the project group configured for project-level access control."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f04ecc7d-b1db-4eaa-a4b6-cb3f9ea8b0c2",
+              "name": "The projectId referenced an existing project group and it was deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c59c7251-1e1d-4d79-ab70-3a177a09ef2e",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c57888b-dc61-44fa-aac4-7603be38849c",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "project-groups",
+                    ":projectGroupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectGroupId",
+                      "description": "(Required) The ID of the project group configured for project-level access control."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8eac900d-8bfe-4986-b889-5c4cdce4a03f",
+          "name": "Lists access control projects.",
+          "request": {
+            "name": "Lists access control projects.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Returns a paged list of projects configured for project-level access control.\nIf there are a lot of projects, then all pages will need to be retrieved in order to retrieve the full list of projects.\nThe default number of projects per page is 1,000.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "0",
+                  "description": "The page to fetch."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<in32>",
+                  "description": "The page to fetch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f6b8c6d-3589-432e-b9ce-62390fa10c49",
+              "name": "A list of projects configured for project-level access control in Develocity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<in32>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"some-project\",\n      \"displayName\": \"Some Project\",\n      \"description\": \"An example project\"\n    },\n    {\n      \"id\": \"another-project\",\n      \"displayName\": \"Another Project\",\n      \"description\": \"Another example project\"\n    }\n  ],\n  \"page\": {\n    \"number\": 1,\n    \"size\": 100,\n    \"totalPages\": 4,\n    \"totalElements\": 351\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28cf9fdd-ba58-4efc-88ea-9f079329cb5a",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<in32>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f24751db-9840-442f-8e44-e7d5fa353bee",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<in32>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92dac565-7b48-498d-9ecd-2ee850662dc1",
+          "name": "Get an access control project.",
+          "request": {
+            "name": "Get an access control project.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Gets a specific project configured for project-level access control.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "projects",
+                ":projectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) The ID of the access control project."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ab69600-cdca-4356-b5f0-139c98ce3085",
+              "name": "The requested project configured for project-level access control.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The ID of the access control project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"some-project\",\n  \"displayName\": \"Some Project\",\n  \"description\": \"An example project\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a296b5aa-1e53-448c-a234-45a02c06d77e",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The ID of the access control project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05eed57a-893c-48d7-8f06-9e59e413ea8c",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The ID of the access control project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3afecb4a-1ad4-40e1-adb2-bbd4410174ba",
+          "name": "Create or update an access control project.",
+          "request": {
+            "name": "Create or update an access control project.",
+            "description": {
+              "content": "**<mark>Beta:</mark>** Create or update a project configured for project-level access control in Develocity.\nWhen updating, any optional fields that are omitted from the request, but were previously set on the project, will be unset/removed.\nAn existing project's identifier cannot be updated.\nIf the update contains a id that does not match the current id, then the operation will fail with a Bad Request response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "projects",
+                ":projectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) The ID of the access control project."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fc3c029c-bd72-4e96-99fd-92e5fdb2b659",
+              "name": "The project was created or updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The ID of the access control project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project\",\n  \"displayName\": \"Some Project\",\n  \"description\": \"An example project\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"some-project\",\n  \"displayName\": \"Some Project\",\n  \"description\": \"An example project\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4440481-ca6c-43b6-89bc-a6856194b25f",
+              "name": "The request body is malformed or contains invalid values for at least one of the properties.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The ID of the access control project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project\",\n  \"displayName\": \"Some Project\",\n  \"description\": \"An example project\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:validation\",\n  \"title\": \"Invalid request parameters\",\n  \"detail\": \"One or more capabilities have an invalid format.\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20ec13aa-7174-4d38-9ea9-5b4a4e8fc528",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The ID of the access control project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project\",\n  \"displayName\": \"Some Project\",\n  \"description\": \"An example project\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba67ef30-dd06-4f39-a6bb-19e873fe62ff",
+              "name": "No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) The ID of the access control project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"some-project\",\n  \"displayName\": \"Some Project\",\n  \"description\": \"An example project\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://develocity.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "255d5d18-59b3-4959-90f3-90cd7cdd76cb",
+    "name": "Develocity Auth Projects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
+      "type": "text/plain"
+    }
+  }
+}

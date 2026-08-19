@@ -1,0 +1,893 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth Builds API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Builds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of builds with common attributes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds",
+            "params": [
+              {
+                "name": "BuildsQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the list of builds."
+              }
+            ]
+          },
+          "docs": "The contained attributes are build tool agnostic.\nIf none of `fromInstant`, `fromBuild`, or `reverse` is used, when making a request to this endpoint, it will return builds that were received and processed by Develocity after the request was made.\n"
+        },
+        {
+          "info": {
+            "name": "Get the common attributes of a build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the common attributes of a build."
+              }
+            ]
+          },
+          "docs": "The contained attributes are build tool agnostic."
+        },
+        {
+          "info": {
+            "name": "Get the attributes of a Bazel build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/bazel-attributes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of a Bazel build."
+              }
+            ]
+          },
+          "docs": "This model is Bazel specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the critical path of a Bazel build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/bazel-critical-path",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the critical path of a Bazel build."
+              }
+            ]
+          },
+          "docs": "This model is Bazel specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the artifact transform execution list of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-artifact-transform-executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the artifact transform execution list of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the attributes of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-attributes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the build cache performance of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-build-cache-performance",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the build cache performance of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the performance profile overview of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-build-profile-overview",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the performance profile overview of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the configuration cache information for a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-configuration-cache",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the configuration cache information for a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the dependencies of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-dependencies",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the dependencies of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get dependency caching metrics of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-dependency-caching",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve dependency caching metrics of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool. This model is only available starting with Gradle version 5.0 and Develocity Gradle Plugin version 4.4."
+        },
+        {
+          "info": {
+            "name": "Get the Gradle Build Tool deprecations of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-deprecations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the deprecations for a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the network activity of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-network-activity",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the network activity of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool. This model is only available starting with Gradle version 3.5 and Develocity Gradle Plugin version 1.6."
+        },
+        {
+          "info": {
+            "name": "Get the plugins of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-plugins",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the plugins for a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the projects of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-projects",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the build structure of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get repository instabilities of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-repository-instabilities",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve repository instabilities of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool. This model is only available starting with Gradle version 5.0 and Develocity Gradle Plugin version 3.19."
+        },
+        {
+          "info": {
+            "name": "Get the resource usage of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-resource-usage",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the resource usage of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get test performance-related metrics of a Gradle build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/gradle-test-performance",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of a Gradle build."
+              }
+            ]
+          },
+          "docs": "This model is Gradle specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the attributes of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-attributes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the build cache performance of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-build-cache-performance",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the build cache performance of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the performance profile overview of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-build-profile-overview",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the performance profile overview of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the dependencies of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-dependencies",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the dependencies of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get dependency caching metrics of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-dependency-caching",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve dependency caching metrics of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool. This model is only available starting with Maven version 3.3.1 and Develocity Maven Extension version 2.4."
+        },
+        {
+          "info": {
+            "name": "Get information about the dependency resolution of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-dependency-resolution",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the dependency resolution of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool.  This model is only available starting with the Develocity Maven Extension version 1.9."
+        },
+        {
+          "info": {
+            "name": "Get the extensions of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-extensions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the extensions for a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the modules of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-modules",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the build structure of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the plugins of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-plugins",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the plugins of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get repository instabilities of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-repository-instabilities",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve repository instabilities of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the resource usage of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-resource-usage",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the resource usage of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get test performance-related metrics of a Maven build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/maven-test-performance",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of a Maven build."
+              }
+            ]
+          },
+          "docs": "This model is Maven specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the attributes of an npm build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/npm-attributes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of an npm build."
+              }
+            ]
+          },
+          "docs": "This model is npm specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the dependencies of an npm build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/npm-dependencies",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the dependencies of an npm build."
+              }
+            ]
+          },
+          "docs": "This model is npm specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the network activity of an npm build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/npm-network-activity",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the network activity of an npm build."
+              }
+            ]
+          },
+          "docs": "This model is npm specific and cannot be requested for another build tool.  This model is only available starting with the Develocity npm agent version 3.0.0."
+        },
+        {
+          "info": {
+            "name": "Get the attributes of a Python build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/python-attributes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of a Python build."
+              }
+            ]
+          },
+          "docs": "This model is Python specific and cannot be requested for another build tool."
+        },
+        {
+          "info": {
+            "name": "Get the attributes of an sbt build.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/builds/:id/sbt-attributes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Build Scan ID."
+              },
+              {
+                "name": "BuildQuery",
+                "value": "",
+                "type": "query",
+                "description": "The query parameters used to retrieve the attributes of an sbt build."
+              }
+            ]
+          },
+          "docs": "This model is sbt specific and cannot be requested for another build tool."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

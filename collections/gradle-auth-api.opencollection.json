@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Revoke auth token signing keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://develocity.example.com/api/auth/revoke-signing-keys"
+          },
+          "docs": "Revokes the existing auth token signing keys, and creates a new one. Requires the `Configure operational settings` permission. All existing access tokens will become invalid. Develocity may take a few minutes to revoke all existing access tokens."
+        },
+        {
+          "info": {
+            "name": "Create a new access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://develocity.example.com/api/auth/token",
+            "params": [
+              {
+                "name": "projectIds",
+                "value": "project-a,project-b,project-c",
+                "type": "query",
+                "description": "Limit the created token to one or more projects. Values should be project ids. Comma seperated values and repeated parameters are supported."
+              },
+              {
+                "name": "permissions",
+                "value": "publishScan,readCache,writeCache",
+                "type": "query",
+                "description": "Limit the created token to one or more permissions. Values should be permission [config values](https://gradle.com/help/helm-admin-permissions). Comma seperated values and repeated parameters are supported."
+              },
+              {
+                "name": "expiresInHours",
+                "value": "0.5",
+                "type": "query",
+                "description": "The lifetime of the created token, in hours."
+              }
+            ]
+          },
+          "docs": "Create a new short-lived access token, optionally limited to the provided permissions and projects. Users do not need any specific Develocity permission to do this, but must be authenticated. If an access key is used to authenticate this request, the created token will be limited to the user's permissions and projects. If an access token is used to authenticate this request, the created token will be limited to the authenticating token's permissions and projects and not live longer than the auth"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

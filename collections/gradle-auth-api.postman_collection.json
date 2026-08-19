@@ -1,0 +1,763 @@
+{
+  "item": [
+    {
+      "id": "ee7b4874-b18f-4cc8-a751-4b92a0dba326",
+      "name": "Auth",
+      "description": {
+        "content": "Endpoints related to Develocity authentication and authorization. \nThe permissions required for these endpoints vary.\nConsult the endpoint descriptions.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "add6bbb5-ec14-4155-a9e2-a20a6ac8967f",
+          "name": "Revoke auth token signing keys",
+          "request": {
+            "name": "Revoke auth token signing keys",
+            "description": {
+              "content": "Revokes the existing auth token signing keys, and creates a new one. Requires the `Configure operational settings` permission. All existing access tokens will become invalid. Develocity may take a few minutes to revoke all existing access tokens.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "revoke-signing-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e98355bb-3a36-4ca3-bd11-adc654a1c46a",
+              "name": "The existing signing keys have been revoked, all access tokens will become invalid shortly",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "revoke-signing-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "66f523e1-be53-4e21-87f6-1cdbc76377d5",
+              "name": "The request cannot be fulfilled due to a problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "revoke-signing-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5627beb3-1741-490a-bb5a-c6ad4c8a4737",
+              "name": "The authenticated user has insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "revoke-signing-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:forbidden\",\n  \"title\": \"Insufficient permissions\",\n  \"detail\": \"User must have the Administer Projects permission to access this endpoint.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "944aaf5a-d557-48d7-80bd-6b022bb86bea",
+              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "revoke-signing-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6d9d7b2-e307-4c20-a87c-9fc17658dacc",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "revoke-signing-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a9ff9b5-0039-4f9b-a04b-7277ad3bb906",
+          "name": "Create a new access token",
+          "request": {
+            "name": "Create a new access token",
+            "description": {
+              "content": "Create a new short-lived access token, optionally limited to the provided permissions and projects. Users do not need any specific Develocity permission to do this, but must be authenticated. If an access key is used to authenticate this request, the created token will be limited to the user's permissions and projects. If an access token is used to authenticate this request, the created token will be limited to the authenticating token's permissions and projects and not live longer than the authenticating token's remaining lifetime. Query parameters can be used to further restrict the permissions of the access token. A 401 response will be sent if the request is not authenticated. A 403 response will be sent if one of the projects or permissions present in the query parameters is not assigned to this user. A 403 will also be sent if an access token is used to authenticate the request and the requested expiration date is after the authenticating access token's expiration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<string>",
+                  "description": "Limit the created token to one or more projects. Values should be project ids. Comma seperated values and repeated parameters are supported."
+                },
+                {
+                  "disabled": false,
+                  "key": "projectIds",
+                  "value": "<string>",
+                  "description": "Limit the created token to one or more projects. Values should be project ids. Comma seperated values and repeated parameters are supported."
+                },
+                {
+                  "disabled": false,
+                  "key": "permissions",
+                  "value": "<string>",
+                  "description": "Limit the created token to one or more permissions. Values should be permission [config values](https://gradle.com/help/helm-admin-permissions). Comma seperated values and repeated parameters are supported."
+                },
+                {
+                  "disabled": false,
+                  "key": "permissions",
+                  "value": "<string>",
+                  "description": "Limit the created token to one or more permissions. Values should be permission [config values](https://gradle.com/help/helm-admin-permissions). Comma seperated values and repeated parameters are supported."
+                },
+                {
+                  "disabled": false,
+                  "key": "expiresInHours",
+                  "value": "2",
+                  "description": "The lifetime of the created token, in hours."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06aed6e7-0457-46e6-9ae4-8cee7530632e",
+              "name": "An access token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectIds",
+                      "value": "project-a,project-b"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "project-c"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "publishScan,readCache"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "writeCache"
+                    },
+                    {
+                      "key": "expiresInHours",
+                      "value": "0.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "eyJraWQiOiJ0ZXN0LWtleSIsImFsZyI6IlJTMjU2IiwidHlwIjoiSldUIn0.eyJpc19hbm9ueW1vdXMiOmZhbHNlLCJwZXJtaXNzaW9ucyI6WyJSRUFEX1ZFUlNJT04iLCJFWFBPUlRfREFUQSIsIkFDQ0VTU19EQVRBX1dJVEhPVVRfQVNTT0NJQVRFRF9QUk9KRUNUIl0sInByb2plY3RzIjp7ImEiOjEsImIiOjJ9LCJ1c2VyX2lkIjoic29tZS1pZCIsInVzZXJuYW1lIjoidGVzdCIsImZpcnN0X25hbWUiOiJhIiwibGFzdF9uYW1lIjoidXNlciIsImVtYWlsIjoiYkBncmFkbGUuY29tIiwic3ViIjoidGVzdCIsImV4cCI6NzIwMCwibmJmIjowLCJpYXQiOjAsImF1ZCI6ImV4YW1wbGUuZ3JhZGxlLmNvbSIsImlzcyI6ImV4YW1wbGUuZ3JhZGxlLmNvbSIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.H1_NEG1xuleP-WIAY_uvSmdd2o7i_-Ko3qhlo04zvCgrElJe7_F5jNuqsyDfnb5hvKlOe5UKG_7QPTgY9-3pFQ",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1651423e-0cf9-489e-adc6-e66596557322",
+              "name": "The request cannot be fulfilled due to a problem.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectIds",
+                      "value": "project-a,project-b"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "project-c"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "publishScan,readCache"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "writeCache"
+                    },
+                    {
+                      "key": "expiresInHours",
+                      "value": "0.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8f5dd58-7a39-4e0c-9cf5-f30d520c28d9",
+              "name": "Something was wrong with the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectIds",
+                      "value": "project-a,project-b"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "project-c"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "publishScan,readCache"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "writeCache"
+                    },
+                    {
+                      "key": "expiresInHours",
+                      "value": "0.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:client-error\",\n  \"title\": \"Something was wrong with the request\",\n  \"status\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3e7ab5d-2949-43e7-832d-f290b52614c2",
+              "name": "The current user or authenticating access token does not have sufficient access or lifetime to create the requested access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectIds",
+                      "value": "project-a,project-b"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "project-c"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "publishScan,readCache"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "writeCache"
+                    },
+                    {
+                      "key": "expiresInHours",
+                      "value": "0.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:forbidden\",\n  \"title\": \"Missing requested permission.\",\n  \"detail\": \"The permissions [administerGe] were requested for the access token, but were not granted to this user.\",\n  \"status\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "917c987f-3abb-48b4-b5a5-cf7be5445879",
+              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectIds",
+                      "value": "project-a,project-b"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "project-c"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "publishScan,readCache"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "writeCache"
+                    },
+                    {
+                      "key": "expiresInHours",
+                      "value": "0.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c9838cc-5b48-4900-ab67-f13ea4b56f74",
+              "name": "The server encountered an unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectIds",
+                      "value": "project-a,project-b"
+                    },
+                    {
+                      "key": "projectIds",
+                      "value": "project-c"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "publishScan,readCache"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "writeCache"
+                    },
+                    {
+                      "key": "expiresInHours",
+                      "value": "0.5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://develocity.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "35496974-b9e7-4e34-95df-6dd6aae32d9e",
+    "name": "Develocity Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
+      "type": "text/plain"
+    }
+  }
+}

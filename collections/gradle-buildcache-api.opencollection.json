@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Develocity Auth BuildCache API",
+    "version": "2026.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BuildCache",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "View the configuration of a Build Cache Node.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://develocity.example.com/api/build-cache/nodes/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
+              }
+            ]
+          },
+          "docs": "View the enablement status and replication configuration of a Build Cache Node."
+        },
+        {
+          "info": {
+            "name": "Create or update a Build Cache Node.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://develocity.example.com/api/build-cache/nodes/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Build Cache Node in Develocity or update the configuration of an existing one.\nThe Built-in Build Cache Node cannot be named as the target of this operation.\n"
+        },
+        {
+          "info": {
+            "name": "Deletes all entries from a Build Cache Node.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://develocity.example.com/api/build-cache/nodes/:name/purge",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
+              }
+            ]
+          },
+          "docs": "Triggers the deletion of all entries stored at the named Build Cache Node.\n"
+        },
+        {
+          "info": {
+            "name": "Regenerate the secret of a Build Cache Node.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://develocity.example.com/api/build-cache/nodes/:name/secret",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the Build Cache Node."
+              }
+            ]
+          },
+          "docs": "Regenerates the secret associated with the named Build Cache Node. The old secret expires immediately, causing the Build Cache Node to\ndisconnect from Develocity. The Built-in Build Cache Node cannot be named as the target of this operation.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
