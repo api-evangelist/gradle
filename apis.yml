@@ -124,20 +124,6 @@ apis:
     url: https://docs.develocity.ai/2026.2/reference/api-manual/
   - type: APIReference
     url: https://docs.develocity.ai/2026.2/reference/develocity-api/
-- aid: gradle:gradle-develocity-api
-  name: Gradle Develocity API
-  description: All endpoints of the Develocity API.
-  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
-  baseURL: https://develocity.example.com/api
-  tags:
-  - Develocity
-  properties:
-  - type: OpenAPI
-    url: openapi/gradle-develocity-api-openapi.yml
-  - type: Documentation
-    url: https://docs.develocity.ai/2026.2/reference/api-manual/
-  - type: APIReference
-    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
 - aid: gradle:gradle-failures-api
   name: Gradle Failures API
   description: "Endpoints related to retrieving details about failures of builds from the Develocity instance.\
@@ -150,23 +136,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gradle-failures-api-openapi.yml
-  - type: Documentation
-    url: https://docs.develocity.ai/2026.2/reference/api-manual/
-  - type: APIReference
-    url: https://docs.develocity.ai/2026.2/reference/develocity-api/
-- aid: gradle:gradle-gradleenterprise-api
-  name: Gradle GradleEnterprise API
-  description: >-
-    **This tag is deprecated, use `Develocity` instead**.
-
-    All endpoints of the Develocity API.
-  humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
-  baseURL: https://develocity.example.com/api
-  tags:
-  - GradleEnterprise
-  properties:
-  - type: OpenAPI
-    url: openapi/gradle-gradleenterprise-api-openapi.yml
   - type: Documentation
     url: https://docs.develocity.ai/2026.2/reference/api-manual/
   - type: APIReference
