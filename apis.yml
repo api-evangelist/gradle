@@ -93,7 +93,7 @@ apis:
   humanURL: https://docs.develocity.ai/2026.2/reference/develocity-api/
   baseURL: https://develocity.example.com/api
   tags:
-  - Build Cache
+  - BuildCache
   tags_raw:
   - BuildCache
   properties:
