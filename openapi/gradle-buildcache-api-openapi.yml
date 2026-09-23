@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Develocity Auth BuildCache API
-  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
-
-    '
+  title: Develocity Build Cache API
+  description: The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
   version: 2026.2.0
   license:
     name: Develocity License
@@ -25,9 +23,7 @@ tags:
   x-displayName: Build Cache
   description: 'Endpoints related to configuring the Build Cache nodes of the Develocity instance.
 
-    To access these endpoints the user requires the `Configure Build Caching` permission.
-
-    '
+    To access these endpoints the user requires the `Configure Build Caching` permission.'
 paths:
   /api/build-cache/nodes/{name}:
     parameters:
@@ -39,7 +35,7 @@ paths:
       description: The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name.
     get:
       operationId: GetBuildCacheNode
-      summary: View the configuration of a Build Cache Node.
+      summary: View the configuration of a Build Cache Node
       description: View the enablement status and replication configuration of a Build Cache Node.
       tags:
       - BuildCache
@@ -61,12 +57,10 @@ paths:
           $ref: '#/components/responses/UnexpectedError'
     put:
       operationId: CreateOrUpdateBuildCacheNode
-      summary: Create or update a Build Cache Node.
+      summary: Create or update a Build Cache Node
       description: 'Create a new Build Cache Node in Develocity or update the configuration of an existing one.
 
-        The Built-in Build Cache Node cannot be named as the target of this operation.
-
-        '
+        The Built-in Build Cache Node cannot be named as the target of this operation.'
       tags:
       - BuildCache
       requestBody:
@@ -99,10 +93,8 @@ paths:
       description: The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name.
     post:
       operationId: InitiatePurgeOfBuildCacheNode
-      summary: Deletes all entries from a Build Cache Node.
-      description: 'Triggers the deletion of all entries stored at the named Build Cache Node.
-
-        '
+      summary: Deletes all entries from a Build Cache Node
+      description: Triggers the deletion of all entries stored at the named Build Cache Node.
       tags:
       - BuildCache
       responses:
@@ -124,12 +116,10 @@ paths:
       description: The name of the Build Cache Node.
     post:
       operationId: RegenerateSecretOfBuildCacheNode
-      summary: Regenerate the secret of a Build Cache Node.
+      summary: Regenerate the secret of a Build Cache Node
       description: 'Regenerates the secret associated with the named Build Cache Node. The old secret expires immediately, causing the Build Cache Node to
 
-        disconnect from Develocity. The Built-in Build Cache Node cannot be named as the target of this operation.
-
-        '
+        disconnect from Develocity. The Built-in Build Cache Node cannot be named as the target of this operation.'
       tags:
       - BuildCache
       responses:
@@ -147,11 +137,49 @@ paths:
         '500':
           $ref: '#/components/responses/UnexpectedError'
 components:
+  responses:
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    NodeNotSignedInError:
+      description: The node was not signed in with Develocity.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NodeNotSignedInResponse:
+              $ref: '#/components/examples/NodeNotSignedInProblemExample'
   schemas:
     ReplicationConfiguration:
       description: Cached data replication configuration description. May be `null` if replication is not configured.
-      type: object
-      nullable: true
+      type:
+      - object
+      - 'null'
       required:
       - source
       - preemptive
@@ -162,6 +190,32 @@ components:
         preemptive:
           type: boolean
           description: Indicates if preemptive replication is enabled from the source.
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type:
+          - string
+          - 'null'
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
     NodeConfiguration:
       description: A Build Cache Node configuration description.
       type: object
@@ -186,74 +240,12 @@ components:
         secret:
           type: string
           description: The secret associated with the Build Cache Node.
-    ApiProblem:
-      type: object
-      description: 'Response detailing why a request was rejected.
-
-        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
-
-        '
-      required:
-      - type
-      - title
-      - status
-      properties:
-        status:
-          type: integer
-          description: HTTP status code of the problem response.
-        type:
-          type: string
-          description: A URN (Uniform Resource Name) identifying the type of the problem.
-        title:
-          type: string
-          description: The underlying reason for the problem.
-        detail:
-          type: string
-          description: A longer and comprehensive description of the problem. May be `null` if not available.
-          nullable: true
-  responses:
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
-    BadRequestError:
-      description: The request cannot be fulfilled due to a problem.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/RequestValidationApiProblemExample'
-    NotFoundError:
-      description: The referenced resource either does not exist or the permissions to know about it are missing.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NotFoundResponse:
-              $ref: '#/components/examples/NotFoundApiProblemExample'
-    NodeNotSignedInError:
-      description: The node was not signed in with Develocity.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NodeNotSignedInResponse:
-              $ref: '#/components/examples/NodeNotSignedInProblemExample'
   examples:
-    NodeNotSignedInProblemExample:
+    NotFoundApiProblemExample:
       value:
-        type: urn:gradle:enterprise:api:problems:node-not-signed-in
-        title: Node with name not-signed-in-node1 must be signed-in before this operation can be performed.
-        status: 503
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
     RequestValidationApiProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:validation
@@ -270,11 +262,11 @@ components:
 
           '
         status: 500
-    NotFoundApiProblemExample:
+    NodeNotSignedInProblemExample:
       value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
+        type: urn:gradle:enterprise:api:problems:node-not-signed-in
+        title: Node with name not-signed-in-node1 must be signed-in before this operation can be performed.
+        status: 503
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http

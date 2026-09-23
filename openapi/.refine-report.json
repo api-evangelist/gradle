@@ -1,26 +1,14 @@
 {
   "provider": "gradle",
   "sources": [
-    "gradle-auth-api-openapi.yml",
-    "gradle-buildcache-api-openapi.yml",
-    "gradle-builds-api-openapi.yml",
-    "gradle-comparison-api-openapi.yml",
-    "gradle-develocity-api-openapi.yml",
-    "gradle-failures-api-openapi.yml",
-    "gradle-gradleenterprise-api-openapi.yml",
-    "gradle-meta-api-openapi.yml",
-    "gradle-projects-api-openapi.yml",
-    "gradle-testdistribution-api-openapi.yml",
-    "gradle-tests-api-openapi.yml"
+    "_original/gradle-develocity-openapi.yaml"
   ],
   "outputs": [
     "gradle-auth-api-openapi.yml",
     "gradle-buildcache-api-openapi.yml",
     "gradle-builds-api-openapi.yml",
     "gradle-comparison-api-openapi.yml",
-    "gradle-develocity-api-openapi.yml",
     "gradle-failures-api-openapi.yml",
-    "gradle-gradleenterprise-api-openapi.yml",
     "gradle-meta-api-openapi.yml",
     "gradle-projects-api-openapi.yml",
     "gradle-testdistribution-api-openapi.yml",
@@ -29,6 +17,21 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "gradle-develocity-openapi.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "gradle-develocity-openapi.yaml: multi-axis tagging (11 tags, 9 first tags, 2.60x duplication over 67 operations) \u2014 split on first tag, 67 operations narrowed",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "gradle-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-buildcache-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-builds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-comparison-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-failures-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-meta-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-testdistribution-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gradle-tests-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

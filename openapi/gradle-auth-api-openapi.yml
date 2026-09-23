@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Develocity Auth API
-  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
-
-    '
+  description: The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
   version: 2026.2.0
   license:
     name: Develocity License
@@ -22,7 +20,11 @@ security:
 - DevelocityAccessKeyOrToken: []
 tags:
 - name: Auth
-  description: "Endpoints related to Develocity authentication and authorization. \nThe permissions required for these endpoints vary.\nConsult the endpoint descriptions.\n"
+  description: 'Endpoints related to Develocity authentication and authorization.
+
+    The permissions required for these endpoints vary.
+
+    Consult the endpoint descriptions.'
 paths:
   /api/auth/revoke-signing-keys:
     post:
@@ -81,10 +83,9 @@ paths:
         schema:
           type: number
           format: float
-          minimum: 0
-          exclusiveMinimum: true
           maximum: 24
           default: 2
+          exclusiveMinimum: 0
         example: 0.5
         required: false
         description: The lifetime of the created token, in hours.
@@ -107,58 +108,55 @@ paths:
         '500':
           $ref: '#/components/responses/UnexpectedError'
 components:
-  examples:
-    ForbiddenUserExample:
-      value:
-        type: urn:gradle:enterprise:forbidden
-        title: Insufficient permissions
-        detail: User must have the Administer Projects permission to access this endpoint.
-        status: 403
-    RequestValidationApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:validation
-        title: Request validation failed.
-        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+  schemas:
+    ProjectId:
+      type: string
+      description: The unique identifier for the project. Must not contain whitespace.
+      minLength: 1
+      maxLength: 256
+      pattern: ^\S+$
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
 
-          '
-        status: 400
-    UnauthenticatedExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:client-error
-        title: Something was wrong with the request
-        status: 401
-    UnexpectedErrorApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:unexpected-error
-        title: Encountered an internal server error.
-        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
 
-          '
-        status: 500
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type:
+          - string
+          - 'null'
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+    Permission:
+      type: string
+      description: A permission [config value](https://gradle.com/help/helm-admin-permissions).
+      minLength: 1
+      maxLength: 256
+      pattern: ^\S+$
   responses:
-    UnexpectedError:
-      description: The server encountered an unexpected error.
+    ForbiddenError:
+      description: The authenticated user has insufficient permissions.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ApiProblem'
           examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
-    UnauthenticatedError:
-      description: Something was wrong with the request.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/UnauthenticatedExample'
+            ForbiddenUserResponse:
+              $ref: '#/components/examples/ForbiddenUserExample'
     AccessTokenForbidden:
       description: The current user or authenticating access token does not have sufficient access or lifetime to create the requested access token.
       content:
@@ -193,6 +191,24 @@ components:
           examples:
             RequestValidationApiProblemResponse:
               $ref: '#/components/examples/RequestValidationApiProblemExample'
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    UnauthenticatedError:
+      description: Something was wrong with the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/UnauthenticatedExample'
     NotFoundError:
       description: The referenced resource either does not exist or the permissions to know about it are missing.
       content:
@@ -202,53 +218,39 @@ components:
           examples:
             NotFoundResponse:
               $ref: '#/components/examples/NotFoundApiProblemExample'
-    ForbiddenError:
-      description: The authenticated user has insufficient permissions.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            ForbiddenUserResponse:
-              $ref: '#/components/examples/ForbiddenUserExample'
-  schemas:
-    Permission:
-      type: string
-      description: A permission [config value](https://gradle.com/help/helm-admin-permissions).
-      minLength: 1
-      maxLength: 256
-      pattern: ^\S+$
-    ProjectId:
-      type: string
-      description: The unique identifier for the project. Must not contain whitespace.
-      minLength: 1
-      maxLength: 256
-      pattern: ^\S+$
-    ApiProblem:
-      type: object
-      description: 'Response detailing why a request was rejected.
+  examples:
+    ForbiddenUserExample:
+      value:
+        type: urn:gradle:enterprise:forbidden
+        title: Insufficient permissions
+        detail: User must have the Administer Projects permission to access this endpoint.
+        status: 403
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
 
-        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+          '
+        status: 400
+    UnauthenticatedExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:client-error
+        title: Something was wrong with the request
+        status: 401
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
 
-        '
-      required:
-      - type
-      - title
-      - status
-      properties:
-        status:
-          type: integer
-          description: HTTP status code of the problem response.
-        type:
-          type: string
-          description: A URN (Uniform Resource Name) identifying the type of the problem.
-        title:
-          type: string
-          description: The underlying reason for the problem.
-        detail:
-          type: string
-          description: A longer and comprehensive description of the problem. May be `null` if not available.
-          nullable: true
+          '
+        status: 500
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http

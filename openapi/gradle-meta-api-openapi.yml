@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Develocity Auth Meta API
-  description: 'The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
-
-    '
+  title: Develocity Meta API
+  description: The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.
   version: 2026.2.0
   license:
     name: Develocity License
@@ -23,14 +21,12 @@ security:
 tags:
 - name: Meta
   x-displayName: Meta
-  description: 'Endpoints related to the Develocity installation and its state.
-
-    '
+  description: Endpoints related to the Develocity installation and its state.
 paths:
   /api/version:
     get:
       operationId: GetVersion
-      summary: Provides the version of Develocity.
+      summary: Provides the version of Develocity
       description: This endpoint can be accessed by any authenticated user.
       tags:
       - Meta
@@ -42,32 +38,38 @@ paths:
         '500':
           $ref: '#/components/responses/UnexpectedError'
 components:
-  responses:
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
-    SuccessfulVersionResponse:
-      description: Successful version response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DevelocityVersion'
-    NotFoundError:
-      description: The referenced resource either does not exist or the permissions to know about it are missing.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NotFoundResponse:
-              $ref: '#/components/examples/NotFoundApiProblemExample'
   schemas:
+    DevelocityVersion:
+      title: DevelocityVersion
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GradleEnterpriseVersion'
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type:
+          - string
+          - 'null'
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
     GradleEnterpriseVersion:
       title: GradleEnterpriseVersion
       type: object
@@ -108,37 +110,37 @@ components:
             year: 2022
             release: 3
             patch: 1
-    DevelocityVersion:
-      title: DevelocityVersion
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GradleEnterpriseVersion'
-    ApiProblem:
-      type: object
-      description: 'Response detailing why a request was rejected.
-
-        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
-
-        '
-      required:
-      - type
-      - title
-      - status
-      properties:
-        status:
-          type: integer
-          description: HTTP status code of the problem response.
-        type:
-          type: string
-          description: A URN (Uniform Resource Name) identifying the type of the problem.
-        title:
-          type: string
-          description: The underlying reason for the problem.
-        detail:
-          type: string
-          description: A longer and comprehensive description of the problem. May be `null` if not available.
-          nullable: true
+  responses:
+    SuccessfulVersionResponse:
+      description: Successful version response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DevelocityVersion'
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
   examples:
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
     UnexpectedErrorApiProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:unexpected-error
@@ -147,11 +149,6 @@ components:
 
           '
         status: 500
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http
