@@ -137,25 +137,34 @@ paths:
         '500':
           $ref: '#/components/responses/UnexpectedError'
 components:
+  examples:
+    NodeNotSignedInProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:node-not-signed-in
+        title: Node with name not-signed-in-node1 must be signed-in before this operation can be performed.
+        status: 503
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
   responses:
-    BadRequestError:
-      description: The request cannot be fulfilled due to a problem.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/RequestValidationApiProblemExample'
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
     NotFoundError:
       description: The referenced resource either does not exist or the permissions to know about it are missing.
       content:
@@ -174,22 +183,25 @@ components:
           examples:
             NodeNotSignedInResponse:
               $ref: '#/components/examples/NodeNotSignedInProblemExample'
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
   schemas:
-    ReplicationConfiguration:
-      description: Cached data replication configuration description. May be `null` if replication is not configured.
-      type:
-      - object
-      - 'null'
-      required:
-      - source
-      - preemptive
-      properties:
-        source:
-          type: string
-          description: The name of the Build Cache Node which is the source of data.
-        preemptive:
-          type: boolean
-          description: Indicates if preemptive replication is enabled from the source.
     ApiProblem:
       type: object
       description: 'Response detailing why a request was rejected.
@@ -216,6 +228,21 @@ components:
           - string
           - 'null'
           description: A longer and comprehensive description of the problem. May be `null` if not available.
+    ReplicationConfiguration:
+      description: Cached data replication configuration description. May be `null` if replication is not configured.
+      type:
+      - object
+      - 'null'
+      required:
+      - source
+      - preemptive
+      properties:
+        source:
+          type: string
+          description: The name of the Build Cache Node which is the source of data.
+        preemptive:
+          type: boolean
+          description: Indicates if preemptive replication is enabled from the source.
     NodeConfiguration:
       description: A Build Cache Node configuration description.
       type: object
@@ -240,33 +267,6 @@ components:
         secret:
           type: string
           description: The secret associated with the Build Cache Node.
-  examples:
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
-    RequestValidationApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:validation
-        title: Request validation failed.
-        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
-
-          '
-        status: 400
-    UnexpectedErrorApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:unexpected-error
-        title: Encountered an internal server error.
-        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
-
-          '
-        status: 500
-    NodeNotSignedInProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:node-not-signed-in
-        title: Node with name not-signed-in-node1 must be signed-in before this operation can be performed.
-        status: 503
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http

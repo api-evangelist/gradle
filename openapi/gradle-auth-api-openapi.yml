@@ -108,6 +108,110 @@ paths:
         '500':
           $ref: '#/components/responses/UnexpectedError'
 components:
+  examples:
+    UnauthenticatedExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:client-error
+        title: Something was wrong with the request
+        status: 401
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
+    ForbiddenUserExample:
+      value:
+        type: urn:gradle:enterprise:forbidden
+        title: Insufficient permissions
+        detail: User must have the Administer Projects permission to access this endpoint.
+        status: 403
+  responses:
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    ForbiddenError:
+      description: The authenticated user has insufficient permissions.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            ForbiddenUserResponse:
+              $ref: '#/components/examples/ForbiddenUserExample'
+    AccessTokenForbidden:
+      description: The current user or authenticating access token does not have sufficient access or lifetime to create the requested access token.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            MissingPermissionResponse:
+              value:
+                type: urn:gradle:enterprise:api:problems:forbidden
+                title: Missing requested permission.
+                detail: The permissions [administerGe] were requested for the access token, but were not granted to this user.
+                status: 403
+            MissingProjectResponse:
+              value:
+                type: urn:gradle:enterprise:api:problems:forbidden
+                title: Missing requested projects.
+                detail: The projects [project-a, project-b] were requested for the access token, but were not assigned to this user.
+                status: 403
+            InsufficientLifetimeResponse:
+              value:
+                type: urn:gradle:enterprise:api:problems:forbidden
+                title: Requested expiration exceeds current.
+                detail: The access token used to authenticate this request expires at 2024-02-14T01:44:51.225701Z, which is sooner than the requested expiration time of PT12H from now.
+                status: 403
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    UnauthenticatedError:
+      description: Something was wrong with the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/UnauthenticatedExample'
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
   schemas:
     ProjectId:
       type: string
@@ -147,110 +251,6 @@ components:
       minLength: 1
       maxLength: 256
       pattern: ^\S+$
-  responses:
-    ForbiddenError:
-      description: The authenticated user has insufficient permissions.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            ForbiddenUserResponse:
-              $ref: '#/components/examples/ForbiddenUserExample'
-    AccessTokenForbidden:
-      description: The current user or authenticating access token does not have sufficient access or lifetime to create the requested access token.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            MissingPermissionResponse:
-              value:
-                type: urn:gradle:enterprise:api:problems:forbidden
-                title: Missing requested permission.
-                detail: The permissions [administerGe] were requested for the access token, but were not granted to this user.
-                status: 403
-            MissingProjectResponse:
-              value:
-                type: urn:gradle:enterprise:api:problems:forbidden
-                title: Missing requested projects.
-                detail: The projects [project-a, project-b] were requested for the access token, but were not assigned to this user.
-                status: 403
-            InsufficientLifetimeResponse:
-              value:
-                type: urn:gradle:enterprise:api:problems:forbidden
-                title: Requested expiration exceeds current.
-                detail: The access token used to authenticate this request expires at 2024-02-14T01:44:51.225701Z, which is sooner than the requested expiration time of PT12H from now.
-                status: 403
-    BadRequestError:
-      description: The request cannot be fulfilled due to a problem.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/RequestValidationApiProblemExample'
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
-    UnauthenticatedError:
-      description: Something was wrong with the request.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/UnauthenticatedExample'
-    NotFoundError:
-      description: The referenced resource either does not exist or the permissions to know about it are missing.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NotFoundResponse:
-              $ref: '#/components/examples/NotFoundApiProblemExample'
-  examples:
-    ForbiddenUserExample:
-      value:
-        type: urn:gradle:enterprise:forbidden
-        title: Insufficient permissions
-        detail: User must have the Administer Projects permission to access this endpoint.
-        status: 403
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
-    RequestValidationApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:validation
-        title: Request validation failed.
-        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
-
-          '
-        status: 400
-    UnauthenticatedExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:client-error
-        title: Something was wrong with the request
-        status: 401
-    UnexpectedErrorApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:unexpected-error
-        title: Encountered an internal server error.
-        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
-
-          '
-        status: 500
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http

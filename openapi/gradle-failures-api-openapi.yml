@@ -153,52 +153,90 @@ paths:
           $ref: '#/components/responses/UnexpectedError'
 components:
   schemas:
-    TestId:
+    FailureGroupsQuery:
       type: object
-      description: Information required to uniquely identify a test.
       required:
-      - workUnitName
-      - suiteName
+      - query
       properties:
-        workUnitName:
+        failureTypes:
+          type: array
+          description: Allows restricting the search to failure types. By default all failure types are considered.
+          default:
+          - build
+          - test
+          items:
+            $ref: '#/components/schemas/FailureType'
+        query:
           type: string
-          description: Work unit name that executed the test.
-        suiteName:
-          type: string
-          description: Suite name of the test, in most cases the class name.
-        testName:
+          description: 'A query for filtering the builds considered for failure groups, written in the Develocity advanced search query language.
+
+            The query must contain a restriction on `buildStartTime` to ensure the search is bounded in time.
+
+            See: https://gradle.com/help/advanced-search
+
+            '
+        maxFailureGroups:
+          description: The maximum number of failure groups to return.
+          type: integer
+          format: int32
+          default: 100
+          minimum: 1
+          maximum: 1000
+        maxBuildIdsPerGroup:
+          description: The maximum number of buildIds to return in a given FailureGroup.
+          type: integer
+          format: int32
+          default: 20
+          minimum: 1
+          maximum: 1000
+    FailureType:
+      type: string
+      enum:
+      - build
+      - test
+    NpmFailures:
+      type:
+      - object
+      - 'null'
+      description: The build and test failures of an npm build. `null` if the build is not an npm build.
+      properties:
+        buildFailures:
+          description: A list of build failures.
+          items:
+            $ref: '#/components/schemas/NpmBuildFailure'
+          type: array
+        testFailures:
+          description: A list of test failures. `null` if tests are not captured.
+          items:
+            $ref: '#/components/schemas/TestFailure'
           type:
-          - string
+          - array
           - 'null'
-          description: Name of the test. `null` when the test is a suite.
-    BuildFailuresQuery:
-      allOf:
-      - $ref: '#/components/schemas/BuildModelQuery'
-      - type: object
-        properties:
-          maxFailures:
-            type: integer
-            format: int32
-            minimum: 1
-            maximum: 1000
-            default: 100
-            description: The maximum number of failures to return for each failure list independently. This limit applies separately to the buildFailures and testFailures lists.
-    TestFailure:
+    NpmBuildFailure:
       type: object
       required:
-      - id
+      - header
       - message
       properties:
-        id:
-          $ref: '#/components/schemas/TestId'
+        header:
+          type: string
+          description: Failure header.
         message:
           type: string
           description: Failure message.
+        relevantLog:
+          type:
+          - string
+          - 'null'
+          description: Relevant console log. `null` if no relevant console log has been found.
+        processName:
+          type: string
+          description: The full process name (executable name and parameters) for which this failure was detected.
         stacktrace:
           type:
           - string
           - 'null'
-          description: The failure stacktrace. `null` if there is no stacktrace available.
+          description: The stacktrace of this failure. `null` if there is no stacktrace available.
     FailureGroup:
       type: object
       description: 'A failure group.
@@ -241,181 +279,6 @@ components:
           description: Build Scan IDs for builds that contain failures that belong to this failure group.
           items:
             type: string
-    FailureGroupsQuery:
-      type: object
-      required:
-      - query
-      properties:
-        failureTypes:
-          type: array
-          description: Allows restricting the search to failure types. By default all failure types are considered.
-          default:
-          - build
-          - test
-          items:
-            $ref: '#/components/schemas/FailureType'
-        query:
-          type: string
-          description: 'A query for filtering the builds considered for failure groups, written in the Develocity advanced search query language.
-
-            The query must contain a restriction on `buildStartTime` to ensure the search is bounded in time.
-
-            See: https://gradle.com/help/advanced-search
-
-            '
-        maxFailureGroups:
-          description: The maximum number of failure groups to return.
-          type: integer
-          format: int32
-          default: 100
-          minimum: 1
-          maximum: 1000
-        maxBuildIdsPerGroup:
-          description: The maximum number of buildIds to return in a given FailureGroup.
-          type: integer
-          format: int32
-          default: 20
-          minimum: 1
-          maximum: 1000
-    MavenBuildFailure:
-      type: object
-      required:
-      - header
-      - message
-      properties:
-        header:
-          type: string
-          description: Failure header.
-        message:
-          type: string
-          description: Failure message.
-        relevantLog:
-          type:
-          - string
-          - 'null'
-          description: Relevant console log. `null` if no relevant console log has been found.
-        goalExecutionId:
-          type:
-          - string
-          - 'null'
-          description: The goal execution id associated with this failure. `null` if no goal execution is associated with the failure.
-        stacktrace:
-          type:
-          - string
-          - 'null'
-          description: The stacktrace of this failure. `null` if there is no stacktrace available.
-    Failure:
-      type: object
-      description: 'An individual failure instance.
-
-        '
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: The failure message.
-        relevantLog:
-          type:
-          - string
-          - 'null'
-          description: Relevant console log. `null` if no relevant console log has been found.
-    MavenFailures:
-      type:
-      - object
-      - 'null'
-      description: The build and test failures of a Maven build. `null` if the build is not a Maven build.
-      properties:
-        buildFailures:
-          description: A list of build failures.
-          items:
-            $ref: '#/components/schemas/MavenBuildFailure'
-          type: array
-        testFailures:
-          description: A list of test failures. `null` if tests are not captured.
-          items:
-            $ref: '#/components/schemas/TestFailure'
-          type:
-          - array
-          - 'null'
-    GradleFailures:
-      type:
-      - object
-      - 'null'
-      description: The build and test failures of a Gradle build. `null` if the build is not a Gradle build.
-      properties:
-        buildFailures:
-          description: A list of build failures.
-          items:
-            $ref: '#/components/schemas/GradleBuildFailure'
-          type: array
-        testFailures:
-          description: A list of test failures. `null` if tests are not captured.
-          items:
-            $ref: '#/components/schemas/TestFailure'
-          type:
-          - array
-          - 'null'
-    BuildModelQuery:
-      type: object
-      properties:
-        availabilityWaitTimeoutSecs:
-          $ref: '#/components/schemas/AvailabilityWaitTimeoutSecs'
-    BuildFailures:
-      type: object
-      description: 'The unified failures response for a build, containing build tool-specific failure information.
-
-        Each build tool (gradle, maven, npm) has its own nested object with failures if applicable for that build.
-
-        '
-      required:
-      - buildToolType
-      properties:
-        buildToolType:
-          type: string
-          description: The build tool type of the build.
-        gradle:
-          $ref: '#/components/schemas/GradleFailures'
-        maven:
-          $ref: '#/components/schemas/MavenFailures'
-        npm:
-          $ref: '#/components/schemas/NpmFailures'
-    NpmBuildFailure:
-      type: object
-      required:
-      - header
-      - message
-      properties:
-        header:
-          type: string
-          description: Failure header.
-        message:
-          type: string
-          description: Failure message.
-        relevantLog:
-          type:
-          - string
-          - 'null'
-          description: Relevant console log. `null` if no relevant console log has been found.
-        processName:
-          type: string
-          description: The full process name (executable name and parameters) for which this failure was detected.
-        stacktrace:
-          type:
-          - string
-          - 'null'
-          description: The stacktrace of this failure. `null` if there is no stacktrace available.
-    FailureGroupsResponse:
-      type: object
-      description: A list of failure groups.
-      required:
-      - content
-      properties:
-        content:
-          type: array
-          description: A list of failure groups.
-          items:
-            $ref: '#/components/schemas/FailureGroup'
     ApiProblem:
       type: object
       description: 'Response detailing why a request was rejected.
@@ -442,28 +305,41 @@ components:
           - string
           - 'null'
           description: A longer and comprehensive description of the problem. May be `null` if not available.
-    AvailabilityWaitTimeoutSecs:
-      type: integer
-      minimum: 0
-      description: The time in seconds the server should wait for ingestion before returning a wait timeout response.
-    NpmFailures:
-      type:
-      - object
-      - 'null'
-      description: The build and test failures of an npm build. `null` if the build is not an npm build.
+    BuildFailures:
+      type: object
+      description: 'The unified failures response for a build, containing build tool-specific failure information.
+
+        Each build tool (gradle, maven, npm) has its own nested object with failures if applicable for that build.
+
+        '
+      required:
+      - buildToolType
       properties:
-        buildFailures:
-          description: A list of build failures.
-          items:
-            $ref: '#/components/schemas/NpmBuildFailure'
-          type: array
-        testFailures:
-          description: A list of test failures. `null` if tests are not captured.
-          items:
-            $ref: '#/components/schemas/TestFailure'
+        buildToolType:
+          type: string
+          description: The build tool type of the build.
+        gradle:
+          $ref: '#/components/schemas/GradleFailures'
+        maven:
+          $ref: '#/components/schemas/MavenFailures'
+        npm:
+          $ref: '#/components/schemas/NpmFailures'
+    Failure:
+      type: object
+      description: 'An individual failure instance.
+
+        '
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: The failure message.
+        relevantLog:
           type:
-          - array
+          - string
           - 'null'
+          description: Relevant console log. `null` if no relevant console log has been found.
     GradleBuildFailure:
       type: object
       required:
@@ -496,11 +372,135 @@ components:
           - string
           - 'null'
           description: The stacktrace of this failure. `null` if there is no stacktrace available.
-    FailureType:
-      type: string
-      enum:
-      - build
-      - test
+    MavenBuildFailure:
+      type: object
+      required:
+      - header
+      - message
+      properties:
+        header:
+          type: string
+          description: Failure header.
+        message:
+          type: string
+          description: Failure message.
+        relevantLog:
+          type:
+          - string
+          - 'null'
+          description: Relevant console log. `null` if no relevant console log has been found.
+        goalExecutionId:
+          type:
+          - string
+          - 'null'
+          description: The goal execution id associated with this failure. `null` if no goal execution is associated with the failure.
+        stacktrace:
+          type:
+          - string
+          - 'null'
+          description: The stacktrace of this failure. `null` if there is no stacktrace available.
+    TestFailure:
+      type: object
+      required:
+      - id
+      - message
+      properties:
+        id:
+          $ref: '#/components/schemas/TestId'
+        message:
+          type: string
+          description: Failure message.
+        stacktrace:
+          type:
+          - string
+          - 'null'
+          description: The failure stacktrace. `null` if there is no stacktrace available.
+    BuildModelQuery:
+      type: object
+      properties:
+        availabilityWaitTimeoutSecs:
+          $ref: '#/components/schemas/AvailabilityWaitTimeoutSecs'
+    FailureGroupsResponse:
+      type: object
+      description: A list of failure groups.
+      required:
+      - content
+      properties:
+        content:
+          type: array
+          description: A list of failure groups.
+          items:
+            $ref: '#/components/schemas/FailureGroup'
+    BuildFailuresQuery:
+      allOf:
+      - $ref: '#/components/schemas/BuildModelQuery'
+      - type: object
+        properties:
+          maxFailures:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 100
+            description: The maximum number of failures to return for each failure list independently. This limit applies separately to the buildFailures and testFailures lists.
+    TestId:
+      type: object
+      description: Information required to uniquely identify a test.
+      required:
+      - workUnitName
+      - suiteName
+      properties:
+        workUnitName:
+          type: string
+          description: Work unit name that executed the test.
+        suiteName:
+          type: string
+          description: Suite name of the test, in most cases the class name.
+        testName:
+          type:
+          - string
+          - 'null'
+          description: Name of the test. `null` when the test is a suite.
+    MavenFailures:
+      type:
+      - object
+      - 'null'
+      description: The build and test failures of a Maven build. `null` if the build is not a Maven build.
+      properties:
+        buildFailures:
+          description: A list of build failures.
+          items:
+            $ref: '#/components/schemas/MavenBuildFailure'
+          type: array
+        testFailures:
+          description: A list of test failures. `null` if tests are not captured.
+          items:
+            $ref: '#/components/schemas/TestFailure'
+          type:
+          - array
+          - 'null'
+    AvailabilityWaitTimeoutSecs:
+      type: integer
+      minimum: 0
+      description: The time in seconds the server should wait for ingestion before returning a wait timeout response.
+    GradleFailures:
+      type:
+      - object
+      - 'null'
+      description: The build and test failures of a Gradle build. `null` if the build is not a Gradle build.
+      properties:
+        buildFailures:
+          description: A list of build failures.
+          items:
+            $ref: '#/components/schemas/GradleBuildFailure'
+          type: array
+        testFailures:
+          description: A list of test failures. `null` if tests are not captured.
+          items:
+            $ref: '#/components/schemas/TestFailure'
+          type:
+          - array
+          - 'null'
   responses:
     NotFoundError:
       description: The referenced resource either does not exist or the permissions to know about it are missing.
@@ -520,15 +520,6 @@ components:
           examples:
             IngestionNotCompletedResponse:
               $ref: '#/components/examples/IngestionNotCompletedApiProblemExample'
-    BadRequestError:
-      description: The request cannot be fulfilled due to a problem.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/RequestValidationApiProblemExample'
     UnexpectedError:
       description: The server encountered an unexpected error.
       content:
@@ -538,23 +529,16 @@ components:
           examples:
             UnexpectedErrorResponse:
               $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
   examples:
-    UnexpectedErrorApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:unexpected-error
-        title: Encountered an internal server error.
-        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
-
-          '
-        status: 500
-    RequestValidationApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:validation
-        title: Request validation failed.
-        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
-
-          '
-        status: 400
     NotFoundApiProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:not-found
@@ -568,6 +552,22 @@ components:
 
           '
         status: 503
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http
