@@ -38,38 +38,51 @@ paths:
         '500':
           $ref: '#/components/responses/UnexpectedError'
 components:
+  responses:
+    SuccessfulVersionResponse:
+      description: Successful version response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DevelocityVersion'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+  examples:
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
+    UnexpectedErrorApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
   schemas:
     DevelocityVersion:
       title: DevelocityVersion
       type: object
       allOf:
       - $ref: '#/components/schemas/GradleEnterpriseVersion'
-    ApiProblem:
-      type: object
-      description: 'Response detailing why a request was rejected.
-
-        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
-
-        '
-      required:
-      - type
-      - title
-      - status
-      properties:
-        status:
-          type: integer
-          description: HTTP status code of the problem response.
-        type:
-          type: string
-          description: A URN (Uniform Resource Name) identifying the type of the problem.
-        title:
-          type: string
-          description: The underlying reason for the problem.
-        detail:
-          type:
-          - string
-          - 'null'
-          description: A longer and comprehensive description of the problem. May be `null` if not available.
     GradleEnterpriseVersion:
       title: GradleEnterpriseVersion
       type: object
@@ -110,45 +123,32 @@ components:
             year: 2022
             release: 3
             patch: 1
-  examples:
-    UnexpectedErrorApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:unexpected-error
-        title: Encountered an internal server error.
-        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
 
-          '
-        status: 500
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
-  responses:
-    NotFoundError:
-      description: The referenced resource either does not exist or the permissions to know about it are missing.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NotFoundResponse:
-              $ref: '#/components/examples/NotFoundApiProblemExample'
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
-    SuccessfulVersionResponse:
-      description: Successful version response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DevelocityVersion'
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type:
+          - string
+          - 'null'
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http

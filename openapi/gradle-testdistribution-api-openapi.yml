@@ -423,7 +423,45 @@ paths:
         '404':
           $ref: '#/components/responses/UnauthorizedOrNotFoundError'
 components:
+  responses:
+    BadRequest:
+      description: The request body is malformed or contains invalid values for at least one of the properties.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            CapabilityValidationProblemResponse:
+              $ref: '#/components/examples/CapabilityValidationProblemExample'
+    UnauthorizedOrNotFoundError:
+      description: No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.
+    ForbiddenError:
+      description: The authenticated user has insufficient permissions.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            ForbiddenUserResponse:
+              $ref: '#/components/examples/ForbiddenUserExample'
   schemas:
+    TestDistributionAgentPoolRegistrationKey:
+      description: A Test Distribution pool-specific agent registration key.
+      type: object
+      required:
+      - key
+      properties:
+        key:
+          type: string
+          minLength: 52
+          maxLength: 52
+          pattern: ^[a-z2-7]{52}$
+          description: The agent API key.
+        description:
+          type: string
+          maxLength: 100
+          description: Description of the registration key to help identify it later.
+          example: Used by xyz
     TestDistributionAgentPoolRegistrationKeyDescription:
       description: Optional description of a Test Distribution pool-specific agent registration key.
       type: object
@@ -433,66 +471,6 @@ components:
           maxLength: 100
           description: Description of the registration key to help identify it later.
           example: Used by xyz
-    TestDistributionAgentPoolRegistrationKeyPrefixPage:
-      description: A list of Test Distribution pool-specific agent registration key prefixes.
-      type: object
-      required:
-      - content
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKeyPrefix'
-    TestDistributionAgentPoolRegistrationKeyPrefix:
-      description: A Test Distribution pool-specific agent registration key prefix.
-      type: object
-      required:
-      - keyPrefix
-      - createdAt
-      properties:
-        keyPrefix:
-          type: string
-          minLength: 26
-          maxLength: 26
-          pattern: ^[a-z2-7]{26}$
-          description: The registration key prefix.
-        description:
-          type: string
-          maxLength: 100
-          description: Description of the registration key to help identify it later.
-          example: Used by xyz
-        createdAt:
-          type: string
-          format: date-time
-          description: When the key was created
-        lastUsedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: When the key was last used
-        lastUsedBy:
-          type:
-          - string
-          - 'null'
-          description: Who used the key last
-        revokedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: When the key was revoked, a non-null value implies that the key is revoked and can no longer be used to authenticate.
-    TestDistributionAgentPoolPage:
-      description: A list of agent pools.
-      type: object
-      required:
-      - content
-      properties:
-        content:
-          type: array
-          description: A list of agent pool IDs.
-          items:
-            $ref: '#/components/schemas/TestDistributionAgentPoolConfigurationWithId'
     TestDistributionAgentPoolConfigurationWithId:
       description: An agent pool configuration.
       type: object
@@ -556,39 +534,23 @@ components:
             type: string
             pattern: ^[^\\s]{1,215}$
             example: project-group-a
-    TestDistributionAgentPoolStatus:
-      description: The status of an agent pool.
+    TestDistributionAgentPoolId:
+      description: The unique identifier of the agent pool.
+      type: string
+      minLength: 8
+      maxLength: 8
+      pattern: ^[a-z2-7]{8}$
+    TestDistributionAgentPoolPage:
+      description: A list of agent pools.
       type: object
       required:
-      - id
-      - name
-      - minimumSize
-      - maximumSize
-      - connectedAgents
-      - idleAgents
-      - desiredAgents
+      - content
       properties:
-        id:
-          $ref: '#/components/schemas/TestDistributionAgentPoolId'
-        name:
-          type: string
-          description: The alias or display name of the agent pool.
-          minLength: 1
-        minimumSize:
-          type: integer
-          format: int32
-        maximumSize:
-          type: integer
-          format: int32
-        connectedAgents:
-          type: integer
-          format: int32
-        idleAgents:
-          type: integer
-          format: int32
-        desiredAgents:
-          type: integer
-          format: int32
+        content:
+          type: array
+          description: A list of agent pool IDs.
+          items:
+            $ref: '#/components/schemas/TestDistributionAgentPoolConfigurationWithId'
     ApiProblem:
       type: object
       description: 'Response detailing why a request was rejected.
@@ -615,29 +577,6 @@ components:
           - string
           - 'null'
           description: A longer and comprehensive description of the problem. May be `null` if not available.
-    TestDistributionAgentPoolRegistrationKey:
-      description: A Test Distribution pool-specific agent registration key.
-      type: object
-      required:
-      - key
-      properties:
-        key:
-          type: string
-          minLength: 52
-          maxLength: 52
-          pattern: ^[a-z2-7]{52}$
-          description: The agent API key.
-        description:
-          type: string
-          maxLength: 100
-          description: Description of the registration key to help identify it later.
-          example: Used by xyz
-    TestDistributionAgentPoolId:
-      description: The unique identifier of the agent pool.
-      type: string
-      minLength: 8
-      maxLength: 8
-      pattern: ^[a-z2-7]{8}$
     TestDistributionAgentPoolConfiguration:
       description: An agent pool configuration.
       type: object
@@ -699,40 +638,101 @@ components:
             type: string
             pattern: ^[^\\s]{1,215}$
             example: project-group-a
-  responses:
-    UnauthorizedOrNotFoundError:
-      description: No API key was specified in the request, the key has been revoked, or the user bearing the key lacks permissions for this operation.
-    BadRequest:
-      description: The request body is malformed or contains invalid values for at least one of the properties.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            CapabilityValidationProblemResponse:
-              $ref: '#/components/examples/CapabilityValidationProblemExample'
-    ForbiddenError:
-      description: The authenticated user has insufficient permissions.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            ForbiddenUserResponse:
-              $ref: '#/components/examples/ForbiddenUserExample'
+    TestDistributionAgentPoolRegistrationKeyPrefix:
+      description: A Test Distribution pool-specific agent registration key prefix.
+      type: object
+      required:
+      - keyPrefix
+      - createdAt
+      properties:
+        keyPrefix:
+          type: string
+          minLength: 26
+          maxLength: 26
+          pattern: ^[a-z2-7]{26}$
+          description: The registration key prefix.
+        description:
+          type: string
+          maxLength: 100
+          description: Description of the registration key to help identify it later.
+          example: Used by xyz
+        createdAt:
+          type: string
+          format: date-time
+          description: When the key was created
+        lastUsedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the key was last used
+        lastUsedBy:
+          type:
+          - string
+          - 'null'
+          description: Who used the key last
+        revokedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the key was revoked, a non-null value implies that the key is revoked and can no longer be used to authenticate.
+    TestDistributionAgentPoolStatus:
+      description: The status of an agent pool.
+      type: object
+      required:
+      - id
+      - name
+      - minimumSize
+      - maximumSize
+      - connectedAgents
+      - idleAgents
+      - desiredAgents
+      properties:
+        id:
+          $ref: '#/components/schemas/TestDistributionAgentPoolId'
+        name:
+          type: string
+          description: The alias or display name of the agent pool.
+          minLength: 1
+        minimumSize:
+          type: integer
+          format: int32
+        maximumSize:
+          type: integer
+          format: int32
+        connectedAgents:
+          type: integer
+          format: int32
+        idleAgents:
+          type: integer
+          format: int32
+        desiredAgents:
+          type: integer
+          format: int32
+    TestDistributionAgentPoolRegistrationKeyPrefixPage:
+      description: A list of Test Distribution pool-specific agent registration key prefixes.
+      type: object
+      required:
+      - content
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestDistributionAgentPoolRegistrationKeyPrefix'
   examples:
-    CapabilityValidationProblemExample:
-      value:
-        type: urn:gradle:enterprise:validation
-        title: Invalid request parameters
-        detail: One or more capabilities have an invalid format.
-        status: 400
     ForbiddenUserExample:
       value:
         type: urn:gradle:enterprise:forbidden
         title: Insufficient permissions
         detail: User must have the Administer Projects permission to access this endpoint.
         status: 403
+    CapabilityValidationProblemExample:
+      value:
+        type: urn:gradle:enterprise:validation
+        title: Invalid request parameters
+        detail: One or more capabilities have an invalid format.
+        status: 400
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http
