@@ -137,25 +137,49 @@ paths:
         '500':
           $ref: '#/components/responses/UnexpectedError'
 components:
+  responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    NodeNotSignedInError:
+      description: The node was not signed in with Develocity.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NodeNotSignedInResponse:
+              $ref: '#/components/examples/NodeNotSignedInProblemExample'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    BadRequestError:
+      description: The request cannot be fulfilled due to a problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/RequestValidationApiProblemExample'
   examples:
     NodeNotSignedInProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:node-not-signed-in
         title: Node with name not-signed-in-node1 must be signed-in before this operation can be performed.
         status: 503
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
-    RequestValidationApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:validation
-        title: Request validation failed.
-        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
-
-          '
-        status: 400
     UnexpectedErrorApiProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:unexpected-error
@@ -164,35 +188,20 @@ components:
 
           '
         status: 500
+    RequestValidationApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:validation
+        title: Request validation failed.
+        detail: 'Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).
+
+          '
+        status: 400
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
   schemas:
-    KeySecretPair:
-      description: A Build Cache Node key and secret pair.
-      type: object
-      required:
-      - key
-      - secret
-      properties:
-        key:
-          type: string
-          description: A unique identifier for the Build Cache Node in Develocity.
-        secret:
-          type: string
-          description: The secret associated with the Build Cache Node.
-    ReplicationConfiguration:
-      description: Cached data replication configuration description. May be `null` if replication is not configured.
-      type:
-      - object
-      - 'null'
-      required:
-      - source
-      - preemptive
-      properties:
-        source:
-          type: string
-          description: The name of the Build Cache Node which is the source of data.
-        preemptive:
-          type: boolean
-          description: Indicates if preemptive replication is enabled from the source.
     ApiProblem:
       type: object
       description: 'Response detailing why a request was rejected.
@@ -230,43 +239,34 @@ components:
           description: Indicates if the Build Cache Node is enabled.
         replication:
           $ref: '#/components/schemas/ReplicationConfiguration'
-  responses:
-    BadRequestError:
-      description: The request cannot be fulfilled due to a problem.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/RequestValidationApiProblemExample'
-    NotFoundError:
-      description: The referenced resource either does not exist or the permissions to know about it are missing.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NotFoundResponse:
-              $ref: '#/components/examples/NotFoundApiProblemExample'
-    NodeNotSignedInError:
-      description: The node was not signed in with Develocity.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NodeNotSignedInResponse:
-              $ref: '#/components/examples/NodeNotSignedInProblemExample'
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    KeySecretPair:
+      description: A Build Cache Node key and secret pair.
+      type: object
+      required:
+      - key
+      - secret
+      properties:
+        key:
+          type: string
+          description: A unique identifier for the Build Cache Node in Develocity.
+        secret:
+          type: string
+          description: The secret associated with the Build Cache Node.
+    ReplicationConfiguration:
+      description: Cached data replication configuration description. May be `null` if replication is not configured.
+      type:
+      - object
+      - 'null'
+      required:
+      - source
+      - preemptive
+      properties:
+        source:
+          type: string
+          description: The name of the Build Cache Node which is the source of data.
+        preemptive:
+          type: boolean
+          description: Indicates if preemptive replication is enabled from the source.
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http

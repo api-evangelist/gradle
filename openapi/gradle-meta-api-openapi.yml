@@ -39,6 +39,15 @@ paths:
           $ref: '#/components/responses/UnexpectedError'
 components:
   responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
     SuccessfulVersionResponse:
       description: Successful version response
       content:
@@ -54,21 +63,7 @@ components:
           examples:
             NotFoundResponse:
               $ref: '#/components/examples/NotFoundApiProblemExample'
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
   examples:
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
     UnexpectedErrorApiProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:unexpected-error
@@ -77,12 +72,38 @@ components:
 
           '
         status: 500
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
   schemas:
-    DevelocityVersion:
-      title: DevelocityVersion
+    ApiProblem:
       type: object
-      allOf:
-      - $ref: '#/components/schemas/GradleEnterpriseVersion'
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
+          type:
+          - string
+          - 'null'
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
     GradleEnterpriseVersion:
       title: GradleEnterpriseVersion
       type: object
@@ -123,32 +144,11 @@ components:
             year: 2022
             release: 3
             patch: 1
-    ApiProblem:
+    DevelocityVersion:
+      title: DevelocityVersion
       type: object
-      description: 'Response detailing why a request was rejected.
-
-        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
-
-        '
-      required:
-      - type
-      - title
-      - status
-      properties:
-        status:
-          type: integer
-          description: HTTP status code of the problem response.
-        type:
-          type: string
-          description: A URN (Uniform Resource Name) identifying the type of the problem.
-        title:
-          type: string
-          description: The underlying reason for the problem.
-        detail:
-          type:
-          - string
-          - 'null'
-          description: A longer and comprehensive description of the problem. May be `null` if not available.
+      allOf:
+      - $ref: '#/components/schemas/GradleEnterpriseVersion'
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http

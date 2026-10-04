@@ -109,6 +109,33 @@ paths:
           $ref: '#/components/responses/UnexpectedError'
 components:
   responses:
+    UnexpectedError:
+      description: The server encountered an unexpected error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            UnexpectedErrorResponse:
+              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
+    NotFoundError:
+      description: The referenced resource either does not exist or the permissions to know about it are missing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            NotFoundResponse:
+              $ref: '#/components/examples/NotFoundApiProblemExample'
+    UnauthenticatedError:
+      description: Something was wrong with the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            RequestValidationApiProblemResponse:
+              $ref: '#/components/examples/UnauthenticatedExample'
     BadRequestError:
       description: The request cannot be fulfilled due to a problem.
       content:
@@ -143,15 +170,6 @@ components:
                 title: Requested expiration exceeds current.
                 detail: The access token used to authenticate this request expires at 2024-02-14T01:44:51.225701Z, which is sooner than the requested expiration time of PT12H from now.
                 status: 403
-    NotFoundError:
-      description: The referenced resource either does not exist or the permissions to know about it are missing.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            NotFoundResponse:
-              $ref: '#/components/examples/NotFoundApiProblemExample'
     ForbiddenError:
       description: The authenticated user has insufficient permissions.
       content:
@@ -161,30 +179,7 @@ components:
           examples:
             ForbiddenUserResponse:
               $ref: '#/components/examples/ForbiddenUserExample'
-    UnexpectedError:
-      description: The server encountered an unexpected error.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            UnexpectedErrorResponse:
-              $ref: '#/components/examples/UnexpectedErrorApiProblemExample'
-    UnauthenticatedError:
-      description: Something was wrong with the request.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            RequestValidationApiProblemResponse:
-              $ref: '#/components/examples/UnauthenticatedExample'
   examples:
-    NotFoundApiProblemExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
     UnexpectedErrorApiProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:unexpected-error
@@ -201,24 +196,23 @@ components:
 
           '
         status: 400
+    UnauthenticatedExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:client-error
+        title: Something was wrong with the request
+        status: 401
+    NotFoundApiProblemExample:
+      value:
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
     ForbiddenUserExample:
       value:
         type: urn:gradle:enterprise:forbidden
         title: Insufficient permissions
         detail: User must have the Administer Projects permission to access this endpoint.
         status: 403
-    UnauthenticatedExample:
-      value:
-        type: urn:gradle:enterprise:api:problems:client-error
-        title: Something was wrong with the request
-        status: 401
   schemas:
-    ProjectId:
-      type: string
-      description: The unique identifier for the project. Must not contain whitespace.
-      minLength: 1
-      maxLength: 256
-      pattern: ^\S+$
     ApiProblem:
       type: object
       description: 'Response detailing why a request was rejected.
@@ -248,6 +242,12 @@ components:
     Permission:
       type: string
       description: A permission [config value](https://gradle.com/help/helm-admin-permissions).
+      minLength: 1
+      maxLength: 256
+      pattern: ^\S+$
+    ProjectId:
+      type: string
+      description: The unique identifier for the project. Must not contain whitespace.
       minLength: 1
       maxLength: 256
       pattern: ^\S+$
