@@ -224,6 +224,9 @@ apis:
   - type: APIReference
     url: https://docs.develocity.ai/2026.2/reference/develocity-api/
 common:
+- type: CapabilityMap
+  url: capabilities/gradle-capability-edges.yml
+  name: Gradle Business Capability Map
 - type: DeveloperPortal
   url: https://docs.develocity.ai/
 - type: Documentation
