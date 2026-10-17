@@ -173,80 +173,162 @@ paths:
           $ref: '#/components/responses/NotReadyError'
 components:
   schemas:
-    ComparisonFileChild:
+    ComparisonActions:
       type: object
-      description: A child entry in a file input comparison tree.
+      description: Comparison of task actions (Gradle only).
       required:
-      - path
+      - doFirstActions
+      - doLastActions
+      properties:
+        doFirstActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonAction'
+        doLastActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonAction'
+    ComparisonFileRoot:
+      type: object
+      description: A root directory in a file input comparison.
+      required:
+      - root
       - presence
       properties:
-        path:
-          type: string
-          description: The child path relative to its parent.
+        root:
+          $ref: '#/components/schemas/ComparisonFileRootInfo'
         presence:
           $ref: '#/components/schemas/ComparisonPresence'
-          description: Whether this child is in one or both builds.
+          description: Whether this root is in one or both builds.
         status:
           type:
           - string
           - 'null'
-          description: The comparison status of this child. Only present when `presence` is `IN_BOTH`.
+          description: The comparison status of this root. Only present when `presence` is `IN_BOTH`.
         children:
           type:
           - array
           - 'null'
-          description: Children of this child. Null if this child has no children.
+          description: Child entries of this root. Null if the root has no children.
           items:
             $ref: '#/components/schemas/ComparisonFileChild'
-    ComparisonValueInputChange:
+    ComparisonFileNormalization:
       type: object
-      description: A value input property that differs between builds.
+      description: The normalization strategy for a file input property.
       required:
-      - name
-      - presence
+      - strategy
       properties:
-        name:
+        strategy:
           type: string
-          description: The input property name.
-        presence:
-          $ref: '#/components/schemas/ComparisonPresence'
-          description: Whether this input is in one or both builds.
-    ComparisonFileInputChange:
+          enum:
+          - IGNORED_PATH
+          - NAME_ONLY
+          - RELATIVE_PATH
+          - ABSOLUTE_PATH
+          - COMPILE_CLASSPATH
+          - CLASSPATH
+          description: The fingerprinting strategy.
+        directorySensitivity:
+          type:
+          - string
+          - 'null'
+          enum:
+          - DEFAULT
+          - IGNORE
+          - UNKNOWN
+          description: 'How empty directories are handled. Null for strategies where it doesn''t apply (COMPILE_CLASSPATH, CLASSPATH).
+
+            '
+        lineEndingSensitivity:
+          type:
+          - string
+          - 'null'
+          enum:
+          - DEFAULT
+          - NORMALIZE
+          - UNKNOWN
+          description: 'How line endings are handled. Null for strategies where it doesn''t apply (COMPILE_CLASSPATH).
+
+            '
+    ComparisonDifferences:
       type: object
-      description: A file input property that differs between builds.
-      required:
-      - name
-      - presence
+      description: Boolean flags indicating which comparison dimensions have differences. Null when the build tool doesn't support the compared dimension.
       properties:
-        name:
-          type: string
-          description: The input property name.
-        presence:
-          $ref: '#/components/schemas/ComparisonPresence'
-          description: Whether this file input property is in one or both builds.
+        workUnitInputs:
+          type:
+          - boolean
+          - 'null'
+          description: Whether there are differences in work unit inputs (task inputs for Gradle, goal inputs for Maven).
+        dependencies:
+          type:
+          - boolean
+          - 'null'
+          description: Whether there are differences in dependencies.
+        buildDependencies:
+          type:
+          - boolean
+          - 'null'
+          description: Whether there are differences in build dependencies.
+        customValues:
+          type:
+          - boolean
+          - 'null'
+          description: Whether there are differences in custom values.
+        switches:
+          type:
+          - boolean
+          - 'null'
+          description: Whether there are differences in switches.
+        infrastructure:
+          type:
+          - boolean
+          - 'null'
+          description: Whether there are differences in infrastructure.
+    ApiProblem:
+      type: object
+      description: 'Response detailing why a request was rejected.
+
+        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
+
+        '
+      required:
+      - type
+      - title
+      - status
+      properties:
         status:
+          type: integer
+          description: HTTP status code of the problem response.
+        type:
+          type: string
+          description: A URN (Uniform Resource Name) identifying the type of the problem.
+        title:
+          type: string
+          description: The underlying reason for the problem.
+        detail:
           type:
           - string
           - 'null'
-          description: The comparison status of this file input property. Only present when `presence` is `IN_BOTH`.
-        normalizationA:
-          $ref: '#/components/schemas/ComparisonFileNormalization'
-          description: Normalization in build A. Null if the file input property is not present in build A.
-        normalizationB:
-          $ref: '#/components/schemas/ComparisonFileNormalization'
-          description: Normalization in build B. Null if the file input property is not present in build B.
-        differenceExplainer:
+          description: A longer and comprehensive description of the problem. May be `null` if not available.
+    ComparisonFileRootInfo:
+      type: object
+      description: Information about a file root.
+      required:
+      - displayPath
+      properties:
+        displayPath:
+          type: string
+          description: Human-friendly representation of the path.
+        realPathA:
           type:
           - string
           - 'null'
-          description: Explanation of the difference. Null if no explanation is provided.
-        roots:
+          description: The real filesystem path in build A. Null when the root is not in build A or when the real path equals displayPath.
+        realPathB:
           type:
-          - array
+          - string
           - 'null'
-          description: File input roots. Null when the file input property is present in one build only.
-          items:
-            $ref: '#/components/schemas/ComparisonFileRoot'
+          description: The real filesystem path in build B. Null when the root is not in build B or when the real path equals displayPath.
     MavenComparisonWorkUnitDetail:
       type: object
       description: Full Maven work unit comparison data including goal identity, difference types, build metadata, and all input/output/action changes.
@@ -309,111 +391,6 @@ components:
           description: Output properties that differ between the builds.
           items:
             $ref: '#/components/schemas/ComparisonOutputChange'
-    ComparisonSummary:
-      type: object
-      description: A summary of differences between two builds.
-      required:
-      - buildToolType
-      - differences
-      properties:
-        buildToolType:
-          $ref: '#/components/schemas/BuildToolType'
-        differences:
-          $ref: '#/components/schemas/ComparisonDifferences'
-    BuildToolType:
-      type: string
-      description: The build tool type.
-      enum:
-      - gradle
-      - maven
-    ApiProblem:
-      type: object
-      description: 'Response detailing why a request was rejected.
-
-        Adheres to the [RFC-7807](https://datatracker.ietf.org/doc/html/rfc7807) standard (colloquially known as "Problem JSON") for the response format.
-
-        '
-      required:
-      - type
-      - title
-      - status
-      properties:
-        status:
-          type: integer
-          description: HTTP status code of the problem response.
-        type:
-          type: string
-          description: A URN (Uniform Resource Name) identifying the type of the problem.
-        title:
-          type: string
-          description: The underlying reason for the problem.
-        detail:
-          type:
-          - string
-          - 'null'
-          description: A longer and comprehensive description of the problem. May be `null` if not available.
-    ComparisonFileNormalization:
-      type: object
-      description: The normalization strategy for a file input property.
-      required:
-      - strategy
-      properties:
-        strategy:
-          type: string
-          enum:
-          - IGNORED_PATH
-          - NAME_ONLY
-          - RELATIVE_PATH
-          - ABSOLUTE_PATH
-          - COMPILE_CLASSPATH
-          - CLASSPATH
-          description: The fingerprinting strategy.
-        directorySensitivity:
-          type:
-          - string
-          - 'null'
-          enum:
-          - DEFAULT
-          - IGNORE
-          - UNKNOWN
-          description: 'How empty directories are handled. Null for strategies where it doesn''t apply (COMPILE_CLASSPATH, CLASSPATH).
-
-            '
-        lineEndingSensitivity:
-          type:
-          - string
-          - 'null'
-          enum:
-          - DEFAULT
-          - NORMALIZE
-          - UNKNOWN
-          description: 'How line endings are handled. Null for strategies where it doesn''t apply (COMPILE_CLASSPATH).
-
-            '
-    ComparisonFileRoot:
-      type: object
-      description: A root directory in a file input comparison.
-      required:
-      - root
-      - presence
-      properties:
-        root:
-          $ref: '#/components/schemas/ComparisonFileRootInfo'
-        presence:
-          $ref: '#/components/schemas/ComparisonPresence'
-          description: Whether this root is in one or both builds.
-        status:
-          type:
-          - string
-          - 'null'
-          description: The comparison status of this root. Only present when `presence` is `IN_BOTH`.
-        children:
-          type:
-          - array
-          - 'null'
-          description: Child entries of this root. Null if the root has no children.
-          items:
-            $ref: '#/components/schemas/ComparisonFileChild'
     ComparisonAction:
       type: object
       description: A task action comparison.
@@ -437,105 +414,6 @@ components:
         hasImplementationChanged:
           type: boolean
           description: Whether the action implementation changed between builds.
-    ComparisonOutputChange:
-      type: object
-      description: An output property that differs between builds.
-      properties:
-        nameA:
-          type:
-          - string
-          - 'null'
-          description: Output property name in build A. Null if not present in build A.
-        nameB:
-          type:
-          - string
-          - 'null'
-          description: Output property name in build B. Null if not present in build B.
-    ComparisonActions:
-      type: object
-      description: Comparison of task actions (Gradle only).
-      required:
-      - doFirstActions
-      - doLastActions
-      properties:
-        doFirstActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComparisonAction'
-        doLastActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComparisonAction'
-    ComparisonDifferenceType:
-      type: string
-      description: The type of difference found in a work unit.
-      enum:
-      - IMPLEMENTATION_CLASS
-      - INPUTS
-      - OUTPUTS
-      - ACTIONS
-    ComparisonFileRootInfo:
-      type: object
-      description: Information about a file root.
-      required:
-      - displayPath
-      properties:
-        displayPath:
-          type: string
-          description: Human-friendly representation of the path.
-        realPathA:
-          type:
-          - string
-          - 'null'
-          description: The real filesystem path in build A. Null when the root is not in build A or when the real path equals displayPath.
-        realPathB:
-          type:
-          - string
-          - 'null'
-          description: The real filesystem path in build B. Null when the root is not in build B or when the real path equals displayPath.
-    ComparisonInputsResponse:
-      type: object
-      description: 'Work unit input comparison response with full detail for each work unit.
-
-        Exactly one of `gradle` or `maven` is set, depending on the build tool type.
-
-        '
-      required:
-      - totalCount
-      - offset
-      - limit
-      properties:
-        omissionReason:
-          type:
-          - string
-          - 'null'
-          description: When present, the work unit input comparison was omitted (e.g. incompatible build agent versions). The message explains why. When omitted, `gradle` or `maven` contains the comparison results.
-        gradle:
-          type:
-          - array
-          - 'null'
-          description: Gradle work units with comparison detail. Null for Maven builds or when `omissionReason` is present.
-          items:
-            $ref: '#/components/schemas/GradleComparisonWorkUnitDetail'
-        maven:
-          type:
-          - array
-          - 'null'
-          description: Maven work units with comparison detail. Null for Gradle builds or when `omissionReason` is present.
-          items:
-            $ref: '#/components/schemas/MavenComparisonWorkUnitDetail'
-        totalCount:
-          type: integer
-          format: int32
-          description: The total number of work units with differences matching the applied filters (before pagination).
-        offset:
-          type: integer
-          format: int32
-          description: The offset of the first work unit in the response.
-        limit:
-          type: integer
-          format: int32
-          description: The maximum number of work units returned.
     GradleComparisonWorkUnitDetail:
       type: object
       description: Full Gradle work unit comparison data including task identity, difference types, build metadata, and all input/output/action changes.
@@ -582,6 +460,91 @@ components:
           description: Output properties that differ between the builds.
           items:
             $ref: '#/components/schemas/ComparisonOutputChange'
+    ComparisonSummary:
+      type: object
+      description: A summary of differences between two builds.
+      required:
+      - buildToolType
+      - differences
+      properties:
+        buildToolType:
+          $ref: '#/components/schemas/BuildToolType'
+        differences:
+          $ref: '#/components/schemas/ComparisonDifferences'
+    ComparisonFileChild:
+      type: object
+      description: A child entry in a file input comparison tree.
+      required:
+      - path
+      - presence
+      properties:
+        path:
+          type: string
+          description: The child path relative to its parent.
+        presence:
+          $ref: '#/components/schemas/ComparisonPresence'
+          description: Whether this child is in one or both builds.
+        status:
+          type:
+          - string
+          - 'null'
+          description: The comparison status of this child. Only present when `presence` is `IN_BOTH`.
+        children:
+          type:
+          - array
+          - 'null'
+          description: Children of this child. Null if this child has no children.
+          items:
+            $ref: '#/components/schemas/ComparisonFileChild'
+    BuildToolType:
+      type: string
+      description: The build tool type.
+      enum:
+      - gradle
+      - maven
+    ComparisonInputsResponse:
+      type: object
+      description: 'Work unit input comparison response with full detail for each work unit.
+
+        Exactly one of `gradle` or `maven` is set, depending on the build tool type.
+
+        '
+      required:
+      - totalCount
+      - offset
+      - limit
+      properties:
+        omissionReason:
+          type:
+          - string
+          - 'null'
+          description: When present, the work unit input comparison was omitted (e.g. incompatible build agent versions). The message explains why. When omitted, `gradle` or `maven` contains the comparison results.
+        gradle:
+          type:
+          - array
+          - 'null'
+          description: Gradle work units with comparison detail. Null for Maven builds or when `omissionReason` is present.
+          items:
+            $ref: '#/components/schemas/GradleComparisonWorkUnitDetail'
+        maven:
+          type:
+          - array
+          - 'null'
+          description: Maven work units with comparison detail. Null for Gradle builds or when `omissionReason` is present.
+          items:
+            $ref: '#/components/schemas/MavenComparisonWorkUnitDetail'
+        totalCount:
+          type: integer
+          format: int32
+          description: The total number of work units with differences matching the applied filters (before pagination).
+        offset:
+          type: integer
+          format: int32
+          description: The offset of the first work unit in the response.
+        limit:
+          type: integer
+          format: int32
+          description: The maximum number of work units returned.
     ComparisonWorkUnitBrief:
       type: object
       description: Brief details about a work unit in one of the compared builds.
@@ -604,40 +567,77 @@ components:
         cacheability:
           type: string
           description: The cacheability status of the work unit.
-    ComparisonDifferences:
+    ComparisonFileInputChange:
       type: object
-      description: Boolean flags indicating which comparison dimensions have differences. Null when the build tool doesn't support the compared dimension.
+      description: A file input property that differs between builds.
+      required:
+      - name
+      - presence
       properties:
-        workUnitInputs:
+        name:
+          type: string
+          description: The input property name.
+        presence:
+          $ref: '#/components/schemas/ComparisonPresence'
+          description: Whether this file input property is in one or both builds.
+        status:
           type:
-          - boolean
+          - string
           - 'null'
-          description: Whether there are differences in work unit inputs (task inputs for Gradle, goal inputs for Maven).
-        dependencies:
+          description: The comparison status of this file input property. Only present when `presence` is `IN_BOTH`.
+        normalizationA:
+          $ref: '#/components/schemas/ComparisonFileNormalization'
+          description: Normalization in build A. Null if the file input property is not present in build A.
+        normalizationB:
+          $ref: '#/components/schemas/ComparisonFileNormalization'
+          description: Normalization in build B. Null if the file input property is not present in build B.
+        differenceExplainer:
           type:
-          - boolean
+          - string
           - 'null'
-          description: Whether there are differences in dependencies.
-        buildDependencies:
+          description: Explanation of the difference. Null if no explanation is provided.
+        roots:
           type:
-          - boolean
+          - array
           - 'null'
-          description: Whether there are differences in build dependencies.
-        customValues:
+          description: File input roots. Null when the file input property is present in one build only.
+          items:
+            $ref: '#/components/schemas/ComparisonFileRoot'
+    ComparisonOutputChange:
+      type: object
+      description: An output property that differs between builds.
+      properties:
+        nameA:
           type:
-          - boolean
+          - string
           - 'null'
-          description: Whether there are differences in custom values.
-        switches:
+          description: Output property name in build A. Null if not present in build A.
+        nameB:
           type:
-          - boolean
+          - string
           - 'null'
-          description: Whether there are differences in switches.
-        infrastructure:
-          type:
-          - boolean
-          - 'null'
-          description: Whether there are differences in infrastructure.
+          description: Output property name in build B. Null if not present in build B.
+    ComparisonValueInputChange:
+      type: object
+      description: A value input property that differs between builds.
+      required:
+      - name
+      - presence
+      properties:
+        name:
+          type: string
+          description: The input property name.
+        presence:
+          $ref: '#/components/schemas/ComparisonPresence'
+          description: Whether this input is in one or both builds.
+    ComparisonDifferenceType:
+      type: string
+      description: The type of difference found in a work unit.
+      enum:
+      - IMPLEMENTATION_CLASS
+      - INPUTS
+      - OUTPUTS
+      - ACTIONS
     ComparisonPresence:
       type: string
       description: Whether a compared item is present in one or both builds.
@@ -646,6 +646,15 @@ components:
       - ONLY_IN_B
       - IN_BOTH
   responses:
+    NotReadyError:
+      description: The server is not ready to handle the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+          examples:
+            IngestionNotCompletedResponse:
+              $ref: '#/components/examples/IngestionNotCompletedApiProblemExample'
     NotFoundError:
       description: The referenced resource either does not exist or the permissions to know about it are missing.
       content:
@@ -673,24 +682,12 @@ components:
           examples:
             RequestValidationApiProblemResponse:
               $ref: '#/components/examples/RequestValidationApiProblemExample'
-    NotReadyError:
-      description: The server is not ready to handle the request.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ApiProblem'
-          examples:
-            IngestionNotCompletedResponse:
-              $ref: '#/components/examples/IngestionNotCompletedApiProblemExample'
   examples:
-    UnexpectedErrorApiProblemExample:
+    NotFoundApiProblemExample:
       value:
-        type: urn:gradle:enterprise:api:problems:unexpected-error
-        title: Encountered an internal server error.
-        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
-
-          '
-        status: 500
+        type: urn:gradle:enterprise:api:problems:not-found
+        title: The requested resource is not found or the permissions to know about it are missing.
+        status: 404
     IngestionNotCompletedApiProblemExample:
       value:
         type: urn:gradle:enterprise:api:problems:build-processing-incomplete
@@ -707,11 +704,14 @@ components:
 
           '
         status: 400
-    NotFoundApiProblemExample:
+    UnexpectedErrorApiProblemExample:
       value:
-        type: urn:gradle:enterprise:api:problems:not-found
-        title: The requested resource is not found or the permissions to know about it are missing.
-        status: 404
+        type: urn:gradle:enterprise:api:problems:unexpected-error
+        title: Encountered an internal server error.
+        detail: 'The ingestion of build 9r4d13f0r3v3r failed.
+
+          '
+        status: 500
   securitySchemes:
     DevelocityAccessKeyOrToken:
       type: http
