@@ -257,3 +257,9 @@ components:
       scheme: bearer
       bearerFormat: Bearer <<Develocity Access Key or Token>>
       description: "All requests require a Develocity access key or token as a bearer token. \nGiven an access key of `l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`, the required header is `Authorization: Bearer l3an7wk3j4ze5v4mi7rvgjf2p7g44nvlswg4cpvdonjs7rzd4kmq`.\n\nPlease consult the [Develocity API User Manual](https://gradle.com/help/api-access-control) for guidance on how to provision access keys or tokens and check user permissions.\n"
+x-provenance:
+  method: harvested
+  publisher: Gradle
+  source: https://docs.develocity.ai/downloads/develocity-api-specification/develocity-api-specification-2026.2.0.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
