@@ -224,6 +224,8 @@ apis:
   - type: APIReference
     url: https://docs.develocity.ai/2026.2/reference/develocity-api/
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/gradle/overview
 - type: CapabilityMap
   url: capabilities/gradle-capability-edges.yml
   name: Gradle Business Capability Map
