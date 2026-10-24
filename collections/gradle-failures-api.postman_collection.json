@@ -1,645 +1,676 @@
 {
+  "info": {
+    "_postman_id": "22726ea1-175f-480f-a003-a42ab67a4e07",
+    "name": "Develocity Failures API",
+    "description": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\nContact Support:\n Name: Gradle",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:20:27.000Z",
+    "updatedAt": "2026-10-21T21:20:27.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-22726ea1-175f-480f-a003-a42ab67a4e07"
+  },
   "item": [
     {
-      "id": "5a8f97ad-f00d-46d9-bfa2-358e0abe7db2",
-      "name": "Failures",
-      "description": {
-        "content": "Endpoints related to retrieving details about failures of builds from the Develocity instance. \nTo access these endpoints the user requires the `Access build data via the API` permission.\n\n**<mark>Beta:</mark> _The Failures API is unstable and is likely to change in future._**\n",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "df1b8a30-120e-44f0-afa0-9d856d19d569",
-          "name": "Get the failures of a build.",
-          "request": {
-            "name": "Get the failures of a build.",
-            "description": {
-              "content": "**<mark>Beta:</mark>** Returns the failures of a build, organized by build tool (Gradle, Maven, npm).\nThe response structure includes nested objects for each build tool containing their respective failures.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "failures",
-                "builds",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "availabilityWaitTimeoutSecs",
-                  "value": "<integer>",
-                  "description": "The query parameters used to retrieve the failures of a build."
-                },
-                {
-                  "disabled": false,
-                  "key": "maxFailures",
-                  "value": "100",
-                  "description": "The query parameters used to retrieve the failures of a build."
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "id",
-                  "description": "(Required) The Build Scan ID."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "failures",
+          "item": [
             {
-              "id": "cf7a342a-f2bf-461a-b507-d75649e64c4f",
-              "name": "The failures of a build.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "builds",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "availabilityWaitTimeoutSecs",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "maxFailures",
-                      "value": "100"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) The Build Scan ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "builds",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{id}",
+                  "item": [
+                    {
+                      "name": "Get the failures of a build",
+                      "id": "b718616f-4d1f-4ca0-8bdc-18bf861b82f4",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/failures/builds/:id?availabilityWaitTimeoutSecs=<integer>&maxFailures=100",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "failures",
+                            "builds",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "The query parameters used to retrieve the failures of a build.",
+                              "key": "availabilityWaitTimeoutSecs",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The query parameters used to retrieve the failures of a build.",
+                              "key": "maxFailures",
+                              "value": "100"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "ff64215c-d64f-495f-aebc-b8b1ad8d1ed1",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) The Build Scan ID."
+                            }
+                          ]
+                        },
+                        "description": "**Beta:** Returns the failures of a build, organized by build tool (Gradle, Maven, npm).\nThe response structure includes nested objects for each build tool containing their respective failures."
+                      },
+                      "response": [
+                        {
+                          "id": "6780d6c3-ddfe-4a13-b053-56c5bd88d307",
+                          "name": "The failures of a build.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/failures/builds/:id?availabilityWaitTimeoutSecs=<integer>&maxFailures=100",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "failures",
+                                "builds",
+                                ":id"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "availabilityWaitTimeoutSecs",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "maxFailures",
+                                  "value": "100"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"buildToolType\": \"<string>\",\n  \"gradle\": null,\n  \"maven\": {\n    \"buildFailures\": [\n      {\n        \"header\": \"<string>\",\n        \"message\": \"<string>\",\n        \"relevantLog\": \"<string,null>\",\n        \"goalExecutionId\": \"<string,null>\",\n        \"stacktrace\": \"<string,null>\"\n      },\n      {\n        \"header\": \"<string>\",\n        \"message\": \"<string>\",\n        \"relevantLog\": \"<string,null>\",\n        \"goalExecutionId\": \"<string,null>\",\n        \"stacktrace\": \"<string,null>\"\n      }\n    ],\n    \"testFailures\": \"<array,null>\"\n  },\n  \"npm\": {\n    \"buildFailures\": [\n      {\n        \"header\": \"<string>\",\n        \"message\": \"<string>\",\n        \"relevantLog\": \"<string,null>\",\n        \"processName\": \"<string>\",\n        \"stacktrace\": \"<string,null>\"\n      },\n      {\n        \"header\": \"<string>\",\n        \"message\": \"<string>\",\n        \"relevantLog\": \"<string,null>\",\n        \"processName\": \"<string>\",\n        \"stacktrace\": \"<string,null>\"\n      }\n    ],\n    \"testFailures\": \"<array,null>\"\n  }\n}",
+                          "createdAt": "2026-10-21T21:20:27.000Z",
+                          "updatedAt": "2026-10-21T21:20:27.000Z",
+                          "uid": "35240-6780d6c3-ddfe-4a13-b053-56c5bd88d307"
+                        },
+                        {
+                          "id": "455f7b2c-90b9-444c-bab7-da7271107105",
+                          "name": "The request cannot be fulfilled due to a problem.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/failures/builds/:id?availabilityWaitTimeoutSecs=<integer>&maxFailures=100",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "failures",
+                                "builds",
+                                ":id"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "availabilityWaitTimeoutSecs",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "maxFailures",
+                                  "value": "100"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:27.000Z",
+                          "updatedAt": "2026-10-21T21:20:27.000Z",
+                          "uid": "35240-455f7b2c-90b9-444c-bab7-da7271107105"
+                        },
+                        {
+                          "id": "41929524-f5ab-4616-b844-45aa06279134",
+                          "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/failures/builds/:id?availabilityWaitTimeoutSecs=<integer>&maxFailures=100",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "failures",
+                                "builds",
+                                ":id"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "availabilityWaitTimeoutSecs",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "maxFailures",
+                                  "value": "100"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:27.000Z",
+                          "updatedAt": "2026-10-21T21:20:27.000Z",
+                          "uid": "35240-41929524-f5ab-4616-b844-45aa06279134"
+                        },
+                        {
+                          "id": "064bf93d-04bc-4550-9c6e-47e5749da42b",
+                          "name": "The server encountered an unexpected error.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/failures/builds/:id?availabilityWaitTimeoutSecs=<integer>&maxFailures=100",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "failures",
+                                "builds",
+                                ":id"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "availabilityWaitTimeoutSecs",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "maxFailures",
+                                  "value": "100"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:27.000Z",
+                          "updatedAt": "2026-10-21T21:20:27.000Z",
+                          "uid": "35240-064bf93d-04bc-4550-9c6e-47e5749da42b"
+                        },
+                        {
+                          "id": "87086725-e9c2-4190-adb1-d7f689b0fbb8",
+                          "name": "The server is not ready to handle the request.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/failures/builds/:id?availabilityWaitTimeoutSecs=<integer>&maxFailures=100",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "failures",
+                                "builds",
+                                ":id"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "availabilityWaitTimeoutSecs",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "The query parameters used to retrieve the failures of a build.",
+                                  "key": "maxFailures",
+                                  "value": "100"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Service Unavailable",
+                          "code": 503,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:27.000Z",
+                          "updatedAt": "2026-10-21T21:20:27.000Z",
+                          "uid": "35240-87086725-e9c2-4190-adb1-d7f689b0fbb8"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:20:27.000Z",
+                      "updatedAt": "2026-10-21T21:20:27.000Z",
+                      "uid": "35240-b718616f-4d1f-4ca0-8bdc-18bf861b82f4"
+                    }
+                  ],
+                  "id": "90ed5c72-c5e7-4c65-9f11-4e229abf7ea9",
+                  "createdAt": "2026-10-21T21:20:27.000Z",
+                  "updatedAt": "2026-10-21T21:20:27.000Z",
+                  "uid": "35240-90ed5c72-c5e7-4c65-9f11-4e229abf7ea9"
                 }
               ],
-              "body": "{\n  \"buildToolType\": \"gradle\",\n  \"gradle\": {\n    \"buildFailures\": [\n      {\n        \"header\": \"Task :codeNarcMain failed\",\n        \"message\": \"A failure occurred while executing org.gradle.api.plugins.quality.internal.CodeNarcAction\\n> CodeNarc rule violations were found. See the report at: file:///Users/user/project/build/reports/codenarc/main.html\\n\",\n        \"taskPath\": \":codeNarcMain\",\n        \"location\": \"Build file 'build.gradle' line 3\",\n        \"stacktrace\": \"        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:130)\\nCaused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionException: A failure occurred while executing org.gradle.api.plugins.quality.internal.CodeNarcAction\\n        at org.gradle.workers.internal.DefaultWorkerExecutor$WorkItemExecution.waitForCompletion(DefaultWorkerExecutor.java:287)\\n\"\n      }\n    ],\n    \"testFailures\": [\n      {\n        \"id\": {\n          \"workUnitName\": \":test\",\n          \"suiteName\": \"example.ExampleTest\",\n          \"testName\": \"failingTest\"\n        },\n        \"message\": \"org.junit.ComparisonFailure: expected:<[1]> but was:<[2]>\\n\",\n        \"stacktrace\": \"        at example.ExampleTest.failingTest(ExampleTest.java:10)\\nCaused by: org.junit.ComparisonFailure: expected:<[1]> but was:<[2]>\\n        at org.junit.ComparisonFailure.create(ComparisonFailure.java:41)\\n\"\n      }\n    ]\n  },\n  \"maven\": null,\n  \"npm\": null\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "8afef71a-50e0-4e9e-9c18-e3261461b3d8",
+              "createdAt": "2026-10-21T21:20:27.000Z",
+              "updatedAt": "2026-10-21T21:20:27.000Z",
+              "uid": "35240-8afef71a-50e0-4e9e-9c18-e3261461b3d8"
             },
             {
-              "id": "a46ff410-faf9-475f-a380-14ae266ae759",
-              "name": "The request cannot be fulfilled due to a problem.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "builds",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "availabilityWaitTimeoutSecs",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "maxFailures",
-                      "value": "100"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) The Build Scan ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
+              "name": "groups",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
+                  "name": "Get a list of failure groups",
+                  "id": "ea8293d2-abb8-4eee-a1fb-679bb5e556c9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/failures/groups?query=<string>&failureTypes=build,test&maxFailureGroups=100&maxBuildIdsPerGroup=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "failures",
+                        "groups"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                          "key": "failureTypes",
+                          "value": "build,test"
+                        },
+                        {
+                          "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                          "key": "maxFailureGroups",
+                          "value": "100"
+                        },
+                        {
+                          "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                          "key": "maxBuildIdsPerGroup",
+                          "value": "20"
+                        }
+                      ]
+                    },
+                    "description": "**Beta:** Returns the list of failure groups."
+                  },
+                  "response": [
+                    {
+                      "id": "59702acd-7359-456f-a3b9-cecc73f02300",
+                      "name": "A list of failure groups.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/failures/groups?query=<string>&failureTypes=build,test&maxFailureGroups=100&maxBuildIdsPerGroup=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "failures",
+                            "groups"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "query",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "failureTypes",
+                              "value": "build,test"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "maxFailureGroups",
+                              "value": "100"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "maxBuildIdsPerGroup",
+                              "value": "20"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"content\": [\n    {\n      \"type\": \"build\",\n      \"failureCount\": \"<long>\",\n      \"firstOccurrence\": \"<dateTime>\",\n      \"lastOccurrence\": \"<dateTime>\",\n      \"exampleFailure\": {\n        \"message\": \"<string>\",\n        \"relevantLog\": \"<string,null>\"\n      },\n      \"buildIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"type\": \"build\",\n      \"failureCount\": \"<long>\",\n      \"firstOccurrence\": \"<dateTime>\",\n      \"lastOccurrence\": \"<dateTime>\",\n      \"exampleFailure\": {\n        \"message\": \"<string>\",\n        \"relevantLog\": \"<string,null>\"\n      },\n      \"buildIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-10-21T21:20:27.000Z",
+                      "updatedAt": "2026-10-21T21:20:27.000Z",
+                      "uid": "35240-59702acd-7359-456f-a3b9-cecc73f02300"
+                    },
+                    {
+                      "id": "8d0dc944-c0ef-4e2f-ab19-60c8d9748a72",
+                      "name": "The request cannot be fulfilled due to a problem.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/failures/groups?query=<string>&failureTypes=build,test&maxFailureGroups=100&maxBuildIdsPerGroup=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "failures",
+                            "groups"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "query",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "failureTypes",
+                              "value": "build,test"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "maxFailureGroups",
+                              "value": "100"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "maxBuildIdsPerGroup",
+                              "value": "20"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                      "createdAt": "2026-10-21T21:20:27.000Z",
+                      "updatedAt": "2026-10-21T21:20:27.000Z",
+                      "uid": "35240-8d0dc944-c0ef-4e2f-ab19-60c8d9748a72"
+                    },
+                    {
+                      "id": "f1469470-e450-4e42-af5b-1d6c81cba97f",
+                      "name": "The server encountered an unexpected error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/failures/groups?query=<string>&failureTypes=build,test&maxFailureGroups=100&maxBuildIdsPerGroup=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "failures",
+                            "groups"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "query",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "failureTypes",
+                              "value": "build,test"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "maxFailureGroups",
+                              "value": "100"
+                            },
+                            {
+                              "description": "(Required) The query parameters used to retrieve the list of failure groups.",
+                              "key": "maxBuildIdsPerGroup",
+                              "value": "20"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                      "createdAt": "2026-10-21T21:20:27.000Z",
+                      "updatedAt": "2026-10-21T21:20:27.000Z",
+                      "uid": "35240-f1469470-e450-4e42-af5b-1d6c81cba97f"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:20:27.000Z",
+                  "updatedAt": "2026-10-21T21:20:27.000Z",
+                  "uid": "35240-ea8293d2-abb8-4eee-a1fb-679bb5e556c9"
                 }
               ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b912bb4c-86dc-4076-930b-6763fdc4d0df",
-              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "builds",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "availabilityWaitTimeoutSecs",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "maxFailures",
-                      "value": "100"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) The Build Scan ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e107aba5-38df-41fc-8cbb-4c8b533fa98f",
-              "name": "The server encountered an unexpected error.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "builds",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "availabilityWaitTimeoutSecs",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "maxFailures",
-                      "value": "100"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) The Build Scan ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "abcc7894-2089-4187-8226-7713a9e828cb",
-              "name": "The server is not ready to handle the request.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "builds",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "availabilityWaitTimeoutSecs",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "maxFailures",
-                      "value": "100"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "id",
-                      "description": "(Required) The Build Scan ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Service Unavailable",
-              "code": 503,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:build-processing-incomplete\",\n  \"title\": \"Build processing is incomplete.\",\n  \"detail\": \"The data of build 9r4d13f0r3v3r is not yet available for viewing. Please try again later.\\n\",\n  \"status\": 503\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "ec0e1f5d-3d4a-4fd9-844f-0c4e3565c3ca",
+              "createdAt": "2026-10-21T21:20:27.000Z",
+              "updatedAt": "2026-10-21T21:20:27.000Z",
+              "uid": "35240-ec0e1f5d-3d4a-4fd9-844f-0c4e3565c3ca"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "50b8c473-78bf-4359-8726-bc57beb29e8b",
-          "name": "Get a list of failure groups.",
-          "request": {
-            "name": "Get a list of failure groups.",
-            "description": {
-              "content": "**<mark>Beta:</mark>** Returns the list of failure groups.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "failures",
-                "groups"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "query",
-                  "value": "<string>",
-                  "description": "(Required) The query parameters used to retrieve the list of failure groups."
-                },
-                {
-                  "disabled": false,
-                  "key": "failureTypes",
-                  "value": "[\"build\",\"test\"]",
-                  "description": "(Required) The query parameters used to retrieve the list of failure groups."
-                },
-                {
-                  "disabled": false,
-                  "key": "maxFailureGroups",
-                  "value": "100",
-                  "description": "(Required) The query parameters used to retrieve the list of failure groups."
-                },
-                {
-                  "disabled": false,
-                  "key": "maxBuildIdsPerGroup",
-                  "value": "20",
-                  "description": "(Required) The query parameters used to retrieve the list of failure groups."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "c7f7d14e-3ff9-4cc9-8d95-16385af57be2",
-              "name": "A list of failure groups.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "groups"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "query",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "failureTypes",
-                      "value": "build,test"
-                    },
-                    {
-                      "key": "maxFailureGroups",
-                      "value": "100"
-                    },
-                    {
-                      "key": "maxBuildIdsPerGroup",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"content\": [\n    {\n      \"type\": \"build\",\n      \"failureCount\": 10,\n      \"firstOccurrence\": \"2025-01-15T10:00:00Z\",\n      \"lastOccurrence\": \"2025-06-10T15:30:00Z\",\n      \"exampleFailure\": {\n        \"message\": \"A failure occurred while executing org.gradle.api.plugins.quality.internal.CodeNarcAction\\n> CodeNarc rule violations were found. See the report at: file:///Users/user/project/build/reports/codenarc/main.html\\n\",\n        \"relevantLog\": \"Violation: Rule=VariableName P=2 Line=304 Msg=[Variable named isAtLeastGradle9_2 in class com.gradle.scan.server.test.vmcv.scan.tests.suitedetailsview.IntermediaryNodeFailureCrossVersionTest$IntermediaryNodeFailureCrossVersionTest_JUnit4 does not match the pattern [a-z][a-zA-Z0-9]*] Src=[def isAtLeastGradle9_2 = gradleVersion.isAtLeast(GradleVersions.V9_2_0)]\\n\"\n      },\n      \"buildIds\": [\n        \"bsfohatb6uw2u\",\n        \"begl4bohhoy2i\",\n        \"beo6lnhluzkbbg\"\n      ]\n    },\n    {\n      \"type\": \"test\",\n      \"failureCount\": 25,\n      \"firstOccurrence\": \"2025-05-15T10:00:00Z\",\n      \"lastOccurrence\": \"2025-07-11T15:30:00Z\",\n      \"exampleFailure\": {\n        \"message\": \"org.junit.ComparisonFailure: expected:<[1]> but was:<[2]>\\n\"\n      },\n      \"buildIds\": [\n        \"tsfohatb6uw2u\",\n        \"teg4bohhoy2i\",\n        \"teo6lnhluzkbbg\"\n      ]\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "33088b0a-a749-4394-bdb8-576082fc85ff",
-              "name": "The request cannot be fulfilled due to a problem.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "groups"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "query",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "failureTypes",
-                      "value": "build,test"
-                    },
-                    {
-                      "key": "maxFailureGroups",
-                      "value": "100"
-                    },
-                    {
-                      "key": "maxBuildIdsPerGroup",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "6ee8592a-0e91-402e-8f01-14dae403d58d",
-              "name": "The server encountered an unexpected error.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "failures",
-                    "groups"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "query",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "failureTypes",
-                      "value": "build,test"
-                    },
-                    {
-                      "key": "maxFailureGroups",
-                      "value": "100"
-                    },
-                    {
-                      "key": "maxBuildIdsPerGroup",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "17ff0855-5086-441a-96e3-7fa4f0cd1369",
+          "createdAt": "2026-10-21T21:20:27.000Z",
+          "updatedAt": "2026-10-21T21:20:27.000Z",
+          "uid": "35240-17ff0855-5086-441a-96e3-7fa4f0cd1369"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://develocity.example.com",
-      "key": "baseUrl"
+      "id": "d135c2ae-44e9-48c0-8c2e-ed37b1590409",
+      "createdAt": "2026-10-21T21:20:27.000Z",
+      "updatedAt": "2026-10-21T21:20:27.000Z",
+      "uid": "35240-d135c2ae-44e9-48c0-8c2e-ed37b1590409"
     }
   ],
   "auth": {
@@ -647,17 +678,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "f6591ff6-925b-46eb-a2c8-ce6b16ab5be6",
-    "name": "Develocity Auth Failures API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://develocity.example.com"
     }
-  }
+  ]
 }

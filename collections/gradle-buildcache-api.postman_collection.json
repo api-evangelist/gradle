@@ -1,1005 +1,988 @@
 {
+  "info": {
+    "_postman_id": "b9a88e16-53a1-4bfa-be57-00cb656ac435",
+    "name": "Develocity Build Cache API",
+    "description": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\nContact Support:\n Name: Gradle",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:20:06.000Z",
+    "updatedAt": "2026-10-21T21:20:06.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b9a88e16-53a1-4bfa-be57-00cb656ac435"
+  },
   "item": [
     {
-      "id": "82dda731-4df2-4294-9b87-5dd875e22e8a",
-      "name": "BuildCache",
-      "description": {
-        "content": "Endpoints related to configuring the Build Cache nodes of the Develocity instance.\nTo access these endpoints the user requires the `Configure Build Caching` permission.\n",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "fe4dfc7f-2754-4c5f-8bfe-806524062e68",
-          "name": "View the configuration of a Build Cache Node.",
-          "request": {
-            "name": "View the configuration of a Build Cache Node.",
-            "description": {
-              "content": "View the enablement status and replication configuration of a Build Cache Node.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "build-cache",
-                "nodes",
-                ":name"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "name",
-                  "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "build-cache",
+          "item": [
             {
-              "id": "57195478-8aab-4ed9-9efb-debdeeb0754f",
-              "name": "The configuration of a Build Cache Node.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "nodes",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{name}",
+                  "item": [
+                    {
+                      "name": "purge",
+                      "item": [
+                        {
+                          "name": "Deletes all entries from a Build Cache Node",
+                          "id": "2d7d3b0a-0fe6-4783-9616-6b107de2afe6",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name/purge",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name",
+                                "purge"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "decd860e-0dc6-4774-a270-e729eb0bb0bb",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
+                                }
+                              ]
+                            },
+                            "description": "Triggers the deletion of all entries stored at the named Build Cache Node."
+                          },
+                          "response": [
+                            {
+                              "id": "383a2a97-d568-4663-960f-915d69908a15",
+                              "name": "Purging the Build Cache Node was successfully initiated.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/build-cache/nodes/:name/purge",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "build-cache",
+                                    "nodes",
+                                    ":name",
+                                    "purge"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Accepted",
+                              "code": 202,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T21:20:06.000Z",
+                              "updatedAt": "2026-10-21T21:20:06.000Z",
+                              "uid": "35240-383a2a97-d568-4663-960f-915d69908a15"
+                            },
+                            {
+                              "id": "7a732cff-3c61-4079-8171-2be95e38aa3e",
+                              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/problem+json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/build-cache/nodes/:name/purge",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "build-cache",
+                                    "nodes",
+                                    ":name",
+                                    "purge"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/problem+json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                              "createdAt": "2026-10-21T21:20:06.000Z",
+                              "updatedAt": "2026-10-21T21:20:06.000Z",
+                              "uid": "35240-7a732cff-3c61-4079-8171-2be95e38aa3e"
+                            },
+                            {
+                              "id": "c6e1a5de-78bc-462f-a836-834cd0f7cf43",
+                              "name": "The server encountered an unexpected error.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/problem+json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/build-cache/nodes/:name/purge",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "build-cache",
+                                    "nodes",
+                                    ":name",
+                                    "purge"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/problem+json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                              "createdAt": "2026-10-21T21:20:06.000Z",
+                              "updatedAt": "2026-10-21T21:20:06.000Z",
+                              "uid": "35240-c6e1a5de-78bc-462f-a836-834cd0f7cf43"
+                            },
+                            {
+                              "id": "b758de92-e59f-4f29-9b1d-294c971f819f",
+                              "name": "The node was not signed in with Develocity.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/problem+json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/build-cache/nodes/:name/purge",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "build-cache",
+                                    "nodes",
+                                    ":name",
+                                    "purge"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Service Unavailable",
+                              "code": 503,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/problem+json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                              "createdAt": "2026-10-21T21:20:06.000Z",
+                              "updatedAt": "2026-10-21T21:20:06.000Z",
+                              "uid": "35240-b758de92-e59f-4f29-9b1d-294c971f819f"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-2d7d3b0a-0fe6-4783-9616-6b107de2afe6"
+                        }
+                      ],
+                      "id": "c09fb488-6771-4be5-bee8-dfd0aadc4377",
+                      "createdAt": "2026-10-21T21:20:06.000Z",
+                      "updatedAt": "2026-10-21T21:20:06.000Z",
+                      "uid": "35240-c09fb488-6771-4be5-bee8-dfd0aadc4377"
+                    },
+                    {
+                      "name": "secret",
+                      "item": [
+                        {
+                          "name": "Regenerate the secret of a Build Cache Node",
+                          "id": "0fea4d86-5b70-40c7-bcbf-bf789cc44dc8",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name/secret",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name",
+                                "secret"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "3e1a4220-fff9-48aa-9241-4e52cee133fc",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) The name of the Build Cache Node."
+                                }
+                              ]
+                            },
+                            "description": "Regenerates the secret associated with the named Build Cache Node. The old secret expires immediately, causing the Build Cache Node to\ndisconnect from Develocity. The Built-in Build Cache Node cannot be named as the target of this operation."
+                          },
+                          "response": [
+                            {
+                              "id": "45c301aa-776a-45bc-b737-e18b96e9bed5",
+                              "name": "The name referenced an existing Build Cache Node and that Build Cache Node's secret was regenerated.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/build-cache/nodes/:name/secret",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "build-cache",
+                                    "nodes",
+                                    ":name",
+                                    "secret"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"key\": \"<string>\",\n  \"secret\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T21:20:06.000Z",
+                              "updatedAt": "2026-10-21T21:20:06.000Z",
+                              "uid": "35240-45c301aa-776a-45bc-b737-e18b96e9bed5"
+                            },
+                            {
+                              "id": "c4a8c3d5-b5dd-4a17-a43e-87294c0c8d8d",
+                              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/problem+json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/build-cache/nodes/:name/secret",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "build-cache",
+                                    "nodes",
+                                    ":name",
+                                    "secret"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/problem+json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                              "createdAt": "2026-10-21T21:20:06.000Z",
+                              "updatedAt": "2026-10-21T21:20:06.000Z",
+                              "uid": "35240-c4a8c3d5-b5dd-4a17-a43e-87294c0c8d8d"
+                            },
+                            {
+                              "id": "cb63793f-3e8a-4207-a5f2-113739be97ec",
+                              "name": "The server encountered an unexpected error.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/problem+json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/build-cache/nodes/:name/secret",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "build-cache",
+                                    "nodes",
+                                    ":name",
+                                    "secret"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/problem+json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                              "createdAt": "2026-10-21T21:20:06.000Z",
+                              "updatedAt": "2026-10-21T21:20:06.000Z",
+                              "uid": "35240-cb63793f-3e8a-4207-a5f2-113739be97ec"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-0fea4d86-5b70-40c7-bcbf-bf789cc44dc8"
+                        }
+                      ],
+                      "id": "ed05e3e8-d608-48c0-9bcd-bef5f7ced4b3",
+                      "createdAt": "2026-10-21T21:20:06.000Z",
+                      "updatedAt": "2026-10-21T21:20:06.000Z",
+                      "uid": "35240-ed05e3e8-d608-48c0-9bcd-bef5f7ced4b3"
+                    },
+                    {
+                      "name": "View the configuration of a Build Cache Node",
+                      "id": "41bcf859-9acf-42fc-b68f-b296e7202eea",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "build-cache",
+                            "nodes",
+                            ":name"
+                          ],
+                          "variable": [
+                            {
+                              "id": "45a72d7e-5c8e-4059-8eab-31d1eb522e06",
+                              "key": "name",
+                              "value": "<string>",
+                              "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
+                            }
+                          ]
+                        },
+                        "description": "View the enablement status and replication configuration of a Build Cache Node."
+                      },
+                      "response": [
+                        {
+                          "id": "b7b155d4-af41-4fea-af29-20f992d86be5",
+                          "name": "The configuration of a Build Cache Node.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"enabled\": \"<boolean>\",\n  \"replication\": null\n}",
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-b7b155d4-af41-4fea-af29-20f992d86be5"
+                        },
+                        {
+                          "id": "bdb71dcd-227b-404b-a76f-808f854e0ec1",
+                          "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-bdb71dcd-227b-404b-a76f-808f854e0ec1"
+                        },
+                        {
+                          "id": "e63f61ef-06be-4add-b853-1cfde6db625b",
+                          "name": "The server encountered an unexpected error.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-e63f61ef-06be-4add-b853-1cfde6db625b"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:20:06.000Z",
+                      "updatedAt": "2026-10-21T21:20:06.000Z",
+                      "uid": "35240-41bcf859-9acf-42fc-b68f-b296e7202eea"
+                    },
+                    {
+                      "name": "Create or update a Build Cache Node",
+                      "id": "fc473ab6-9e2b-4585-8652-24d2222522bb",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"replication\": null\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "build-cache",
+                            "nodes",
+                            ":name"
+                          ],
+                          "variable": [
+                            {
+                              "id": "f2b09679-0285-4d1c-970d-f76f4500354b",
+                              "key": "name",
+                              "value": "<string>",
+                              "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
+                            }
+                          ]
+                        },
+                        "description": "Create a new Build Cache Node in Develocity or update the configuration of an existing one.\nThe Built-in Build Cache Node cannot be named as the target of this operation."
+                      },
+                      "response": [
+                        {
+                          "id": "48139f4c-a62f-4850-bc17-c4bb5482f4d6",
+                          "name": "The name referenced an existing Build Cache Node and that Build Cache Node\u2019s configuration was updated successfully.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"replication\": null\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-48139f4c-a62f-4850-bc17-c4bb5482f4d6"
+                        },
+                        {
+                          "id": "3c2dba71-7d44-4145-a507-f6ef89863997",
+                          "name": "A new Build Cache Node was created with the configuration specified in the request.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"replication\": null\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-3c2dba71-7d44-4145-a507-f6ef89863997"
+                        },
+                        {
+                          "id": "1f83414d-4b0b-4eb5-9a77-d09c411439a8",
+                          "name": "The request cannot be fulfilled due to a problem.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"replication\": null\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-1f83414d-4b0b-4eb5-9a77-d09c411439a8"
+                        },
+                        {
+                          "id": "e0f74a6d-2fc4-4aaa-99a8-6b6adea71cc8",
+                          "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"replication\": null\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/build-cache/nodes/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "build-cache",
+                                "nodes",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-21T21:20:06.000Z",
+                          "updatedAt": "2026-10-21T21:20:06.000Z",
+                          "uid": "35240-e0f74a6d-2fc4-4aaa-99a8-6b6adea71cc8"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:20:06.000Z",
+                      "updatedAt": "2026-10-21T21:20:06.000Z",
+                      "uid": "35240-fc473ab6-9e2b-4585-8652-24d2222522bb"
+                    }
+                  ],
+                  "id": "18861bc9-b799-4319-a7df-72a7593fa2da",
+                  "createdAt": "2026-10-21T21:20:06.000Z",
+                  "updatedAt": "2026-10-21T21:20:06.000Z",
+                  "uid": "35240-18861bc9-b799-4319-a7df-72a7593fa2da"
                 }
               ],
-              "body": "{\n  \"enabled\": false,\n  \"replication\": {\n    \"source\": \"parent-node-1\",\n    \"preemptive\": true\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "bfb759dd-8c0d-455e-bbd6-7bcc4e357ff9",
-              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3b6c5196-97f7-496d-95ff-08ecd197bbdb",
-              "name": "The server encountered an unexpected error.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "198d79e8-fd04-478f-a65b-d2e02fa815e1",
+              "createdAt": "2026-10-21T21:20:06.000Z",
+              "updatedAt": "2026-10-21T21:20:06.000Z",
+              "uid": "35240-198d79e8-fd04-478f-a65b-d2e02fa815e1"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "bfd2799e-70c1-419a-8515-ea1a5ba4cf3e",
-          "name": "Create or update a Build Cache Node.",
-          "request": {
-            "name": "Create or update a Build Cache Node.",
-            "description": {
-              "content": "Create a new Build Cache Node in Develocity or update the configuration of an existing one.\nThe Built-in Build Cache Node cannot be named as the target of this operation.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "build-cache",
-                "nodes",
-                ":name"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "name",
-                  "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/problem+json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"enabled\": \"<boolean>\",\n  \"replication\": {\n    \"source\": \"<string>\",\n    \"preemptive\": \"<boolean>\"\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "244f5059-3b29-4bca-b947-85321f0fca01",
-              "name": "The name referenced an existing Build Cache Node and that Build Cache Node’s configuration was updated successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"enabled\": false,\n  \"replication\": {\n    \"source\": \"parent-node-1\",\n    \"preemptive\": true\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "90a7b9db-ee53-407b-b832-f8f50cb5ebf6",
-              "name": "A new Build Cache Node was created with the configuration specified in the request.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"enabled\": false,\n  \"replication\": {\n    \"source\": \"parent-node-1\",\n    \"preemptive\": true\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "5a1add5f-04a6-40ca-95f5-2694d8570b8c",
-              "name": "The request cannot be fulfilled due to a problem.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"enabled\": false,\n  \"replication\": {\n    \"source\": \"parent-node-1\",\n    \"preemptive\": true\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:validation\",\n  \"title\": \"Request validation failed.\",\n  \"detail\": \"Numeric instance is lower than the required minimum (minimum: 1, found: 0) (Additional info: Query parameter: maxWaitSecs).\\n\",\n  \"status\": 400\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b848b7f7-3dcc-402b-870c-089c2040eff7",
-              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"enabled\": false,\n  \"replication\": {\n    \"source\": \"parent-node-1\",\n    \"preemptive\": true\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "781df027-7c9b-4d72-9fcc-1675ca56014b",
-          "name": "Deletes all entries from a Build Cache Node.",
-          "request": {
-            "name": "Deletes all entries from a Build Cache Node.",
-            "description": {
-              "content": "Triggers the deletion of all entries stored at the named Build Cache Node.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "build-cache",
-                "nodes",
-                ":name",
-                "purge"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "name",
-                  "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/problem+json"
-              }
-            ],
-            "method": "POST",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "f1d074a3-3ea2-4bb0-b12e-2737b76edcc0",
-              "name": "Purging the Build Cache Node was successfully initiated.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name",
-                    "purge"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Accepted",
-              "code": 202,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "5180c661-67cd-47d5-9680-045aea43bf45",
-              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name",
-                    "purge"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a2fedf45-7745-483c-ba91-d59a2087a55c",
-              "name": "The server encountered an unexpected error.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name",
-                    "purge"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "33dcce05-9ba8-483d-8b0d-415a6e9ec9aa",
-              "name": "The node was not signed in with Develocity.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name",
-                    "purge"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node. To select the Built-in Build Cache Node, use `Built-in` as name."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Service Unavailable",
-              "code": 503,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:node-not-signed-in\",\n  \"title\": \"Node with name not-signed-in-node1 must be signed-in before this operation can be performed.\",\n  \"status\": 503\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "0b5f9d35-611a-4537-994d-ba2dba5c0315",
-          "name": "Regenerate the secret of a Build Cache Node.",
-          "request": {
-            "name": "Regenerate the secret of a Build Cache Node.",
-            "description": {
-              "content": "Regenerates the secret associated with the named Build Cache Node. The old secret expires immediately, causing the Build Cache Node to\ndisconnect from Develocity. The Built-in Build Cache Node cannot be named as the target of this operation.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "build-cache",
-                "nodes",
-                ":name",
-                "secret"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "name",
-                  "description": "(Required) The name of the Build Cache Node."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "024038b9-d077-4cde-aac6-0a7d68ed9be5",
-              "name": "The name referenced an existing Build Cache Node and that Build Cache Node's secret was regenerated.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name",
-                    "secret"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"key\": \"cvzxztkqkqxzc3vcruabpcr264\",\n  \"secret\": \"e5ag76yp6abcc5jbxusboca313\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d3c2b911-2fd8-40bd-b8f7-c039bbeba9de",
-              "name": "The referenced resource either does not exist or the permissions to know about it are missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name",
-                    "secret"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:not-found\",\n  \"title\": \"The requested resource is not found or the permissions to know about it are missing.\",\n  \"status\": 404\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "13c1999b-bf9b-4226-8a17-36233de6b366",
-              "name": "The server encountered an unexpected error.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "build-cache",
-                    "nodes",
-                    ":name",
-                    "secret"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "name",
-                      "description": "(Required) The name of the Build Cache Node."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/problem+json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/problem+json"
-                }
-              ],
-              "body": "{\n  \"type\": \"urn:gradle:enterprise:api:problems:unexpected-error\",\n  \"title\": \"Encountered an internal server error.\",\n  \"detail\": \"The ingestion of build 9r4d13f0r3v3r failed.\\n\",\n  \"status\": 500\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "6d406dce-d88c-4b1d-b9fe-224da3df57ed",
+          "createdAt": "2026-10-21T21:20:06.000Z",
+          "updatedAt": "2026-10-21T21:20:06.000Z",
+          "uid": "35240-6d406dce-d88c-4b1d-b9fe-224da3df57ed"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://develocity.example.com",
-      "key": "baseUrl"
+      "id": "f3121ebd-6a0e-4174-89f5-5590f4108fa9",
+      "createdAt": "2026-10-21T21:20:06.000Z",
+      "updatedAt": "2026-10-21T21:20:06.000Z",
+      "uid": "35240-f3121ebd-6a0e-4174-89f5-5590f4108fa9"
     }
   ],
   "auth": {
@@ -1007,17 +990,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "412fc58c-bc76-438e-ae13-d1ba8af71106",
-    "name": "Develocity Auth BuildCache API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Develocity API allows programmatic interaction with various aspects of Develocity, from configuration to inspecting build data.\n\n\nContact Support:\n Name: Gradle",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://develocity.example.com"
     }
-  }
+  ]
 }
