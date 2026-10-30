@@ -64,6 +64,97 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Gradle is a company surfaced as a portfolio company of dcvc and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Gradle Inc. (Gradle Technologies) is the company behind the open-source Gradle Build Tool, downloaded more than 25 million times a month across the Java, JVM, Android, Kotlin, C/C++, and native ecosystems, and Develocity (formerly Gradle Enterprise), its commercial Developer Productivity Engineering platform. Develocity adds Build Scan, Build Cache, Predictive Test Selection, and Test Distribution to accelerate and stabilize builds and tests. The Develocity API is a JSON REST API, described with OpenAPI, that provides programmatic access to build data, failures, tests, projects, project groups, Build Cache node configuration, Test Distribution agent pools, and short-lived access tokens on a self-hosted Develocity instance. Founded in 2009 and headquartered in San Francisco with offices in Berlin and Melbourne, Gradle raised a $27M Series C led by Triangle Peak Partners.
 
-Backed by: dcvc
+**Areas:** Company · Developer Tools · Build Automation · Developer Productivity · CI/CD · Build Analytics · Testing · DevOps · Java · Build Cache
+
+## Gradle on APIs.io
+
+Everything profiled for Gradle is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/gradle/](https://apis.io/providers/gradle/)** — or go straight to one of the APIs or properties below.
+
+### APIs (9)
+
+- [Gradle Auth API](https://apis.io/apis/gradle/gradle-auth-api/) — Endpoints related to Develocity authentication and authorization. The permissions required for these endpoints vary. Consult the endpoint descriptions.
+- [Gradle BuildCache API](https://apis.io/apis/gradle/gradle-buildcache-api/) — Endpoints related to configuring the Build Cache nodes of the Develocity instance. To access these endpoints the user requires the `Configure Build Caching`…
+- [Gradle Builds API](https://apis.io/apis/gradle/gradle-builds-api/) — Endpoints related to retrieving details of a build from the Develocity instance. To access these endpoints the user requires the `Access build data via the…
+- [Gradle Comparison API](https://apis.io/apis/gradle/gradle-comparison-api/) — Endpoints for comparing two builds to identify differences in work unit inputs, dependencies, and other dimensions. To access these endpoints the user…
+- [Gradle Failures API](https://apis.io/apis/gradle/gradle-failures-api/) — Endpoints related to retrieving details about failures of builds from the Develocity instance. To access these endpoints the user requires the `Access build…
+- [Gradle Meta API](https://apis.io/apis/gradle/gradle-meta-api/) — Endpoints related to the Develocity installation and its state.
+- [Gradle Projects API](https://apis.io/apis/gradle/gradle-projects-api/) — Endpoints related to the management of project-level access control in Develocity. To access these endpoints the user requires the `Administer Projects`…
+- [Gradle TestDistribution API](https://apis.io/apis/gradle/gradle-testdistribution-api/) — Endpoints related to the management of Test Distribution resources. To access these endpoints the user requires the `Admin` permission.
+- [Gradle Tests API](https://apis.io/apis/gradle/gradle-tests-api/) — Endpoints related to retrieving details of tests of the Develocity instance. To access these endpoints the user requires the `Access build data via the API`…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [gradle-mcp.yml](https://apis.io/servers/gradle/gradle-mcp-yml/)
+
+#### Collections (11)
+
+Postman and Open Collection request collections.
+
+- [Develocity Auth API](https://apis.io/collections/gradle/open-gradle-auth-api/)
+- [Develocity Auth BuildCache API](https://apis.io/collections/gradle/open-gradle-buildcache-api/)
+- [Develocity Auth Builds API](https://apis.io/collections/gradle/open-gradle-builds-api/)
+- [Develocity Auth Comparison API](https://apis.io/collections/gradle/open-gradle-comparison-api/)
+- [Auth Develocity API](https://apis.io/collections/gradle/open-gradle-develocity-api/)
+- [Develocity Auth Failures API](https://apis.io/collections/gradle/open-gradle-failures-api/)
+- [Develocity Auth GradleEnterprise API](https://apis.io/collections/gradle/open-gradle-gradleenterprise-api/)
+- [Develocity Auth Meta API](https://apis.io/collections/gradle/open-gradle-meta-api/)
+- [Develocity Auth Projects API](https://apis.io/collections/gradle/open-gradle-projects-api/)
+- [Develocity Auth TestDistribution API](https://apis.io/collections/gradle/open-gradle-testdistribution-api/)
+- [Develocity Auth Tests API](https://apis.io/collections/gradle/open-gradle-tests-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Gradle Develocity Overlay](https://apis.io/overlays/gradle/gradle-develocity-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Gradle Authentication](https://apis.io/security/gradle/gradle-authentication/)
+- [Gradle Domain Security](https://apis.io/security/gradle/gradle-domain-security/)
+- [Gradle Trust Center](https://apis.io/security/gradle/gradle-trust-center/)
+- [Gradle Vulnerability Disclosure](https://apis.io/security/gradle/gradle-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Documentation](https://docs.develocity.ai/)
+- [Getting started](https://docs.develocity.ai/2026.2/quickstart/)
+- [API reference](https://docs.develocity.ai/2026.2/reference/develocity-api/)
+- [Sign up](https://scans.gradle.com/)
+- [Support](https://community.gradle.org/)
+- [Blog](https://gradle.com/blog/)
+- [Security](https://github.com/gradle/.github/blob/master/SECURITY.md)
+- [Terms of service](https://gradle.com/help/legal-terms-of-use)
+- [Privacy policy](https://gradle.com/legal/privacy/)
+- [GitHub](https://github.com/gradle)
+- [Status](https://status.gradle.com/)
+
+## API Evangelist rating
+
+**Unrated** — no public website could be reached for this company, so there was almost nothing to measure and nothing a reader could check.
+
+This is not a score of zero. No rating is published for this company. If that is wrong because something public exists that we missed, say so on this repository or email [info@apievangelist.com](mailto:info@apievangelist.com) and it will be re-run — free, and no justification needed.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Gradle: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/gradle/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
